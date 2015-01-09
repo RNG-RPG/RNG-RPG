@@ -17,8 +17,8 @@ except:
 	print "Fonts unavailable"
 	sys.exit()
 
-speed = 0
-speed1 = 0
+vertSpeed = 0
+hoSpeed = 0
 	
 clock = pygame.time.Clock()
 
@@ -52,59 +52,81 @@ while (10 == 10):
             key = pygame.key.get_pressed()
             if key[pygame.K_w]:
                 print "W"
-                if speed == 1:
-                    speed = 0
+                if vertSpeed == 1:
+                    vertSpeed = 0
                 else:
-                    speed = -1
+                    vertSpeed = -1
             if key[pygame.K_a]:
                 print "A"
-                if speed1 == 1:
-                    speed1 = 0
+                if hoSpeed == 1:
+                    hoSpeed = 0
                 else:
-                    speed1 = -1
+                    hoSpeed = -1
             if key[pygame.K_s]:
                 print "S"
-                if speed == -1:
-                    speed = 0
+                if vertSpeed == -1:
+                    vertSpeed = 0
                 else:
-                    speed = 1
+                    vertSpeed = 1
             if key[pygame.K_d]:
                 print "D"
-                if speed1 == -1:
-                    speed1 = 0
+                if hoSpeed == -1:
+                    hoSpeed = 0
                 else:
-                    speed1 = 1
+                    hoSpeed = 1
 
         if event.type == pygame.KEYUP:
             if key[pygame.K_w]:
                 print "UPW"
-                if speed == -1:
-                    speed = 0
+                if vertSpeed == -1:
+                    vertSpeed = 0
                 else:
-                    speed = 1
+                    vertSpeed = 1
             if key[pygame.K_a]:
                 print "UPA"
-                if speed1 == -1:
-                    speed1 = 0
+                if hoSpeed == -1:
+                    hoSpeed = 0
                 else:
-                    speed1 = 1
+                    hoSpeed = 1
             if key[pygame.K_s]:
                 print "UPS"
-                if speed == 1:
-                    speed = 0
+                if vertSpeed == 1:
+                    vertSpeed = 0
                 else:
-                    speed = -1
+                    vertSpeed = -1
             if key[pygame.K_d]:
                 print "UPD"
-                if speed1 == 1:
-                    speed1 = 0
+                if hoSpeed == 1:
+                    hoSpeed = 0
                 else:
-                    speed1 = -1
+                    hoSpeed = -1
 
         if event.type == pygame.QUIT:
             sys.exit()
-			
-    hero_Rect = hero_Rect.move( speed1, speed )
+	
+	if hero_Rect.colliderect( rock_Rect ):
+		if hero_Rect.left == rock_Rect.right:
+			if hoSpeed >= 0:
+				hoSpeed = hoSpeed
+			else:
+				hoSpeed = 0
+		if hero_Rect.right == rock_Rect.left:
+			if hoSpeed <= 0:
+				hoSpeed = hoSpeed
+			else:
+				hoSpeed = 0
+		if hero_Rect.top == rock_Rect.bottom:
+			if vertSpeed >= 0:
+				hoSpeed = hoSpeed
+			else:
+				vertSpeed = 0
+		if hero_Rect.bottom == rock_Rect.top:
+			if vertSpeed <= 0:
+				hoSpeed = hoSpeed
+			else:
+				vertSpeed = 0
+
+    hero_Rect = hero_Rect.move( hoSpeed, vertSpeed )
 	
     refresh.append( hero_Rect )
     refresh.append( background.get_rect() )
