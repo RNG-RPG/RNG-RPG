@@ -105,28 +105,21 @@ while (10 == 10):
             sys.exit()
 	
     if hero_Rect.colliderect( rock_Rect ):
-        if hero_Rect.left == rock_Rect.right:
-            if hoSpeed >= 0:
-                hoSpeed = hoSpeed
-            else:
-                hoSpeed = 0
-        if hero_Rect.right == rock_Rect.left:
-            if hoSpeed <= 0:
-                hoSpeed = hoSpeed
-            else:
-                hoSpeed = 0
-        if hero_Rect.top == rock_Rect.bottom:
-            if vertSpeed >= 0:
-                hoSpeed = hoSpeed
-            else:
-                vertSpeed = 0
-        if hero_Rect.bottom == rock_Rect.top:
-            if vertSpeed <= 0:
-                hoSpeed = hoSpeed
-            else:
-                vertSpeed = 0
+        print( "colliding" )
+        if hero_Rect.left >= rock_Rect.left:
+            #hoSpeed = 0
+            hero_Rect.left = rock_Rect.right
+        elif hero_Rect.right <= rock_Rect.right:
+            #hoSpeed = 0
+            hero_Rect.right = rock_Rect.left
+        elif hero_Rect.top <= rock_Rect.top:
+            #vertSpeed = 0
+            hero_Rect.top = rock_Rect.bottom
+        elif hero_Rect.bottom >= rock_Rect.bottom:
+            #vertSpeed = 0
+            hero_Rect.bottom = rock_Rect.top
 
-    hero_Rect = hero_Rect.move( hoSpeed, vertSpeed )
+    hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
 	
     refresh.append( hero_Rect )
     refresh.append( background.get_rect() )
