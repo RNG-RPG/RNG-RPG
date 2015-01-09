@@ -73,7 +73,6 @@ while (10 == 10):
                     speed1 = 1
 
         if event.type == pygame.KEYUP:
-            key = pygame.key.get_pressed()
             if key[pygame.K_w]:
                 print "UPW"
                 if speed == -1:
