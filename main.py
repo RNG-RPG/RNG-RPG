@@ -17,7 +17,8 @@ except:
     print "Fonts unavailable"
     sys.exit()
 
-speed = [0, 0]
+speed = 0
+speed1 = 0
 	
 clock = pygame.time.Clock()
 
@@ -29,11 +30,11 @@ hero = pygame.image.load( "temp_char.png" ).convert_alpha()
 screen.fill( (255, 255, 255) )
 
 screen.blit( background, (0,0) )
-screen.blit( hero, (0, 0) )
+screen.blit( hero, (50, 50) )
 
 refresh = []
 
-hero_Rect = hero.get_rect
+hero_Rect = hero.get_rect().move(50, 50)
 
 pygame.display.update()
 
@@ -48,60 +49,60 @@ while (10 == 10):
 			key = pygame.key.get_pressed()
 			if key[pygame.K_w]:
 				print "W"
-				if speed[0] == -1:
-					speed[0] = 0
+				if speed == -1:
+					speed = 0
 				else:
-					speed[0] = 1
+					speed = 1
 			if key[pygame.K_a]:
 				print "A"
-				if speed[1] == -1:
-					speed[1] = 0
+				if speed1 == -1:
+					speed1 = 0
 				else:
-					speed[1] = 1
+					speed1 = 1
 			if key[pygame.K_s]:
 				print "S"
-				if speed[0] == 1:
-					speed[0] = 0
+				if speed == 1:
+					speed = 0
 				else:
-					speed[0] = -1
+					speed = -1
 			if key[pygame.K_d]:
 				print "D"
-				if speed[1] == 1:
-					speed[1] = 0
+				if speed1 == 1:
+					speed1 = 0
 				else:
-					speed[1] = -1
+					speed1 = -1
 		
 		if event.type == pygame.KEYUP:
 			key = pygame.key.get_pressed()
 			if key[pygame.K_w]:
 				print "UPW"
-				if speed[0] == 1:
-					speed[0] = 0
+				if speed == 1:
+					speed = 0
 				else:
-					speed[0] = -1
+					speed = -1
 			if key[pygame.K_a]:
 				print "UPA"
-				if speed[1] == 1:
-					speed[1] = 0
+				if speed1 == 1:
+					speed1 = 0
 				else:
-					speed[1] = -1
+					speed1 = -1
 			if key[pygame.K_s]:
 				print "UPS"
-				if speed[0] == -1:
-					speed[0] = 0
+				if speed == -1:
+					speed = 0
 				else:
-					speed[0] = 1
+					speed = 1
 			if key[pygame.K_d]:
 				print "UPD"
-				if speed[1] == -1:
-					speed[1] = 0
+				if speed1 == -1:
+					speed1 = 0
 				else:
-					speed[1] = 1
+					speed1 = 1
 
 		if event.type == pygame.QUIT:
 			sys.exit()
 			
-	hero_Rect = hero_Rect.move( speed )
+	hero_Rect = hero_Rect.move( speed, speed1 )
 	
 	refresh.append( hero_Rect )
 	
@@ -109,6 +110,6 @@ while (10 == 10):
 	
 	refresh = []
 	
-	clock.tick(30)
+	#clock.tick(30)
 
 print "terminating"
