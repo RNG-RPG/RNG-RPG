@@ -104,27 +104,27 @@ while (10 == 10):
         if event.type == pygame.QUIT:
             sys.exit()
 	
-	if hero_Rect.colliderect( rock_Rect ):
-		if hero_Rect.left == rock_Rect.right:
-			if hoSpeed >= 0:
-				hoSpeed = hoSpeed
-			else:
-				hoSpeed = 0
-		if hero_Rect.right == rock_Rect.left:
-			if hoSpeed <= 0:
-				hoSpeed = hoSpeed
-			else:
-				hoSpeed = 0
-		if hero_Rect.top == rock_Rect.bottom:
-			if vertSpeed >= 0:
-				hoSpeed = hoSpeed
-			else:
-				vertSpeed = 0
-		if hero_Rect.bottom == rock_Rect.top:
-			if vertSpeed <= 0:
-				hoSpeed = hoSpeed
-			else:
-				vertSpeed = 0
+    if hero_Rect.colliderect( rock_Rect ):
+        if hero_Rect.left == rock_Rect.right:
+            if hoSpeed >= 0:
+                hoSpeed = hoSpeed
+            else:
+                hoSpeed = 0
+        if hero_Rect.right == rock_Rect.left:
+            if hoSpeed <= 0:
+                hoSpeed = hoSpeed
+            else:
+                hoSpeed = 0
+        if hero_Rect.top == rock_Rect.bottom:
+            if vertSpeed >= 0:
+                hoSpeed = hoSpeed
+            else:
+                vertSpeed = 0
+        if hero_Rect.bottom == rock_Rect.top:
+            if vertSpeed <= 0:
+                hoSpeed = hoSpeed
+            else:
+                vertSpeed = 0
 
     hero_Rect = hero_Rect.move( hoSpeed, vertSpeed )
 	
