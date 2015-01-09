@@ -25,15 +25,18 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode( (1000, 380) )
 
 background = pygame.image.load( "grass_jk.png" ).convert_alpha()
-hero = pygame.image.load( "temp_char.png" ).convert_alpha()
+hero = pygame.image.load( "archer_main.png" ).convert_alpha()
+rock = pygame.image.load( "rock.png" ).convert_alpha()
 def reset():
     screen.fill( (255, 255, 255) )
     screen.blit( background, (0,0) )
+    screen.blit( rock, (500, 180) )
 
 screen.blit( hero, (50, 50) )
 
 refresh = []
 
+rock_Rect = rock.get_rect().move(500, 180)
 hero_Rect = hero.get_rect().move(50, 50)
 
 pygame.display.update()
