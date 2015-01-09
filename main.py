@@ -2,6 +2,7 @@
 written by Mathias Dyssegaard Kallick
 1/8/2015
 main.py - holds the code necessary to display a background and the hero, for now.
+Ian is messing around
 '''
 
 # imports
