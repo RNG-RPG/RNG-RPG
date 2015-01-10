@@ -17,8 +17,11 @@ except:
 	print "Fonts unavailable"
 	sys.exit()
 
+dead = False
 vertSpeed = 0
 hoSpeed = 0
+# defines speed of enemy
+enemySpeed = 3
 	
 clock = pygame.time.Clock()
 
@@ -27,17 +30,21 @@ screen = pygame.display.set_mode( (1000, 380) )
 background = pygame.image.load( "grass_jk.png" ).convert_alpha()
 hero = pygame.image.load( "archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
+enemy = pygame.image.load( "enemy_temp.png" ).convert_alpha()
+
 def reset(bkground):
     screen.fill( (255, 255, 255) )
     screen.blit( bkground, (0,0) )
     screen.blit( rock, (500, 180) )
 
 screen.blit( hero, (50, 50) )
+screen.blit( enemy, (500, 100) )
 
 refresh = []
 
 rock_Rect = rock.get_rect().move(500, 180)
 hero_Rect = hero.get_rect().move(50, 50)
+enemy_Rect = enemy.get_rect().move(500, 100)
 
 pygame.display.update()
 #Control limits 
@@ -53,7 +60,7 @@ while (10 == 10):
             sys.exit()
            
         
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN and dead != True:
             key = pygame.key.get_pressed()
             if key[pygame.K_w] and wOn:
                 print "W"
@@ -97,7 +104,7 @@ while (10 == 10):
         vertSpeed=0
     
     
-	# collision checker
+    # collision checker
     if hero_Rect.colliderect( rock_Rect ):
         # print( "colliding" )
         if hero_Rect.left >= rock_Rect.right - 6:
@@ -115,18 +122,61 @@ while (10 == 10):
             #print( "colliding with top" )
             hero_Rect.top = rock_Rect.bottom
 
+    # enemy collision checking
+    if enemy_Rect.colliderect( rock_Rect ):
+        # print( "colliding" )
+        if enemy_Rect.left >= rock_Rect.right - 6:
+            #hoSpeed = 0
+            enemy_Rect.left = rock_Rect.right
+        elif enemy_Rect.right <= rock_Rect.left + 6:
+            #hoSpeed = 0
+            enemy_Rect.right = rock_Rect.left
+        elif enemy_Rect.top <= rock_Rect.bottom - 6:
+            #vertSpeed = 0
+            enemy_Rect.bottom = rock_Rect.top
+            #print( "colliding with bottom" )
+        elif enemy_Rect.bottom >= rock_Rect.top + 6:
+            #vertSpeed = 0
+            #print( "colliding with top" )
+            enemy_Rect.top = rock_Rect.bottom
+            
+    
+    # enemy AI, deciding where it needs to move
+    if enemy_Rect.top < hero_Rect.centery:
+        vertVar = 1
+    elif enemy_Rect.bottom > hero_Rect.centery:
+        vertVar = -1
+    else:
+        vertVar = 0
+    if enemy_Rect.right < hero_Rect.centerx:
+        hoVar = 1
+    elif enemy_Rect.left > hero_Rect.centerx:
+        hoVar = -1
+    else:
+        hoVar = 0
+        
+    # enemy collision with hero checker
+    if enemy_Rect.colliderect( hero_Rect ):
+        hero = pygame.image.load( "dead.png" ).convert_alpha()
+        hoSpeed = 0
+        vertSpeed = 0
+        dead = True
+    
     hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
-	
+    enemy_Rect = enemy_Rect.move( hoVar * enemySpeed, vertVar * enemySpeed )
+    
     refresh.append( hero_Rect )
     refresh.append( background.get_rect() )
+    refresh.append( enemy_Rect )
 
     reset(background)
     screen.blit( hero, (hero_Rect) )
-	
+    screen.blit( enemy, (enemy_Rect) )
+    
     pygame.display.update( refresh )
-	
+    
     refresh = []
-	
+    
     clock.tick(30)
 
 print "terminating"
