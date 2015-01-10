@@ -27,9 +27,9 @@ screen = pygame.display.set_mode( (1000, 380) )
 background = pygame.image.load( "grass_jk.png" ).convert_alpha()
 hero = pygame.image.load( "archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
-def reset():
+def reset(bkground):
     screen.fill( (255, 255, 255) )
-    screen.blit( background, (0,0) )
+    screen.blit( bkground, (0,0) )
     screen.blit( rock, (500, 180) )
 
 screen.blit( hero, (50, 50) )
@@ -97,27 +97,30 @@ while (10 == 10):
         vertSpeed=0
     
     
+	# collision checker
     if hero_Rect.colliderect( rock_Rect ):
-        print( "colliding" )
-        if hero_Rect.left >= rock_Rect.left:
+        # print( "colliding" )
+        if hero_Rect.left >= rock_Rect.right - 6:
             #hoSpeed = 0
             hero_Rect.left = rock_Rect.right
-        elif hero_Rect.right <= rock_Rect.right:
+        elif hero_Rect.right <= rock_Rect.left + 6:
             #hoSpeed = 0
             hero_Rect.right = rock_Rect.left
-        elif hero_Rect.top <= rock_Rect.top:
-            #vertSpeed = 0
-            hero_Rect.top = rock_Rect.bottom
-        elif hero_Rect.bottom >= rock_Rect.bottom:
+        elif hero_Rect.top <= rock_Rect.bottom - 6:
             #vertSpeed = 0
             hero_Rect.bottom = rock_Rect.top
+            #print( "colliding with bottom" )
+        elif hero_Rect.bottom >= rock_Rect.top + 6:
+            #vertSpeed = 0
+            #print( "colliding with top" )
+            hero_Rect.top = rock_Rect.bottom
 
     hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
 	
     refresh.append( hero_Rect )
     refresh.append( background.get_rect() )
 
-    reset()
+    reset(background)
     screen.blit( hero, (hero_Rect) )
 	
     pygame.display.update( refresh )
