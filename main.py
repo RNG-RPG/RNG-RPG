@@ -40,70 +40,58 @@ rock_Rect = rock.get_rect().move(500, 180)
 hero_Rect = hero.get_rect().move(50, 50)
 
 pygame.display.update()
-
+#Control limits 
+wOn=True
+aOn=True
+sOn=True
+dOn=True
 while (10 == 10):
     for event in pygame.event.get():
         #if event.type == pygame.MOUSEMOTION:   
     
         if event.type == pygame.MOUSEBUTTONDOWN:
             sys.exit()
+           
         
         if event.type == pygame.KEYDOWN:
             key = pygame.key.get_pressed()
-            if key[pygame.K_w]:
+            if key[pygame.K_w] and wOn:
                 print "W"
-                if vertSpeed == 1:
-                    vertSpeed = 0
-                else:
-                    vertSpeed = -1
-            if key[pygame.K_a]:
+                vertSpeed=-5
+                wOn=False
+            if key[pygame.K_a] and aOn:
                 print "A"
-                if hoSpeed == 1:
-                    hoSpeed = 0
-                else:
-                    hoSpeed = -1
-            if key[pygame.K_s]:
+                hoSpeed=-5
+                aOn=False
+            if key[pygame.K_s] and sOn:
                 print "S"
-                if vertSpeed == -1:
-                    vertSpeed = 0
-                else:
-                    vertSpeed = 1
-            if key[pygame.K_d]:
+                vertSpeed=5
+                sOn=False
+            if key[pygame.K_d] and dOn:
                 print "D"
-                if hoSpeed == -1:
-                    hoSpeed = 0
-                else:
-                    hoSpeed = 1
-
+                hoSpeed=5
+                dOn=False
         if event.type == pygame.KEYUP:
-            if key[pygame.K_w]:
+            if key[pygame.K_w] and wOn != True:
                 print "UPW"
-                if vertSpeed == -1:
-                    vertSpeed = 0
-                else:
-                    vertSpeed = 1
-            if key[pygame.K_a]:
+                vertSpeed+=5
+                wOn=True
+            if key[pygame.K_a] and aOn != True:
                 print "UPA"
-                if hoSpeed == -1:
-                    hoSpeed = 0
-                else:
-                    hoSpeed = 1
-            if key[pygame.K_s]:
+                hoSpeed+=5
+                aOn=True
+            if key[pygame.K_s] and sOn != True:
                 print "UPS"
-                if vertSpeed == 1:
-                    vertSpeed = 0
-                else:
-                    vertSpeed = -1
-            if key[pygame.K_d]:
+                vertSpeed-=5
+                sOn=True
+            if key[pygame.K_d] and dOn != True:
                 print "UPD"
-                if hoSpeed == 1:
-                    hoSpeed = 0
-                else:
-                    hoSpeed = -1
-
-        if event.type == pygame.QUIT:
-            sys.exit()
-	
+                hoSpeed-=5
+                dOn=True
+    
+    
+    
+    
     if hero_Rect.colliderect( rock_Rect ):
         print( "colliding" )
         if hero_Rect.left >= rock_Rect.left:
