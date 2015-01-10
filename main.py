@@ -57,39 +57,44 @@ while (10 == 10):
             key = pygame.key.get_pressed()
             if key[pygame.K_w] and wOn:
                 print "W"
-                vertSpeed=-5
+                vertSpeed-=1
                 wOn=False
             if key[pygame.K_a] and aOn:
                 print "A"
-                hoSpeed=-5
+                hoSpeed-=1
                 aOn=False
             if key[pygame.K_s] and sOn:
                 print "S"
-                vertSpeed=5
+                vertSpeed+=1
                 sOn=False
             if key[pygame.K_d] and dOn:
                 print "D"
-                hoSpeed=5
+                hoSpeed+=1
                 dOn=False
         if event.type == pygame.KEYUP:
-            if key[pygame.K_w] and wOn != True:
+            keyAfter = pygame.key.get_pressed()
+            if key[pygame.K_w] != keyAfter[pygame.K_w] and wOn != True:
                 print "UPW"
-                vertSpeed+=5
+                vertSpeed+=1
                 wOn=True
-            if key[pygame.K_a] and aOn != True:
+            if key[pygame.K_a] != keyAfter[pygame.K_a] and aOn != True:
                 print "UPA"
-                hoSpeed+=5
+                hoSpeed+=1
                 aOn=True
-            if key[pygame.K_s] and sOn != True:
+            if key[pygame.K_s] != keyAfter[pygame.K_s] and sOn != True:
                 print "UPS"
-                vertSpeed-=5
+                vertSpeed-=1
                 sOn=True
-            if key[pygame.K_d] and dOn != True:
+            if key[pygame.K_d] != keyAfter[pygame.K_d] and dOn != True:
                 print "UPD"
-                hoSpeed-=5
+                hoSpeed-=1
                 dOn=True
-    
-    
+     
+    #Catches pygame event errors
+    catch=pygame.key.get_pressed()
+    if catch[pygame.K_w] == False and catch[pygame.K_a] == False and catch[pygame.K_s] == False and catch[pygame.K_d] == False:
+        hoSpeed=0
+        vertSpeed=0
     
     
     if hero_Rect.colliderect( rock_Rect ):
