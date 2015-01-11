@@ -109,14 +109,12 @@ while (10 == 10):
                 hero_Rect.left = 50
                 enemy_Rect.top = 100
                 enemy_Rect.left = 500
-
      
     #Catches pygame event errors
     catch=pygame.key.get_pressed()
     if catch[pygame.K_w] == False and catch[pygame.K_a] == False and catch[pygame.K_s] == False and catch[pygame.K_d] == False:
         hoSpeed=0
         vertSpeed=0
-    
     
     # collision checker
     if hero_Rect.colliderect( rock_Rect ):
@@ -156,9 +154,9 @@ while (10 == 10):
             
     
     # enemy AI, deciding where it needs to move
-    if enemy_Rect.top < hero_Rect.centery:
+    if enemy_Rect.bottom < hero_Rect.centery:
         vertVar = 1
-    elif enemy_Rect.bottom > hero_Rect.centery:
+    elif enemy_Rect.top > hero_Rect.centery:
         vertVar = -1
     else:
         vertVar = 0
@@ -178,21 +176,21 @@ while (10 == 10):
         for event in pygame.event.get(): 
             if event.type == pygame.KEYDOWN:
                 key = pygame.key.get_pressed()
-                
-                    
-                    
     
+    # movement code
     hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
     enemy_Rect = enemy_Rect.move( hoVar * enemySpeed, vertVar * enemySpeed )
-    
+
+    # adding all the rectangles to the refresh list
     refresh.append( hero_Rect )
     refresh.append( background.get_rect() )
     refresh.append( enemy_Rect )
 
+    # redrawing everything
     reset(background)
     screen.blit( hero, (hero_Rect) )
     screen.blit( enemy, (enemy_Rect) )
-    
+
     pygame.display.update( refresh )
     
     refresh = []
