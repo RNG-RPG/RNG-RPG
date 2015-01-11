@@ -96,6 +96,20 @@ while (10 == 10):
                 print "UPD"
                 hoSpeed-=1
                 dOn=True
+
+        # reset button
+        if event.type == pygame.KEYDOWN and dead == True:
+            key = pygame.key.get_pressed()
+            if key[pygame.K_r]:
+                print ( "r is hit" )
+                reset(background)
+                hero = pygame.image.load( "archer_main.png" ).convert_alpha()
+                dead = False
+                hero_Rect.top = 50
+                hero_Rect.left = 50
+                enemy_Rect.top = 100
+                enemy_Rect.left = 500
+
      
     #Catches pygame event errors
     catch=pygame.key.get_pressed()
@@ -161,6 +175,12 @@ while (10 == 10):
         hoSpeed = 0
         vertSpeed = 0
         dead = True
+        for event in pygame.event.get(): 
+            if event.type == pygame.KEYDOWN:
+                key = pygame.key.get_pressed()
+                
+                    
+                    
     
     hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
     enemy_Rect = enemy_Rect.move( hoVar * enemySpeed, vertVar * enemySpeed )
