@@ -28,9 +28,40 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode( (1000, 380) )
 
 background = pygame.image.load( "grass_jk.png" ).convert_alpha()
-hero = pygame.image.load( "archer_main.png" ).convert_alpha()
+hero = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
 enemy = pygame.image.load( "enemy_temp.png" ).convert_alpha()
+
+#Hero movement sprites
+time = 0
+counter = 0
+
+'''down'''
+herod0 =  pygame.image.load( "sprites/archer_down1.png" ).convert_alpha()
+herod1 = hero
+herod2 =  pygame.image.load( "sprites/archer_down2.png" ).convert_alpha()
+herod3 = hero
+herod = [herod0, herod1, herod2, herod3]
+'''right'''
+heror0 =  pygame.image.load( "sprites/archer_right1.png" ).convert_alpha()
+heror1 =  pygame.image.load( "sprites/archer_right.png" ).convert_alpha()
+heror2 =  pygame.image.load( "sprites/archer_right2.png" ).convert_alpha()
+heror3 =  heror1
+heror = [heror0, heror1, heror2, heror3]
+'''up'''
+herou0 =  pygame.image.load( "sprites/archer_up1.png" ).convert_alpha()
+herou1 =  pygame.image.load( "sprites/archer_up.png" ).convert_alpha()
+herou2 =  pygame.image.load( "sprites/archer_up2.png" ).convert_alpha()
+herou3 =  herou1
+herou = [herou0, herou1, herou2, herou3]
+'''left'''
+herol0 =  pygame.image.load( "sprites/archer_left1.png" ).convert_alpha()
+herol1 =  pygame.image.load( "sprites/archer_left.png" ).convert_alpha()
+herol2 =  pygame.image.load( "sprites/archer_left2.png" ).convert_alpha()
+herol3 =  herol1
+herol = [herol0, herol1, herol2, herol3]
+#remember which direction hero was facing
+direction = herod
 
 def reset(bkground):
     screen.fill( (255, 255, 255) )
@@ -58,8 +89,7 @@ while (10 == 10):
     
         if event.type == pygame.MOUSEBUTTONDOWN:
             sys.exit()
-           
-        
+          
         if event.type == pygame.KEYDOWN and dead != True:
             key = pygame.key.get_pressed()
             if key[pygame.K_w] and wOn:
@@ -80,19 +110,19 @@ while (10 == 10):
                 dOn=False
         if event.type == pygame.KEYUP:
             keyAfter = pygame.key.get_pressed()
-            if key[pygame.K_w] != keyAfter[pygame.K_w] and wOn != True:
+            if catch[pygame.K_w] and not keyAfter[pygame.K_w] and wOn != True:
                 print "UPW"
                 vertSpeed+=1
                 wOn=True
-            if key[pygame.K_a] != keyAfter[pygame.K_a] and aOn != True:
+            if catch[pygame.K_a] and not keyAfter[pygame.K_a] and aOn != True:
                 print "UPA"
                 hoSpeed+=1
                 aOn=True
-            if key[pygame.K_s] != keyAfter[pygame.K_s] and sOn != True:
+            if catch[pygame.K_s] and not keyAfter[pygame.K_s] and sOn != True:
                 print "UPS"
                 vertSpeed-=1
                 sOn=True
-            if key[pygame.K_d] != keyAfter[pygame.K_d] and dOn != True:
+            if catch[pygame.K_d] and not keyAfter[pygame.K_d] and dOn != True:
                 print "UPD"
                 hoSpeed-=1
                 dOn=True
@@ -103,19 +133,27 @@ while (10 == 10):
             if key[pygame.K_r]:
                 print ( "r is hit" )
                 reset(background)
-                hero = pygame.image.load( "archer_main.png" ).convert_alpha()
+                hero = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
                 dead = False
                 hero_Rect.top = 50
                 hero_Rect.left = 50
                 enemy_Rect.top = 100
                 enemy_Rect.left = 500
+<<<<<<< HEAD
      
+=======
+
+>>>>>>> origin/master
     #Catches pygame event errors
     catch=pygame.key.get_pressed()
     if catch[pygame.K_w] == False and catch[pygame.K_a] == False and catch[pygame.K_s] == False and catch[pygame.K_d] == False:
         hoSpeed=0
         vertSpeed=0
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> origin/master
     # collision checker
     if hero_Rect.colliderect( rock_Rect ):
         # print( "colliding" )
@@ -176,6 +214,10 @@ while (10 == 10):
         for event in pygame.event.get(): 
             if event.type == pygame.KEYDOWN:
                 key = pygame.key.get_pressed()
+<<<<<<< HEAD
+=======
+                       
+>>>>>>> origin/master
     
     # movement code
     hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
@@ -188,6 +230,38 @@ while (10 == 10):
 
     # redrawing everything
     reset(background)
+    
+    #sprite control
+    if not dead:
+        if vertSpeed == 0 and hoSpeed == 0:
+            time = -1
+            counter = 0
+            hero = direction[1]
+        else:
+            time += 1
+            if time == 29 :
+                time = 0
+        if time % 5 == 0:
+            if vertSpeed > 0 and hoSpeed == 0:
+                hero = herod[counter]
+                counter = (counter + 1) % 4
+                direction=herod
+            
+            elif vertSpeed == 0 and hoSpeed > 0:
+                hero = heror[counter]
+                counter = (counter + 1) % 4
+                direction=heror
+            
+            elif vertSpeed < 0 and hoSpeed == 0:
+                hero = herou[counter]
+                counter = (counter + 1) % 4
+                direction=herou
+               
+            elif vertSpeed == 0 and hoSpeed < 0:
+                hero = herol[counter]
+                counter = (counter + 1) % 4
+                direction=herol
+                
     screen.blit( hero, (hero_Rect) )
     screen.blit( enemy, (enemy_Rect) )
 
