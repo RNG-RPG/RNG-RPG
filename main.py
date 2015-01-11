@@ -139,21 +139,14 @@ while (10 == 10):
                 hero_Rect.left = 50
                 enemy_Rect.top = 100
                 enemy_Rect.left = 500
-<<<<<<< HEAD
-     
-=======
 
->>>>>>> origin/master
     #Catches pygame event errors
     catch=pygame.key.get_pressed()
     if catch[pygame.K_w] == False and catch[pygame.K_a] == False and catch[pygame.K_s] == False and catch[pygame.K_d] == False:
         hoSpeed=0
         vertSpeed=0
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> origin/master
+
     # collision checker
     if hero_Rect.colliderect( rock_Rect ):
         # print( "colliding" )
@@ -214,11 +207,7 @@ while (10 == 10):
         for event in pygame.event.get(): 
             if event.type == pygame.KEYDOWN:
                 key = pygame.key.get_pressed()
-<<<<<<< HEAD
-=======
-                       
->>>>>>> origin/master
-    
+
     # movement code
     hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
     enemy_Rect = enemy_Rect.move( hoVar * enemySpeed, vertVar * enemySpeed )
