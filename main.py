@@ -12,18 +12,21 @@ pygame.init()
 
 # initialize the fonts
 try:
-	pygame.font.init()
+    pygame.font.init()
 except:
-	print "Fonts unavailable"
-	sys.exit()
+    print "Fonts unavailable"
+    sys.exit()
 
 dead = False
+arrowOn = False
 vertSpeed = 0
 hoSpeed = 0
 # defines speed of enemy
 enemySpeed = 3
-	
+    
 clock = pygame.time.Clock()
+
+width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
 
 screen = pygame.display.set_mode( (1000, 380) )
 
@@ -31,6 +34,7 @@ background = pygame.image.load( "grass_jk.png" ).convert_alpha()
 hero = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
 enemy = pygame.image.load( "enemy_temp.png" ).convert_alpha()
+arrow = pygame.image.load( "arrow.png" ).convert_alpha()
 
 #Hero movement sprites
 time = 0
@@ -95,12 +99,13 @@ def timeReset():
     time=-1
 
 def reset(bkground):
-    screen.fill( (255, 255, 255) )
     screen.blit( bkground, (0,0) )
     screen.blit( rock, (500, 180) )
 
 screen.blit( hero, (50, 50) )
 screen.blit( enemy, (500, 100) )
+screen.blit( background, (0,0) )
+screen.blit( rock, (500, 180) )
 
 refresh = []
 
@@ -115,6 +120,14 @@ aOn=True
 sOn=True
 dOn=True
 while (10 == 10):
+
+    # adding all the rectangles to the refresh list
+    refresh.append( hero_Rect )
+    #refresh.append( background.get_rect() )
+    refresh.append( enemy_Rect )
+    if arrowOn == True:
+        refresh.append( arrow_Rect )
+        
     for event in pygame.event.get():
         #if event.type == pygame.MOUSEMOTION:   
     
@@ -139,6 +152,10 @@ while (10 == 10):
                 print "D"
                 hoSpeed+=1
                 dOn=False
+            if key[pygame.K_SPACE]:
+                arrow_Rect = arrow.get_rect().move(hero_Rect.center)
+                arrowOn = True
+                screen.blit( arrow, (arrow_Rect) )
         if event.type == pygame.KEYUP:
             keyAfter = pygame.key.get_pressed()
             if catch[pygame.K_w] and not keyAfter[pygame.K_w] and wOn != True:
@@ -187,17 +204,17 @@ while (10 == 10):
     # collision checker
     if hero_Rect.colliderect( rock_Rect ):
         # print( "colliding" )
-        if hero_Rect.left >= rock_Rect.right - 6:
+        if hero_Rect.left >= rock_Rect.right - 15:
             #hoSpeed = 0
             hero_Rect.left = rock_Rect.right
-        elif hero_Rect.right <= rock_Rect.left + 6:
+        elif hero_Rect.right <= rock_Rect.left + 50:
             #hoSpeed = 0
             hero_Rect.right = rock_Rect.left
-        elif hero_Rect.top <= rock_Rect.bottom - 6:
+        elif hero_Rect.top <= rock_Rect.bottom - 15:
             #vertSpeed = 0
             hero_Rect.bottom = rock_Rect.top
             #print( "colliding with bottom" )
-        elif hero_Rect.bottom >= rock_Rect.top + 6:
+        elif hero_Rect.bottom >= rock_Rect.top + 15:
             #vertSpeed = 0
             #print( "colliding with top" )
             hero_Rect.top = rock_Rect.bottom
@@ -251,9 +268,11 @@ while (10 == 10):
 
     # adding all the rectangles to the refresh list
     refresh.append( hero_Rect )
-    refresh.append( background.get_rect() )
+    refresh.append( rock_Rect )
     refresh.append( enemy_Rect )
-
+    if arrowOn == True:
+        refresh.append( arrow_Rect )
+    
     # redrawing everything
     reset(background)
     
@@ -269,44 +288,70 @@ while (10 == 10):
                 time = 0
         if time % 5 == 0:
             if vertSpeed > 0 and hoSpeed == 0:
+                templeft = hero_Rect.left
+                temptop = hero_Rect.top
                 hero = herod[counter]
+                hero_Rect = herod[counter].get_rect().move( templeft, temptop )
                 counter = (counter + 1) % 4
                 direction=herod
             
             elif vertSpeed == 0 and hoSpeed > 0:
+                templeft = hero_Rect.left
+                temptop = hero_Rect.top
                 hero = heror[counter]
+                hero_Rect = heror[counter].get_rect().move( templeft, temptop )
                 counter = (counter + 1) % 4
                 direction=heror
             
             elif vertSpeed < 0 and hoSpeed == 0:
+                templeft = hero_Rect.left
+                temptop = hero_Rect.top
                 hero = herou[counter]
+                hero_Rect = herou[counter].get_rect().move( templeft, temptop )
                 counter = (counter + 1) % 4
                 direction=herou
                
             elif vertSpeed == 0 and hoSpeed < 0:
+                templeft = hero_Rect.left
+                temptop = hero_Rect.top
                 hero = herol[counter]
+                hero_Rect = herol[counter].get_rect().move( templeft, temptop )
                 counter = (counter + 1) % 4
                 direction=herol
  
             elif vertSpeed > 0 and hoSpeed < 0:
+                templeft = hero_Rect.left
+                temptop = hero_Rect.top
                 hero = herodl[counter]
+                hero_Rect = herodl[counter].get_rect().move( templeft, temptop )
                 counter = (counter + 1) % 4
                 direction=herodl
             elif vertSpeed > 0 and hoSpeed > 0:
+                templeft = hero_Rect.left
+                temptop = hero_Rect.top
                 hero = herodr[counter]
+                hero_Rect = herodr[counter].get_rect().move( templeft, temptop )
                 counter = (counter + 1) % 4
                 direction=herodr
             elif vertSpeed < 0 and hoSpeed < 0:
+                templeft = hero_Rect.left
+                temptop = hero_Rect.top
                 hero = heroul[counter]
+                hero_Rect = heroul[counter].get_rect().move( templeft, temptop )
                 counter = (counter + 1) % 4
                 direction=heroul
             elif vertSpeed < 0 and hoSpeed > 0:
+                templeft = hero_Rect.left
+                temptop = hero_Rect.top
                 hero = herour[counter]
+                hero_Rect = herour[counter].get_rect().move( templeft, temptop )
                 counter = (counter + 1) % 4
                 direction=herour
                 
     screen.blit( hero, (hero_Rect) )
     screen.blit( enemy, (enemy_Rect) )
+    if arrowOn == True:
+       screen.blit( arrow, (arrow_Rect) )
 
     pygame.display.update( refresh )
     
