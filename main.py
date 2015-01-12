@@ -147,23 +147,36 @@ while (10 == 10):
             target_Rect = target.get_rect().move( mpos[0], mpos[1] )
     
         if event.type == pygame.MOUSEBUTTONDOWN:
-            angle = math.atan( ((math.fabs(target_Rect.centerx - hero_Rect.centerx))/(math.fabs(target_Rect.centery - hero_Rect.centery))) )
-            pygame.transform.rotate(target, angle)
-            arrow_Rect = arrow.get_rect().move(hero_Rect.center)
-            arrowOn = True
-            if hero_Rect.centery > mpos[1]:
-                arrowSpeedY = - (90 - angle) // 9
-            elif hero_Rect.centery < mpos[1]:
-                arrowSpeedY =((90 - angle) // 9)
-            else:
-                arrowSpeedY = 0
-            if hero_Rect.centerx > mpos[0]:
-                arrowSpeedX = - (90 - angle) // 9
-            elif hero_Rect.centerx < mpos[0]:
-                arrowSpeedX = ((90 - angle) // 9)
-            else:
+            if target_Rect.centerx - hero_Rect.centerx == 0:
                 arrowSpeedX = 0
-            screen.blit( arrow, (arrow_Rect) )
+                arrowSpeedY = 10
+            elif target_Rect.centery - hero_Rect.centery == 0:
+                arrowSpeedX = 10
+                arrowSpeedY = 0
+            else:
+                temp_tan_var = ((target_Rect.centerx - hero_Rect.centerx)/(target_Rect.centery - hero_Rect.centery))
+                print( temp_tan_var )
+                angle = math.atan( temp_tan_var )
+                angle = angle * 52.29
+                print (angle)
+                pygame.transform.rotate(target, angle)
+                arrow_Rect = arrow.get_rect().move(hero_Rect.center)
+                arrowOn = True
+                if hero_Rect.centery > mpos[1]:
+                    arrowSpeedY = - (90 - angle) / 9.0
+                elif hero_Rect.centery < mpos[1]:
+                    arrowSpeedY =((90 - angle) / 9.0)
+                else:
+                    arrowSpeedY = 0
+                print ( arrowSpeedY )
+                if hero_Rect.centerx > mpos[0]:
+                    arrowSpeedX = - (angle) / 9.0
+                elif hero_Rect.centerx < mpos[0]:
+                    arrowSpeedX = ((angle) / 9.0)
+                else:
+                    arrowSpeedX = 0
+                print ( arrowSpeedX )
+                screen.blit( arrow, (arrow_Rect) )
 
           
         if event.type == pygame.KEYDOWN and dead != True:
