@@ -33,7 +33,7 @@ screen = pygame.display.set_mode( (1000, 380) )
 background = pygame.image.load( "grass_jk.png" ).convert_alpha()
 hero = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
-enemy = pygame.image.load( "enemy_temp.png" ).convert_alpha()
+enemy = pygame.image.load( "Dragon_Mouth_Closed.png" ).convert_alpha()
 arrow = pygame.image.load( "arrow.png" ).convert_alpha()
 
 #Hero movement sprites
@@ -193,6 +193,7 @@ while (10 == 10):
                 enemy_Rect.left = 500
                 timeReset()
                 direction=herod
+                refresh.append( background.get_rect() )
 
     #Catches pygame event errors
     catch=pygame.key.get_pressed()
@@ -204,18 +205,23 @@ while (10 == 10):
     # collision checker
     if hero_Rect.colliderect( rock_Rect ):
         # print( "colliding" )
-        if hero_Rect.left >= rock_Rect.right - 15:
+        if hero_Rect.left >= rock_Rect.right - 18:
             #hoSpeed = 0
+            refresh.append( hero_Rect )
             hero_Rect.left = rock_Rect.right
-        elif hero_Rect.right <= rock_Rect.left + 50:
+        elif hero_Rect.right <= rock_Rect.left + 18:
             #hoSpeed = 0
+            refresh.append( hero_Rect )
             hero_Rect.right = rock_Rect.left
-        elif hero_Rect.top <= rock_Rect.bottom - 15:
+        elif hero_Rect.top <= rock_Rect.bottom - 18:
             #vertSpeed = 0
+            refresh.append( hero_Rect )
             hero_Rect.bottom = rock_Rect.top
             #print( "colliding with bottom" )
-        elif hero_Rect.bottom >= rock_Rect.top + 15:
+            refresh.append( hero_Rect )
+        elif hero_Rect.bottom >= rock_Rect.top + 18:
             #vertSpeed = 0
+            refresh.append( hero_Rect )
             #print( "colliding with top" )
             hero_Rect.top = rock_Rect.bottom
 
