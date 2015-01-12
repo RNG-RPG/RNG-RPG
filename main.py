@@ -33,7 +33,7 @@ screen = pygame.display.set_mode( (1000, 380) )
 background = pygame.image.load( "grass_jk.png" ).convert_alpha()
 hero = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
-enemy = pygame.image.load( "enemy_temp.png" ).convert_alpha()
+enemy = pygame.image.load( "Dragon_Mouth_Closed.png" ).convert_alpha()
 arrow = pygame.image.load( "arrow.png" ).convert_alpha()
 
 #Hero movement sprites
