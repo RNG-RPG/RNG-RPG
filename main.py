@@ -90,6 +90,10 @@ herour = [herour0, herour1, herour2, herour3]
 #remember which direction hero was facing
 direction = herod
 
+def timeReset():
+    counter=0
+    time=-1
+
 def reset(bkground):
     screen.fill( (255, 255, 255) )
     screen.blit( bkground, (0,0) )
@@ -136,25 +140,27 @@ while (10 == 10):
                 hoSpeed+=1
                 dOn=False
         if event.type == pygame.KEYUP:
-            counter = 0
-            time = -1
             keyAfter = pygame.key.get_pressed()
             if catch[pygame.K_w] and not keyAfter[pygame.K_w] and wOn != True:
                 print "UPW"
                 vertSpeed+=1
                 wOn=True
+                timeReset()
             if catch[pygame.K_a] and not keyAfter[pygame.K_a] and aOn != True:
                 print "UPA"
                 hoSpeed+=1
                 aOn=True
+                timeReset()
             if catch[pygame.K_s] and not keyAfter[pygame.K_s] and sOn != True:
                 print "UPS"
                 vertSpeed-=1
                 sOn=True
+                timeReset()
             if catch[pygame.K_d] and not keyAfter[pygame.K_d] and dOn != True:
                 print "UPD"
                 hoSpeed-=1
                 dOn=True
+                timeReset()
 
         # reset button
         if event.type == pygame.KEYDOWN and dead == True:
@@ -168,6 +174,8 @@ while (10 == 10):
                 hero_Rect.left = 50
                 enemy_Rect.top = 100
                 enemy_Rect.left = 500
+                timeReset()
+                direction=herod
 
     #Catches pygame event errors
     catch=pygame.key.get_pressed()
