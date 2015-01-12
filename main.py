@@ -60,6 +60,33 @@ herol1 =  pygame.image.load( "sprites/archer_left.png" ).convert_alpha()
 herol2 =  pygame.image.load( "sprites/archer_left2.png" ).convert_alpha()
 herol3 =  herol1
 herol = [herol0, herol1, herol2, herol3]
+'''down left'''
+herodl0 =  pygame.image.load( "sprites/archer_dl1.png" ).convert_alpha()
+herodl1 =  pygame.image.load( "sprites/archer_dl.png" ).convert_alpha()
+herodl2 =  pygame.image.load( "sprites/archer_dl2.png" ).convert_alpha()
+herodl3 =  herodl1
+herodl = [herodl0, herodl1, herodl2, herodl3]
+'''down right'''
+herodr0 =  pygame.image.load( "sprites/archer_dr1.png" ).convert_alpha()
+herodr1 =  pygame.image.load( "sprites/archer_dr.png" ).convert_alpha()
+herodr2 =  pygame.image.load( "sprites/archer_dr2.png" ).convert_alpha()
+herodr3 =  herodr1
+herodr = [herodr0, herodr1, herodr2, herodr3]
+'''up left'''
+heroul0 =  pygame.image.load( "sprites/archer_ul1.png" ).convert_alpha()
+heroul1 =  pygame.image.load( "sprites/archer_ul.png" ).convert_alpha()
+heroul2 =  pygame.image.load( "sprites/archer_ul2.png" ).convert_alpha()
+heroul3 =  heroul1
+heroul = [heroul0, heroul1, heroul2, heroul3]
+'''up right'''
+herour0 =  pygame.image.load( "sprites/archer_ur1.png" ).convert_alpha()
+herour1 =  pygame.image.load( "sprites/archer_ur.png" ).convert_alpha()
+herour2 =  pygame.image.load( "sprites/archer_ur2.png" ).convert_alpha()
+herour3 =  herour1
+herour = [herour0, herour1, herour2, herour3]
+
+
+
 #remember which direction hero was facing
 direction = herod
 
@@ -109,6 +136,8 @@ while (10 == 10):
                 hoSpeed+=1
                 dOn=False
         if event.type == pygame.KEYUP:
+            counter = 0
+            time = -1
             keyAfter = pygame.key.get_pressed()
             if catch[pygame.K_w] and not keyAfter[pygame.K_w] and wOn != True:
                 print "UPW"
@@ -250,6 +279,23 @@ while (10 == 10):
                 hero = herol[counter]
                 counter = (counter + 1) % 4
                 direction=herol
+ 
+            elif vertSpeed > 0 and hoSpeed < 0:
+                hero = herodl[counter]
+                counter = (counter + 1) % 4
+                direction=herodl
+            elif vertSpeed > 0 and hoSpeed > 0:
+                hero = herodr[counter]
+                counter = (counter + 1) % 4
+                direction=herodr
+            elif vertSpeed < 0 and hoSpeed < 0:
+                hero = heroul[counter]
+                counter = (counter + 1) % 4
+                direction=heroul
+            elif vertSpeed < 0 and hoSpeed > 0:
+                hero = herour[counter]
+                counter = (counter + 1) % 4
+                direction=herour
                 
     screen.blit( hero, (hero_Rect) )
     screen.blit( enemy, (enemy_Rect) )
