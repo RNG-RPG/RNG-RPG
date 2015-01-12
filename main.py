@@ -5,7 +5,7 @@ main.py - holds the code necessary to display a background and the hero, for now
 '''
 
 # imports
-import sys, pygame
+import sys, pygame, math
 
 # initialize
 pygame.init()
@@ -19,8 +19,10 @@ except:
 
 dead = False
 arrowOn = False
+enemyDead = False
 vertSpeed = 0
 hoSpeed = 0
+frame = 0
 # defines speed of enemy
 enemySpeed = 3
     
@@ -35,6 +37,16 @@ hero = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
 enemy = pygame.image.load( "Dragon_Mouth_Closed.png" ).convert_alpha()
 arrow = pygame.image.load( "arrow.png" ).convert_alpha()
+target = pygame.image.load( "missing.png" ).convert_alpha()
+
+#making the target move
+pygame.event.pump()
+if pygame.mouse.get_focused():
+    pygame.mouse.set_visible(False)
+
+mpos = pygame.mouse.get_pos()
+target_Rect = target.get_rect().move( mpos[0], mpos[1] )
+
 
 #Hero movement sprites
 time = 0
@@ -120,19 +132,39 @@ aOn=True
 sOn=True
 dOn=True
 while (10 == 10):
-
+    frame = frame + 1
     # adding all the rectangles to the refresh list
     refresh.append( hero_Rect )
     #refresh.append( background.get_rect() )
     refresh.append( enemy_Rect )
+    refresh.append( target_Rect )
     if arrowOn == True:
         refresh.append( arrow_Rect )
         
     for event in pygame.event.get():
-        #if event.type == pygame.MOUSEMOTION:   
+        if event.type == pygame.MOUSEMOTION:  
+            mpos = pygame.mouse.get_pos()
+            target_Rect = target.get_rect().move( mpos[0], mpos[1] )
     
         if event.type == pygame.MOUSEBUTTONDOWN:
-            sys.exit()
+            angle = math.atan( ((math.fabs(target_Rect.centerx - hero_Rect.centerx))/(math.fabs(target_Rect.centery - hero_Rect.centery))) )
+            pygame.transform.rotate(target, angle)
+            arrow_Rect = arrow.get_rect().move(hero_Rect.center)
+            arrowOn = True
+            if hero_Rect.centery > mpos[1]:
+                arrowSpeedY = - (90 - angle) // 9
+            elif hero_Rect.centery < mpos[1]:
+                arrowSpeedY =((90 - angle) // 9)
+            else:
+                arrowSpeedY = 0
+            if hero_Rect.centerx > mpos[0]:
+                arrowSpeedX = - (90 - angle) // 9
+            elif hero_Rect.centerx < mpos[0]:
+                arrowSpeedX = ((90 - angle) // 9)
+            else:
+                arrowSpeedX = 0
+            screen.blit( arrow, (arrow_Rect) )
+
           
         if event.type == pygame.KEYDOWN and dead != True:
             key = pygame.key.get_pressed()
@@ -152,10 +184,7 @@ while (10 == 10):
                 print "D"
                 hoSpeed+=1
                 dOn=False
-            if key[pygame.K_SPACE]:
-                arrow_Rect = arrow.get_rect().move(hero_Rect.center)
-                arrowOn = True
-                screen.blit( arrow, (arrow_Rect) )
+            
         if event.type == pygame.KEYUP:
             keyAfter = pygame.key.get_pressed()
             if catch[pygame.K_w] and not keyAfter[pygame.K_w] and wOn != True:
@@ -180,12 +209,14 @@ while (10 == 10):
                 timeReset()
 
         # reset button
-        if event.type == pygame.KEYDOWN and dead == True:
+        if event.type == pygame.KEYDOWN:
             key = pygame.key.get_pressed()
             if key[pygame.K_r]:
                 print ( "r is hit" )
                 reset(background)
                 hero = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
+                enemy = pygame.image.load( "Dragon_Mouth_Closed.png" ).convert_alpha()
+                enemyDead = False
                 dead = False
                 hero_Rect.top = 50
                 hero_Rect.left = 50
@@ -245,15 +276,15 @@ while (10 == 10):
             
     
     # enemy AI, deciding where it needs to move
-    if enemy_Rect.bottom < hero_Rect.centery:
+    if enemy_Rect.bottom < hero_Rect.centery and enemyDead != True:
         vertVar = 1
-    elif enemy_Rect.top > hero_Rect.centery:
+    elif enemy_Rect.top > hero_Rect.centery and enemyDead != True:
         vertVar = -1
     else:
         vertVar = 0
-    if enemy_Rect.right < hero_Rect.centerx:
+    if enemy_Rect.right < hero_Rect.centerx and enemyDead != True:
         hoVar = 1
-    elif enemy_Rect.left > hero_Rect.centerx:
+    elif enemy_Rect.left > hero_Rect.centerx and enemyDead != True:
         hoVar = -1
     else:
         hoVar = 0
@@ -268,14 +299,28 @@ while (10 == 10):
             if event.type == pygame.KEYDOWN:
                 key = pygame.key.get_pressed()
 
+    # arrow collision with enemy checker
+    if arrowOn == True:
+        if arrow_Rect.colliderect( enemy_Rect ):
+            enemy = pygame.image.load( "dead.png" ).convert_alpha()
+            hoVar = 0
+            vertVar = 0
+            enemyDead = True
+                
     # movement code
     hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
     enemy_Rect = enemy_Rect.move( hoVar * enemySpeed, vertVar * enemySpeed )
+    if arrowOn == True:
+        arrow_Rect = arrow_Rect.move( arrowSpeedX, arrowSpeedY )
 
     # adding all the rectangles to the refresh list
     refresh.append( hero_Rect )
     refresh.append( rock_Rect )
     refresh.append( enemy_Rect )
+    refresh.append( target_Rect )
+    if frame % 60 == 0:
+        refresh.append( background.get_rect() )
+    
     if arrowOn == True:
         refresh.append( arrow_Rect )
     
@@ -356,8 +401,10 @@ while (10 == 10):
                 
     screen.blit( hero, (hero_Rect) )
     screen.blit( enemy, (enemy_Rect) )
+    screen.blit( target, (target_Rect) )
     if arrowOn == True:
-       screen.blit( arrow, (arrow_Rect) )
+       screen.blit( arrow, (arrow_Rect) )       
+        
 
     pygame.display.update( refresh )
     
