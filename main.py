@@ -32,7 +32,7 @@ width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
 
 screen = pygame.display.set_mode( (1000, 380) )
 
-background = pygame.image.load( "grass_jk.png" ).convert_alpha()
+background = pygame.image.load( "RockGround2.png" ).convert_alpha()
 heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
 enemy = pygame.image.load( "Dragon_Mouth_Closed.png" ).convert_alpha()
@@ -79,11 +79,13 @@ def timeReset():
 
 def reset(bkground):
     screen.blit( bkground, (0,0) )
+    screen.blit( bkground, (648,0) )
     screen.blit( rock, (500, 180) )
 
 screen.blit( heroSprites, (50, 50), dFrame  )
 screen.blit( enemy, (500, 100) )
 screen.blit( background, (0,0) )
+ screen.blit( bkground, (648,0) )
 screen.blit( rock, (500, 180) )
 
 refresh = []
