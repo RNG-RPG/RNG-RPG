@@ -154,9 +154,9 @@ while (10 == 10):
                 arrowSpeedX = 10
                 arrowSpeedY = 0
             else:
-                temp_tan_var = ((target_Rect.centerx - hero_Rect.centerx)/(target_Rect.centery - hero_Rect.centery))
+                temp_tan_var = ((math.fabs(target_Rect.centerx) - math.fabs(hero_Rect.centerx))/(math.fabs(target_Rect.centery) - math.fabs(hero_Rect.centery)))
                 print( temp_tan_var )
-                angle = math.atan( temp_tan_var )
+                angle = math.fabs(math.atan( temp_tan_var ))
                 angle = angle * 52.29
                 print (angle)
                 pygame.transform.rotate(target, angle)
