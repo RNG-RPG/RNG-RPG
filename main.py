@@ -24,18 +24,18 @@ vertSpeed = 0
 hoSpeed = 0
 frame = 0
 # defines speed of enemy
-enemySpeed = 0
+enemySpeed = 1
     
 clock = pygame.time.Clock()
 
 width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
 
-screen = pygame.display.set_mode( (1000, 380) )
+screen = pygame.display.set_mode( (1000, 648) )
 
 background = pygame.image.load( "RockGround2.png" ).convert_alpha()
 heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
-enemy = pygame.image.load( "dsprite/Dragon_Mouth_Closed.png" ).convert_alpha()
+enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 arrow = pygame.image.load( "arrow.png" ).convert_alpha()
 target = pygame.image.load( "Pointer.png" ).convert_alpha()
 
@@ -48,7 +48,7 @@ target_Rect = target.get_rect().move( mpos[0], mpos[1] )
 
 
 #Hero movement sprites
-time = 0
+time = -1
 counter = 0
 
 '''down'''
@@ -68,7 +68,11 @@ heroul = [(522, 102, 87, 102), (522, 0, 87, 102), (522, 204, 87, 102), (522, 0, 
 '''up right'''
 herour = [(609, 102, 87, 102), (609, 0, 87, 102), (609, 204, 87, 102), (609, 0, 87, 102)]
 
-
+#dragon
+counter1 = 0
+frameCounter = -1
+dragond = [(0, 0, 114, 154), (114, 0, 114, 154)]
+eFrame = dragond[0]
 #remember which direction hero was facing
 direction = herod
 dFrame=herod[1]
@@ -82,7 +86,7 @@ def reset(bkground):
     screen.blit( rock, (500, 180) )
 
 screen.blit( heroSprites, (50, 50), dFrame  )
-screen.blit( enemy, (500, 100) )
+screen.blit( enemySprites, (500, 100), eFrame)
 screen.blit( background, (0,0) )
 screen.blit( background, (648,0) )
 screen.blit( rock, (500, 180) )
@@ -91,7 +95,7 @@ refresh = []
 
 rock_Rect = rock.get_rect().move(500, 180)
 hero_Rect = pygame.Rect(50, 50, 87, 102)
-enemy_Rect = enemy.get_rect().move(500, 100)
+enemy_Rect = pygame.Rect(500, 100, 114, 154)
 
 pygame.display.update()
 #Control limits 
@@ -203,12 +207,10 @@ while (10 == 10):
                 print ( "r is hit" )
                 reset(background)
                 dFrame = herod[1]
-                enemy = pygame.image.load( "dsprite/Dragon_Mouth_Closed.png" ).convert_alpha()
                 enemyDead = False
                 dead = False
                 hero_Rect = pygame.Rect(50, 50, 87, 102)
-                enemy_Rect.top = 100
-                enemy_Rect.left = 500
+                enemy_Rect = pygame.Rect(500, 100, 114, 154)
                 timeReset()
                 direction=herod
                 refresh.append( background.get_rect() )
@@ -278,7 +280,7 @@ while (10 == 10):
         
     # enemy collision with hero checker
     if enemy_Rect.colliderect( hero_Rect ):
-        hero = pygame.image.load( "dead.png" ).convert_alpha()
+        dFrame = (696, 0, 87, 102)
         hoSpeed = 0
         vertSpeed = 0
         dead = True
@@ -289,7 +291,7 @@ while (10 == 10):
     # arrow collision with enemy checker
     if arrowOn == True:
         if arrow_Rect.colliderect( enemy_Rect ):
-            enemy = pygame.image.load( "dead.png" ).convert_alpha()
+            eFrame = (228, 0, 114, 154)
             hoVar = 0
             vertVar = 0
             enemyDead = True
@@ -321,9 +323,9 @@ while (10 == 10):
             counter = 0
             dFrame = direction[1]
         else:
-            time += 1
-            if time == 29 :
-                time = 0
+             time += 1
+             if time == 29:
+                time = -1
         if time % 5 == 0:
             if vertSpeed > 0 and hoSpeed == 0:
                 dFrame = herod[counter]
@@ -336,8 +338,7 @@ while (10 == 10):
             elif vertSpeed < 0 and hoSpeed == 0:
                 dFrame = herou[counter]
                 counter = (counter + 1) % 4
-                direction=herou
-               
+                direction=herou  
             elif vertSpeed == 0 and hoSpeed < 0:
                 dFrame = herol[counter]
                 counter = (counter + 1) % 4
@@ -359,12 +360,17 @@ while (10 == 10):
                 dFrame = herour[counter]
                 counter = (counter + 1) % 4
                 direction=herour
-      
-    if dead:
-        screen.blit( hero, (hero_Rect))
-    else:
-        screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
-    screen.blit( enemy, (enemy_Rect) )
+    #enemy!
+    if not enemyDead:
+        frameCounter += 1
+        if frameCounter == 29:
+            frameCounter = -1
+        if frameCounter % 10 == 0:
+            eFrame = dragond[counter1]
+            counter1 = (counter1 + 1) % 2
+        
+    screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
+    screen.blit( enemySprites, (enemy_Rect.x,enemy_Rect.y), eFrame) 
     screen.blit( target, (target_Rect) )
     if arrowOn == True:
        screen.blit( arrow, (arrow_Rect) )       
