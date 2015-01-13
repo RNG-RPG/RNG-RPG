@@ -18,7 +18,7 @@ except:
     sys.exit()
 
 dead = False
-arrowOn = False
+arrowOn = [False,False,False,False,False,False,False,False,False,False]
 enemyDead = False
 vertSpeed = 0
 hoSpeed = 0
@@ -26,6 +26,9 @@ frame = 0
 attacktimer = 30
 # defines speed of enemy
 enemySpeed = 1
+arrowSpeedX = [0,0,0,0,0,0,0,0,0,0]
+arrowSpeedY = [0,0,0,0,0,0,0,0,0,0]
+arrownum = 0
     
 clock = pygame.time.Clock()
 
@@ -37,8 +40,10 @@ background = pygame.image.load( "RockGround2.png" ).convert_alpha()
 heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
 enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
-arrow = pygame.image.load( "arrow.png" ).convert_alpha()
+arrowLoadImage = pygame.image.load( "arrow.png" ).convert_alpha()
+arrow = [arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage]
 target = pygame.image.load( "Pointer.png" ).convert_alpha()
+arrow_rects = [arrow[0].get_rect(),arrow[1].get_rect(),arrow[2].get_rect(),arrow[3].get_rect(),arrow[4].get_rect(),arrow[5].get_rect(),arrow[6].get_rect(),arrow[7].get_rect(),arrow[8].get_rect(),arrow[9].get_rect()]
 
 #making the target move
 pygame.event.pump()
@@ -114,8 +119,11 @@ while (10 == 10):
     #refresh.append( background.get_rect() )
     refresh.append( enemy_Rect )
     refresh.append( target_Rect )
-    if arrowOn == True:
-        refresh.append( arrow_Rect )
+    j = 0
+    while j < 10:
+        if arrowOn[j] == True:
+            refresh.append( arrow_rects[j] )
+        j += 1
         
     for event in pygame.event.get():
         if event.type == pygame.MOUSEMOTION:  
@@ -124,41 +132,45 @@ while (10 == 10):
     
         if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 30:
             attacktimer = 0
-            arrow = pygame.image.load( "arrow.png" ).convert_alpha() 
+            if arrownum < 9:
+                arrownum += 1
+            else:
+                arrownum = 0
+            arrow[arrownum] = pygame.image.load( "arrow.png" ).convert_alpha() 
             if target_Rect.centerx - hero_Rect.centerx == 0:
-                arrowSpeedX = 0
-                arrowSpeedY = 10
+                arrowSpeedX[arrownum] = 0
+                arrowSpeedY[arrownum] = 10
             elif target_Rect.centery - hero_Rect.centery == 0:
-                arrowSpeedX = 10
-                arrowSpeedY = 0
+                arrowSpeedX[arrownum] = 10
+                arrowSpeedY[arrownum] = 0
             else:
                 temp_tan_var = ((float(target_Rect.centery) - float(hero_Rect.centery))/(float(target_Rect.centerx) - float(hero_Rect.centerx)))
-                print( "temp_tan_var" )
-                print( temp_tan_var )
-                print( "############" )
+                #print( "temp_tan_var" )
+                #print( temp_tan_var )
+                #print( "############" )
                 angle = (math.atan( temp_tan_var ))
-                print( "angle" )
-                print( angle )
-                print( "############" )
+                #print( "angle" )
+                #print( angle )
+                #print( "############" )
 
                 if (hero_Rect.centerx > target_Rect.centerx):
-                    arrow = pygame.transform.rotate(arrow, ( - (angle * 57.29) + 180 ))
+                    arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (angle * 57.29) + 180 ))
                 else:
-                    arrow = pygame.transform.rotate(arrow, ( - (angle * 57.29) ))
-                arrow_Rect = arrow.get_rect().move( hero_Rect.centerx - (arrow.get_rect().width/2), hero_Rect.centery - (arrow.get_rect().height/2) )
-                arrowOn = True
-                arrowSpeedY =  ( math.sin(angle) * 10.0 )
-                print( "arrowSpeedY" )
-                print( arrowSpeedY )
-                print( "############" )
-                arrowSpeedX =  ( math.cos(angle) * 10.0 )
+                    arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (angle * 57.29) ))
+                arrow_rects[arrownum] = arrow[arrownum].get_rect().move( hero_Rect.centerx - (arrow[arrownum].get_rect().width/2), hero_Rect.centery - (arrow[arrownum].get_rect().height/2) )
+                arrowOn[arrownum] = True
+                arrowSpeedY[arrownum] =  ( math.sin(angle) * 10.0 )
+                #print( "arrowSpeedY" )
+                #print( arrowSpeedY )
+                #print( "############" )
+                arrowSpeedX[arrownum] =  ( math.cos(angle) * 10.0 )
                 if (hero_Rect.centerx > target_Rect.centerx):
-                    arrowSpeedX = -arrowSpeedX
-                    arrowSpeedY = -arrowSpeedY
-                print( "arrowSpeedX" )
-                print( arrowSpeedX )
-                print( "############" )
-                screen.blit( arrow, (arrow_Rect) )
+                    arrowSpeedX[arrownum] = -arrowSpeedX[arrownum]
+                    arrowSpeedY[arrownum] = -arrowSpeedY[arrownum]
+                #print( "arrowSpeedX" )
+                #print( arrowSpeedX )
+                #print( "############" )
+                screen.blit( arrow[arrownum], (arrow_rects[arrownum]) )
 
           
         if event.type == pygame.KEYDOWN and dead != True:
@@ -295,18 +307,21 @@ while (10 == 10):
 
                 
     # arrow collision with enemy checker
-    if arrowOn == True:
-        if arrow_Rect.colliderect( enemy_Rect ):
-            eFrame = (228, 0, 114, 154)
-            hoVar = 0
-            vertVar = 0
-            enemyDead = True
+    k = 0
+    while k < 10:
+        if arrowOn[k] == True:
+            if arrow_rects[k].colliderect( enemy_Rect ):
+                eFrame = (228, 0, 114, 154)
+                hoVar = 0
+                vertVar = 0
+                enemyDead = True
+        k += 1
                 
     # movement code
     hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
     enemy_Rect = enemy_Rect.move( hoVar * enemySpeed, vertVar * enemySpeed )
-    if arrowOn == True:
-        arrow_Rect = arrow_Rect.move( arrowSpeedX, arrowSpeedY )
+    
+    
 
     # adding all the rectangles to the refresh list
     refresh.append( hero_Rect )
@@ -315,9 +330,15 @@ while (10 == 10):
     refresh.append( target_Rect )
     if frame % 60 == 0:
         refresh.append( background.get_rect() )
+
+    i = 0
+    while i < 10:
+        if arrowOn[i] == True:
+            arrow_rects[i] = arrow_rects[i].move( arrowSpeedX[i], arrowSpeedY[i] )
+        if arrowOn[i] == True:
+            refresh.append( arrow_rects[i] )
+        i += 1
     
-    if arrowOn == True:
-        refresh.append( arrow_Rect )
     
     # redrawing everything
     reset(background)
@@ -378,8 +399,11 @@ while (10 == 10):
     screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
     screen.blit( enemySprites, (enemy_Rect.x,enemy_Rect.y), eFrame) 
     screen.blit( target, (target_Rect) )
-    if arrowOn == True:
-       screen.blit( arrow, (arrow_Rect) )       
+    i = 0
+    while i < 10:
+        if arrowOn[i] == True:
+           screen.blit( arrow[i], (arrow_rects[i]) )
+        i += 1
         
 
     pygame.display.update( refresh )
