@@ -35,7 +35,7 @@ screen = pygame.display.set_mode( (1000, 380) )
 background = pygame.image.load( "RockGround2.png" ).convert_alpha()
 heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
-enemy = pygame.image.load( "Dragon_Mouth_Closed.png" ).convert_alpha()
+enemy = pygame.image.load( "dsprite/Dragon_Mouth_Closed.png" ).convert_alpha()
 arrow = pygame.image.load( "arrow.png" ).convert_alpha()
 target = pygame.image.load( "Pointer.png" ).convert_alpha()
 
@@ -117,6 +117,7 @@ while (10 == 10):
             target_Rect = target.get_rect().move( mpos[0], mpos[1] )
     
         if event.type == pygame.MOUSEBUTTONDOWN:
+            arrow = pygame.image.load( "arrow.png" ).convert_alpha() 
             if target_Rect.centerx - hero_Rect.centerx == 0:
                 arrowSpeedX = 0
                 arrowSpeedY = 10
@@ -132,7 +133,11 @@ while (10 == 10):
                 print( "angle" )
                 print( angle )
                 print( "############" )
-                pygame.transform.rotate(target, angle)
+
+                if (hero_Rect.centerx > target_Rect.centerx):
+                    arrow = pygame.transform.rotate(arrow, ( - (angle * 57.29) + 180 ))
+                else:
+                    arrow = pygame.transform.rotate(arrow, ( - (angle * 57.29) ))
                 arrow_Rect = arrow.get_rect().move(hero_Rect.center)
                 arrowOn = True
                 arrowSpeedY =  ( math.sin(angle) * 10.0 )
@@ -198,7 +203,7 @@ while (10 == 10):
                 print ( "r is hit" )
                 reset(background)
                 dFrame = herod[1]
-                enemy = pygame.image.load( "Dragon_Mouth_Closed.png" ).convert_alpha()
+                enemy = pygame.image.load( "dsprite/Dragon_Mouth_Closed.png" ).convert_alpha()
                 enemyDead = False
                 dead = False
                 hero_Rect = pygame.Rect(50, 50, 87, 102)
