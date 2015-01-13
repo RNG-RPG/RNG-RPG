@@ -37,12 +37,11 @@ heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
 enemy = pygame.image.load( "Dragon_Mouth_Closed.png" ).convert_alpha()
 arrow = pygame.image.load( "arrow.png" ).convert_alpha()
-target = pygame.image.load( "missing.png" ).convert_alpha()
+target = pygame.image.load( "Pointer.png" ).convert_alpha()
 
 #making the target move
 pygame.event.pump()
-if pygame.mouse.get_focused():
-    pygame.mouse.set_visible(False)
+
 
 mpos = pygame.mouse.get_pos()
 target_Rect = target.get_rect().move( mpos[0], mpos[1] )
@@ -101,6 +100,8 @@ aOn=True
 sOn=True
 dOn=True
 while (10 == 10):
+    if pygame.mouse.get_focused():
+        pygame.mouse.set_visible(False)
     frame = frame + 1
     # adding all the rectangles to the refresh list
     refresh.append( hero_Rect )
@@ -123,34 +124,25 @@ while (10 == 10):
                 arrowSpeedX = 10
                 arrowSpeedY = 0
             else:
-                temp_tan_var = ((float(target_Rect.centerx) - float(hero_Rect.centerx))/(float(target_Rect.centery) - float(hero_Rect.centery)))
+                temp_tan_var = ((float(target_Rect.centery) - float(hero_Rect.centery))/(float(target_Rect.centerx) - float(hero_Rect.centerx)))
                 print( "temp_tan_var" )
                 print( temp_tan_var )
                 print( "############" )
-                angle = math.fabs(math.atan( temp_tan_var ))
-                #print (angle)
-                #angle = angle * 52.29
+                angle = (math.atan( temp_tan_var ))
                 print( "angle" )
                 print( angle )
                 print( "############" )
                 pygame.transform.rotate(target, angle)
                 arrow_Rect = arrow.get_rect().move(hero_Rect.center)
                 arrowOn = True
-                #if hero_Rect.centery > mpos[1]:
                 arrowSpeedY =  ( math.sin(angle) * 10.0 )
-                #elif hero_Rect.centery < mpos[1]:
-                    #arrowSpeedY = math.sin(angle) * 10.0
-                #else:
-                    #arrowSpeedY = 0
                 print( "arrowSpeedY" )
                 print( arrowSpeedY )
                 print( "############" )
-                #if hero_Rect.centerx > mpos[0]:
                 arrowSpeedX =  ( math.cos(angle) * 10.0 )
-                #elif hero_Rect.centerx < mpos[0]:
-                    #arrowSpeedX = math.cos(angle) * 10.0
-                #else:
-                    #arrowSpeedX = 0
+                if (hero_Rect.centerx > target_Rect.centerx):
+                    arrowSpeedX = -arrowSpeedX
+                    arrowSpeedY = -arrowSpeedY
                 print( "arrowSpeedX" )
                 print( arrowSpeedX )
                 print( "############" )
