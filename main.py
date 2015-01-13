@@ -24,7 +24,7 @@ vertSpeed = 0
 hoSpeed = 0
 frame = 0
 # defines speed of enemy
-enemySpeed = 3
+enemySpeed = 0
     
 clock = pygame.time.Clock()
 
@@ -123,28 +123,37 @@ while (10 == 10):
                 arrowSpeedX = 10
                 arrowSpeedY = 0
             else:
-                temp_tan_var = ((math.fabs(target_Rect.centerx) - math.fabs(hero_Rect.centerx))/(math.fabs(target_Rect.centery) - math.fabs(hero_Rect.centery)))
+                temp_tan_var = ((float(target_Rect.centerx) - float(hero_Rect.centerx))/(float(target_Rect.centery) - float(hero_Rect.centery)))
+                print( "temp_tan_var" )
                 print( temp_tan_var )
+                print( "############" )
                 angle = math.fabs(math.atan( temp_tan_var ))
-                angle = angle * 52.29
-                print (angle)
+                #print (angle)
+                #angle = angle * 52.29
+                print( "angle" )
+                print( angle )
+                print( "############" )
                 pygame.transform.rotate(target, angle)
                 arrow_Rect = arrow.get_rect().move(hero_Rect.center)
                 arrowOn = True
-                if hero_Rect.centery > mpos[1]:
-                    arrowSpeedY = - (90 - angle) / 9.0
-                elif hero_Rect.centery < mpos[1]:
-                    arrowSpeedY =((90 - angle) / 9.0)
-                else:
-                    arrowSpeedY = 0
-                print ( arrowSpeedY )
-                if hero_Rect.centerx > mpos[0]:
-                    arrowSpeedX = - (angle) / 9.0
-                elif hero_Rect.centerx < mpos[0]:
-                    arrowSpeedX = ((angle) / 9.0)
-                else:
-                    arrowSpeedX = 0
-                print ( arrowSpeedX )
+                #if hero_Rect.centery > mpos[1]:
+                arrowSpeedY =  ( math.sin(angle) * 10.0 )
+                #elif hero_Rect.centery < mpos[1]:
+                    #arrowSpeedY = math.sin(angle) * 10.0
+                #else:
+                    #arrowSpeedY = 0
+                print( "arrowSpeedY" )
+                print( arrowSpeedY )
+                print( "############" )
+                #if hero_Rect.centerx > mpos[0]:
+                arrowSpeedX =  ( math.cos(angle) * 10.0 )
+                #elif hero_Rect.centerx < mpos[0]:
+                    #arrowSpeedX = math.cos(angle) * 10.0
+                #else:
+                    #arrowSpeedX = 0
+                print( "arrowSpeedX" )
+                print( arrowSpeedX )
+                print( "############" )
                 screen.blit( arrow, (arrow_Rect) )
 
           
