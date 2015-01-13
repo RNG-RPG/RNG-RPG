@@ -33,7 +33,7 @@ width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
 screen = pygame.display.set_mode( (1000, 380) )
 
 background = pygame.image.load( "grass_jk.png" ).convert_alpha()
-hero = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
+heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
 enemy = pygame.image.load( "Dragon_Mouth_Closed.png" ).convert_alpha()
 arrow = pygame.image.load( "arrow.png" ).convert_alpha()
@@ -53,59 +53,26 @@ time = 0
 counter = 0
 
 '''down'''
-herod0 =  pygame.image.load( "sprites/archer_down1.png" ).convert_alpha()
-herod1 = hero
-herod2 =  pygame.image.load( "sprites/archer_down2.png" ).convert_alpha()
-herod3 = hero
-herod = [herod0, herod1, herod2, herod3]
+herod = [(0, 102, 87, 102), (0, 0, 87, 102), (0, 205, 87, 102), (0, 0, 87, 102)]
 '''right'''
-heror0 =  pygame.image.load( "sprites/archer_right1.png" ).convert_alpha()
-heror1 =  pygame.image.load( "sprites/archer_right.png" ).convert_alpha()
-heror2 =  pygame.image.load( "sprites/archer_right2.png" ).convert_alpha()
-heror3 =  heror1
-heror = [heror0, heror1, heror2, heror3]
+heror = [(87, 102, 87, 102), (87, 0, 87, 102), (87, 205, 87, 102), (87, 0, 87, 102)]
 '''up'''
-herou0 =  pygame.image.load( "sprites/archer_up1.png" ).convert_alpha()
-herou1 =  pygame.image.load( "sprites/archer_up.png" ).convert_alpha()
-herou2 =  pygame.image.load( "sprites/archer_up2.png" ).convert_alpha()
-herou3 =  herou1
-herou = [herou0, herou1, herou2, herou3]
+herou = [(174, 102, 87, 102), (174, 0, 87, 102), (174, 205, 87, 102), (174, 0, 87, 102)]
 '''left'''
-herol0 =  pygame.image.load( "sprites/archer_left1.png" ).convert_alpha()
-herol1 =  pygame.image.load( "sprites/archer_left.png" ).convert_alpha()
-herol2 =  pygame.image.load( "sprites/archer_left2.png" ).convert_alpha()
-herol3 =  herol1
-herol = [herol0, herol1, herol2, herol3]
+herol = [(261, 102, 87, 102), (261, 0, 87, 102), (261, 205, 87, 102), (261, 0, 87, 102)]
 '''down left'''
-herodl0 =  pygame.image.load( "sprites/archer_dl1.png" ).convert_alpha()
-herodl1 =  pygame.image.load( "sprites/archer_dl.png" ).convert_alpha()
-herodl2 =  pygame.image.load( "sprites/archer_dl2.png" ).convert_alpha()
-herodl3 =  herodl1
-herodl = [herodl0, herodl1, herodl2, herodl3]
+herodl = [(348, 102, 87, 101), (348, 0, 87, 102), (348, 205, 87, 102), (348, 0, 87, 102)]
 '''down right'''
-herodr0 =  pygame.image.load( "sprites/archer_dr1.png" ).convert_alpha()
-herodr1 =  pygame.image.load( "sprites/archer_dr.png" ).convert_alpha()
-herodr2 =  pygame.image.load( "sprites/archer_dr2.png" ).convert_alpha()
-herodr3 =  herodr1
-herodr = [herodr0, herodr1, herodr2, herodr3]
+herodr = [(435, 102, 87, 102), (435, 0, 87, 102), (435, 205, 87, 102), (435, 0, 87, 102)]
 '''up left'''
-heroul0 =  pygame.image.load( "sprites/archer_ul1.png" ).convert_alpha()
-heroul1 =  pygame.image.load( "sprites/archer_ul.png" ).convert_alpha()
-heroul2 =  pygame.image.load( "sprites/archer_ul2.png" ).convert_alpha()
-heroul3 =  heroul1
-heroul = [heroul0, heroul1, heroul2, heroul3]
+heroul = [(522, 102, 87, 102), (522, 0, 87, 102), (522, 205, 87, 102), (522, 0, 87, 102)]
 '''up right'''
-herour0 =  pygame.image.load( "sprites/archer_ur1.png" ).convert_alpha()
-herour1 =  pygame.image.load( "sprites/archer_ur.png" ).convert_alpha()
-herour2 =  pygame.image.load( "sprites/archer_ur2.png" ).convert_alpha()
-herour3 =  herour1
-herour = [herour0, herour1, herour2, herour3]
-
+herour = [(609, 102, 87, 102), (609, 0, 87, 102), (609, 205, 87, 102), (609, 0, 87, 102)]
 
 
 #remember which direction hero was facing
 direction = herod
-
+dFrame=herod[1]
 def timeReset():
     counter=0
     time=-1
@@ -114,7 +81,7 @@ def reset(bkground):
     screen.blit( bkground, (0,0) )
     screen.blit( rock, (500, 180) )
 
-screen.blit( hero, (50, 50) )
+screen.blit( heroSprites, (50, 50), dFrame  )
 screen.blit( enemy, (500, 100) )
 screen.blit( background, (0,0) )
 screen.blit( rock, (500, 180) )
@@ -122,7 +89,7 @@ screen.blit( rock, (500, 180) )
 refresh = []
 
 rock_Rect = rock.get_rect().move(500, 180)
-hero_Rect = hero.get_rect().move(50, 50)
+hero_Rect = pygame.Rect(50, 50, 87, 102)
 enemy_Rect = enemy.get_rect().move(500, 100)
 
 pygame.display.update()
@@ -227,12 +194,11 @@ while (10 == 10):
             if key[pygame.K_r]:
                 print ( "r is hit" )
                 reset(background)
-                hero = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
+                dFrame = herod[1]
                 enemy = pygame.image.load( "Dragon_Mouth_Closed.png" ).convert_alpha()
                 enemyDead = False
                 dead = False
-                hero_Rect.top = 50
-                hero_Rect.left = 50
+                hero_Rect = pygame.Rect(50, 50, 87, 102)
                 enemy_Rect.top = 100
                 enemy_Rect.left = 500
                 timeReset()
@@ -345,74 +311,51 @@ while (10 == 10):
         if vertSpeed == 0 and hoSpeed == 0:
             time = -1
             counter = 0
-            hero = direction[1]
+            dFrame = direction[1]
         else:
             time += 1
             if time == 29 :
                 time = 0
         if time % 5 == 0:
             if vertSpeed > 0 and hoSpeed == 0:
-                templeft = hero_Rect.left
-                temptop = hero_Rect.top
-                hero = herod[counter]
-                hero_Rect = herod[counter].get_rect().move( templeft, temptop )
+                dFrame = herod[counter]
                 counter = (counter + 1) % 4
                 direction=herod
-            
             elif vertSpeed == 0 and hoSpeed > 0:
-                templeft = hero_Rect.left
-                temptop = hero_Rect.top
-                hero = heror[counter]
-                hero_Rect = heror[counter].get_rect().move( templeft, temptop )
+                dFrame = heror[counter]
                 counter = (counter + 1) % 4
                 direction=heror
-            
             elif vertSpeed < 0 and hoSpeed == 0:
-                templeft = hero_Rect.left
-                temptop = hero_Rect.top
-                hero = herou[counter]
-                hero_Rect = herou[counter].get_rect().move( templeft, temptop )
+                dFrame = herou[counter]
                 counter = (counter + 1) % 4
                 direction=herou
                
             elif vertSpeed == 0 and hoSpeed < 0:
-                templeft = hero_Rect.left
-                temptop = hero_Rect.top
-                hero = herol[counter]
-                hero_Rect = herol[counter].get_rect().move( templeft, temptop )
+                dFrame = herol[counter]
                 counter = (counter + 1) % 4
                 direction=herol
  
             elif vertSpeed > 0 and hoSpeed < 0:
-                templeft = hero_Rect.left
-                temptop = hero_Rect.top
-                hero = herodl[counter]
-                hero_Rect = herodl[counter].get_rect().move( templeft, temptop )
+                dFrame = herodl[counter]
                 counter = (counter + 1) % 4
                 direction=herodl
             elif vertSpeed > 0 and hoSpeed > 0:
-                templeft = hero_Rect.left
-                temptop = hero_Rect.top
-                hero = herodr[counter]
-                hero_Rect = herodr[counter].get_rect().move( templeft, temptop )
+                dFrame = herodr[counter]
                 counter = (counter + 1) % 4
                 direction=herodr
             elif vertSpeed < 0 and hoSpeed < 0:
-                templeft = hero_Rect.left
-                temptop = hero_Rect.top
-                hero = heroul[counter]
-                hero_Rect = heroul[counter].get_rect().move( templeft, temptop )
+                dFrame = heroul[counter]
                 counter = (counter + 1) % 4
                 direction=heroul
             elif vertSpeed < 0 and hoSpeed > 0:
-                templeft = hero_Rect.left
-                temptop = hero_Rect.top
-                hero = herour[counter]
-                hero_Rect = herour[counter].get_rect().move( templeft, temptop )
+                dFrame = herour[counter]
                 counter = (counter + 1) % 4
                 direction=herour
-                
-    screen.blit( hero, (hero_Rect) )
+      
+    if dead:
+        screen.blit( hero, (hero_Rect))
+    else:
+        screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
     screen.blit( enemy, (enemy_Rect) )
     screen.blit( target, (target_Rect) )
     if arrowOn == True:
