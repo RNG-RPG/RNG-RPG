@@ -138,7 +138,7 @@ while (10 == 10):
                     arrow = pygame.transform.rotate(arrow, ( - (angle * 57.29) + 180 ))
                 else:
                     arrow = pygame.transform.rotate(arrow, ( - (angle * 57.29) ))
-                arrow_Rect = arrow.get_rect().move(hero_Rect.center)
+                arrow_Rect = arrow.get_rect().move( hero_Rect.centerx - (arrow.get_rect().width/2), hero_Rect.centery - (arrow.get_rect().height/2) )
                 arrowOn = True
                 arrowSpeedY =  ( math.sin(angle) * 10.0 )
                 print( "arrowSpeedY" )
