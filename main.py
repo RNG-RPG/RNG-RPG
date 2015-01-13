@@ -85,7 +85,7 @@ def reset(bkground):
 screen.blit( heroSprites, (50, 50), dFrame  )
 screen.blit( enemy, (500, 100) )
 screen.blit( background, (0,0) )
- screen.blit( bkground, (648,0) )
+screen.blit( background, (648,0) )
 screen.blit( rock, (500, 180) )
 
 refresh = []
