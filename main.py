@@ -23,6 +23,7 @@ enemyDead = False
 vertSpeed = 0
 hoSpeed = 0
 frame = 0
+attacktimer = 30
 # defines speed of enemy
 enemySpeed = 1
     
@@ -107,6 +108,7 @@ while (10 == 10):
     if pygame.mouse.get_focused():
         pygame.mouse.set_visible(False)
     frame = frame + 1
+    attacktimer = attacktimer + 1
     # adding all the rectangles to the refresh list
     refresh.append( hero_Rect )
     #refresh.append( background.get_rect() )
@@ -120,7 +122,8 @@ while (10 == 10):
             mpos = pygame.mouse.get_pos()
             target_Rect = target.get_rect().move( mpos[0], mpos[1] )
     
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 30:
+            attacktimer = 0
             arrow = pygame.image.load( "arrow.png" ).convert_alpha() 
             if target_Rect.centerx - hero_Rect.centerx == 0:
                 arrowSpeedX = 0
@@ -279,15 +282,18 @@ while (10 == 10):
         hoVar = 0
         
     # enemy collision with hero checker
-    if enemy_Rect.colliderect( hero_Rect ):
+    if enemy_Rect.colliderect( hero_Rect ) and enemyDead == False :
         dFrame = (696, 0, 87, 102)
         hoSpeed = 0
         vertSpeed = 0
         dead = True
+        """
         for event in pygame.event.get(): 
             if event.type == pygame.KEYDOWN:
                 key = pygame.key.get_pressed()
+        """
 
+                
     # arrow collision with enemy checker
     if arrowOn == True:
         if arrow_Rect.colliderect( enemy_Rect ):
