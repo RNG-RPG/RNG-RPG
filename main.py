@@ -228,7 +228,7 @@ def main():
                 mpos = pygame.mouse.get_pos()
                 target_Rect = target.get_rect().move( mpos[0], mpos[1] )
         
-            if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 30:
+            if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 30 and dead == False:
                 attacktimer = 0
                 if arrownum < 9:
                     arrownum += 1
