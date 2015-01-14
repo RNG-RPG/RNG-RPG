@@ -310,11 +310,12 @@ while (10 == 10):
     k = 0
     while k < 10:
         if arrowOn[k] == True:
-            if arrow_rects[k].colliderect( enemy_Rect ):
+            if arrow_rects[k].colliderect( enemy_Rect ) and enemyDead != True:
                 eFrame = (228, 0, 114, 154)
                 hoVar = 0
                 vertVar = 0
                 enemyDead = True
+                arrowOn[k] = False
         k += 1
                 
     # movement code
