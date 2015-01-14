@@ -54,26 +54,28 @@ def start():
     start_Frame = 0
     current_Frame = 0
     x = 0
+    i = 0
+    screen.fill((255,255,255))
+    pygame.display.update()
+
     
-    while x == 0:
-        refresh = []
-        start_Frame += 1
-        i = 0
-        
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                key = pygame.key.get_pressed()
-                if key[pygame.K_SPACE]:
-                    x = 1
-            
-        
-        while i < 72:
+    while i < 72:
             images.append( str(i) )
             if i < 10:
                 images[i] = pygame.image.load( "Title_Screen_Gif/frame_00" + str(i) + ".gif" ).convert_alpha()
             else:
                 images[i] = pygame.image.load( "Title_Screen_Gif/frame_0" + str(i) + ".gif" ).convert_alpha()
             i += 1
+    
+    while x == 0:
+        refresh = []
+        start_Frame += 1
+        
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                key = pygame.key.get_pressed()
+                if key[pygame.K_SPACE]:
+                    x = 1
 
         refresh.append ( images[0].get_rect())
         
