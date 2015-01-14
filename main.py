@@ -103,6 +103,32 @@ rock_Rect = rock.get_rect().move(500, 180)
 hero_Rect = pygame.Rect(50, 50, 87, 102)
 enemy_Rect = pygame.Rect(500, 100, 114, 154)
 
+# collision checker 
+def pathCollide( object_rect, agent_rect ):
+    if agent_rect.colliderect( object_rect ):
+        # print( "colliding" )
+        if agent_rect.left >= object_rect.right - 18:
+            #hoSpeed = 0
+            refresh.append( agent_rect )
+            agent_rect.left = object_rect.right
+        elif agent_rect.right <= object_rect.left + 18:
+            #hoSpeed = 0
+            refresh.append( agent_rect )
+            agent_rect.right = object_rect.left
+        elif agent_rect.top <= object_rect.bottom - 18:
+            #vertSpeed = 0
+            refresh.append( agent_rect )
+            agent_rect.bottom = object_rect.top
+            #print( "colliding with bottom" )
+            refresh.append( object_rect )
+        elif agent_rect.bottom >= object_rect.top + 18:
+            #vertSpeed = 0
+            refresh.append( agent_rect )
+            #print( "colliding with top" )
+            agent_rect.top = object_rect.bottom
+
+
+
 pygame.display.update()
 #Control limits 
 wOn=True
@@ -238,46 +264,8 @@ while (10 == 10):
 
 
     # collision checker
-    if hero_Rect.colliderect( rock_Rect ):
-        # print( "colliding" )
-        if hero_Rect.left >= rock_Rect.right - 18:
-            #hoSpeed = 0
-            refresh.append( hero_Rect )
-            hero_Rect.left = rock_Rect.right
-        elif hero_Rect.right <= rock_Rect.left + 18:
-            #hoSpeed = 0
-            refresh.append( hero_Rect )
-            hero_Rect.right = rock_Rect.left
-        elif hero_Rect.top <= rock_Rect.bottom - 18:
-            #vertSpeed = 0
-            refresh.append( hero_Rect )
-            hero_Rect.bottom = rock_Rect.top
-            #print( "colliding with bottom" )
-            refresh.append( hero_Rect )
-        elif hero_Rect.bottom >= rock_Rect.top + 18:
-            #vertSpeed = 0
-            refresh.append( hero_Rect )
-            #print( "colliding with top" )
-            hero_Rect.top = rock_Rect.bottom
-
-    # enemy collision checking
-    if enemy_Rect.colliderect( rock_Rect ):
-        # print( "colliding" )
-        if enemy_Rect.left >= rock_Rect.right - 6:
-            #hoSpeed = 0
-            enemy_Rect.left = rock_Rect.right
-        elif enemy_Rect.right <= rock_Rect.left + 6:
-            #hoSpeed = 0
-            enemy_Rect.right = rock_Rect.left
-        elif enemy_Rect.top <= rock_Rect.bottom - 6:
-            #vertSpeed = 0
-            enemy_Rect.bottom = rock_Rect.top
-            #print( "colliding with bottom" )
-        elif enemy_Rect.bottom >= rock_Rect.top + 6:
-            #vertSpeed = 0
-            #print( "colliding with top" )
-            enemy_Rect.top = rock_Rect.bottom
-            
+    pathCollide( rock_Rect, hero_Rect )
+    pathCollide( rock_Rect, enemy_Rect )
     
     # enemy AI, deciding where it needs to move
     if enemy_Rect.bottom < hero_Rect.centery and enemyDead != True:
