@@ -34,9 +34,13 @@ clock = pygame.time.Clock()
 
 width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
 
-screen = pygame.display.set_mode( (1000, 648) )
+screen = pygame.display.set_mode( (1296, 648) )
 
 background = pygame.image.load( "RockGround2.png" ).convert_alpha()
+left_side = pygame.image.load( "rock_sides.png" ).convert_alpha()
+right_side = pygame.image.load( "rock_sides.png" ).convert_alpha()
+top_side = pygame.image.load( "rock_top.png" ).convert_alpha()
+bottom_side = pygame.image.load( "rock_top.png" ).convert_alpha()
 heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 rock = pygame.image.load( "rock.png" ).convert_alpha()
 enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
@@ -89,19 +93,32 @@ def timeReset():
 def reset(bkground):
     screen.blit( bkground, (0,0) )
     screen.blit( bkground, (648,0) )
+    #draw on top of the background
     screen.blit( rock, (500, 180) )
+    screen.blit( left_side, (0,0) )
+    screen.blit( right_side, (1242, 0) )
+    screen.blit( top_side, (0,0) )
+    screen.blit( bottom_side, (0, 594) )
 
 screen.blit( heroSprites, (50, 50), dFrame  )
 screen.blit( enemySprites, (500, 100), eFrame)
 screen.blit( background, (0,0) )
 screen.blit( background, (648,0) )
 screen.blit( rock, (500, 180) )
+screen.blit( left_side, (0,0) )
+screen.blit( right_side, (1242, 0) )
+screen.blit( top_side, (0,0) )
+screen.blit( bottom_side, (0, 594) )
 
 refresh = []
 
 rock_Rect = rock.get_rect().move(500, 180)
 hero_Rect = pygame.Rect(50, 50, 87, 102)
 enemy_Rect = pygame.Rect(500, 100, 114, 154)
+top_Rect = top_side.get_rect()
+bottom_Rect = bottom_side.get_rect().move(0, 594)
+left_Rect = left_side.get_rect()
+right_Rect = right_side.get_rect().move(1242, 0)
 
 # collision checker 
 def pathCollide( object_rect, agent_rect ):
@@ -265,7 +282,17 @@ while (10 == 10):
 
     # collision checker
     pathCollide( rock_Rect, hero_Rect )
+    pathCollide( top_Rect, hero_Rect )
+    pathCollide( bottom_Rect, hero_Rect )
+    pathCollide( left_Rect, hero_Rect )
+    pathCollide( right_Rect, hero_Rect )
     pathCollide( rock_Rect, enemy_Rect )
+    """
+    pathCollide( top_Rect, enemy_Rect )
+    pathCollide( bottom_Rect, enemy_Rect )
+    pathCollide( left_Rect, enemy_Rect )
+    pathCollide( right_Rect, enemy_Rect )
+    """
     
     # enemy AI, deciding where it needs to move
     if enemy_Rect.bottom < hero_Rect.centery and enemyDead != True:
