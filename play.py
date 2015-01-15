@@ -66,10 +66,10 @@ def start():
             images.append( str(i) )
             if i < 10:
                 images[i] = pygame.image.load( "Title_Screen_Gif/frame_00" + str(i) + ".gif" ).convert_alpha()
-                images[i] = pygame.transform.smoothscale( images[i], (722, 648) )
+                images[i] = pygame.transform.smoothscale( images[i], (800, 700) )
             else:
                 images[i] = pygame.image.load( "Title_Screen_Gif/frame_0" + str(i) + ".gif" ).convert_alpha()
-                images[i] = pygame.transform.smoothscale( images[i], (722, 648) )
+                images[i] = pygame.transform.smoothscale( images[i], (800, 700) )
             i += 1
     
     while 10 == 10:
