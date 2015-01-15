@@ -260,7 +260,8 @@ def main():
             j += 1
             
         for event in pygame.event.get():
-            if event.type == pygame.MOUSEMOTION:  
+            if event.type == pygame.MOUSEMOTION:
+                pygame.mouse.set_visible(False)
                 mpos = pygame.mouse.get_pos()
                 target_Rect = target.get_rect().move( mpos[0], mpos[1] )
         
