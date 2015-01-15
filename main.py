@@ -153,15 +153,26 @@ def main():
     '''up right'''
     herour = [(609, 102, 87, 102), (609, 0, 87, 102), (609, 204, 87, 102), (609, 0, 87, 102), (609, 306, 87, 102)]
 
-    #DA enemies
+    #Add DA enemies HERE
     frameCounter = -1
     dragond = [(0, 0, 114, 154), (114, 0, 114, 154), (214, 0, 114, 154)]
     #hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-    enemyDragon = agent.Enemy(10, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 84, 124), 10)
-    enemyDragon.setDev(-15, -15)
-    enemySlime = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 400, 55, 55), 5)
-    enemySlime.setDev(-10, -10)
-    enemies = [enemyDragon, enemySlime]
+    enemyDragon = agent.Enemy(10, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 34, 74), 10)
+    enemyDragon.setDev(-40, -40)
+    enemySlime = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 400, 35, 35), 5)
+    enemySlime.setDev(-20, -20)
+    enemySlime2 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 350, 35, 35), 5)
+    enemySlime2.setDev(-20, -20)
+    enemySlime3 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(900, 350, 35, 35), 5)
+    enemySlime3.setDev(-20, -20)
+    enemySlime4 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(900, 450, 35, 35), 5)
+    enemySlime4.setDev(-20, -20)
+    enemySlime5 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 300, 35, 35), 5)
+    enemySlime5.setDev(-20, -20)
+    enemySlime6 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 500, 35, 35), 5)
+    enemySlime6.setDev(-20, -20)
+    
+    enemies = [enemyDragon, enemySlime, enemySlime2, enemySlime3, enemySlime4, enemySlime5, enemySlime6]
 
     #remember which direction hero was facing
     direction = herod
@@ -409,7 +420,7 @@ def main():
         refresh.append( rock_Rect )
         refresh.append( target_Rect )
         for enem in enemies:
-            refresh.append( (enem.getRect().x-30, enem.getRect().y-30, enem.getRect().width+60, enem.getRect().height+60))
+            refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
  
         i = 0
         while i < 10:
