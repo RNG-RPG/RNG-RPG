@@ -22,6 +22,7 @@ def main(WIDTH,HEIGHT):
 
   # Initialize Pygame
   pygame.init()
+  pygame.mixer.pre_init()
   
   theme = pygame.mixer.Sound( "sounds/theme.wav" )
   # Create a window of 800x600 pixels
@@ -40,7 +41,7 @@ def main(WIDTH,HEIGHT):
     back= load_image(bkg,"",LENGTH,HEIGHT)
     BKG.append(back)
   
-  image1  = load_image('1.png', 'images',50,50)
+  image1  = load_image('1.png', 'images',50,50)bbb
   image2  = load_image('2.png', 'images',50,50)
   image3  = load_image('3.png', 'images',50,50)
   image4  = load_image('4.png', 'images',5,50)
