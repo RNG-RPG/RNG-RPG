@@ -75,7 +75,7 @@ def start():
             if event.type == pygame.KEYDOWN:
                 key = pygame.key.get_pressed()
                 if key[pygame.K_SPACE]:
-                    x = 1
+                    main()
 
         refresh.append ( images[0].get_rect())
         
@@ -398,6 +398,7 @@ def main():
         refresh.append( target_Rect )
         if frame % 60 == 0:
             refresh.append( background.get_rect() )
+            refresh.append( background.get_rect().move(648, 0) )
 
         i = 0
         while i < 10:
