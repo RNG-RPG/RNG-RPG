@@ -5,7 +5,8 @@ main.py - holds the code necessary to display a background and the hero, for now
 '''
 
 # imports
-import sys, pygame, math, agent
+import sys, pygame, math, agent, os
+import titlescreen
 
 # initialize
 pygame.init()
@@ -18,8 +19,10 @@ except:
     sys.exit()
 
 #width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
-screen = pygame.display.set_mode( (1296, 648) )
-
+WIDTH = 1300
+HEIGHT = 700
+screen = pygame.display.set_mode( (WIDTH, HEIGHT) )
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 # collision checker 
 def pathCollide( object_rect, agent_rect, refresh_List ):
@@ -77,7 +80,7 @@ def start():
             if event.type == pygame.KEYDOWN:
                 key = pygame.key.get_pressed()
                 if key[pygame.K_SPACE]:
-                    main()
+                    titlescreen.main(WIDTH,HEIGHT)
 
         refresh.append ( images[0].get_rect().move(287,0) )
         
@@ -88,7 +91,6 @@ def start():
                 current_Frame = 0
 
         pygame.display.update( refresh )
-         
         clock.tick(30)
         
             
@@ -351,7 +353,7 @@ def main():
                     direction=herod
                     refresh.append( background.get_rect() )
                 elif key[pygame.K_ESCAPE]:
-                    start()
+                    titlescreen.main(WIDTH,HEIGHT)
         
 
 
