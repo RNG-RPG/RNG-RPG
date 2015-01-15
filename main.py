@@ -100,6 +100,7 @@ def main():
     hoSpeed = 0
     frame = 0
     attacktimer = 30
+    attackDelay = False
     # defines speed of enemy
     enemySpeed = 1
     arrowSpeedX = [0,0,0,0,0,0,0,0,0,0]
@@ -229,6 +230,7 @@ def main():
                 target_Rect = target.get_rect().move( mpos[0], mpos[1] )
         
             if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 30 and dead == False:
+                attackDelay = True
                 attacktimer = 0
                 if arrownum < 9:
                     arrownum += 1
@@ -458,9 +460,9 @@ def main():
                         counter = (counter + 1) % 4
                         direction=herour
                 #attack frames
-            else:
+            elif attackDelay == True:
                 if target_Rect.centerx < hero_Rect.centerx:
-                    if angle < 1.58 and angle > 1.15:
+                    if angle < 1.6 and angle > 1.15:
                         dFrame = herou[4]
                     elif angle <= 1.15 and angle > 0.42:
                         dFrame = heroul[4]
@@ -471,7 +473,7 @@ def main():
                     elif angle < -1.15 and angle > -1.58:
                         dFrame = herod[4]
                 elif target_Rect.centerx > hero_Rect.centerx:
-                    if angle < 1.58 and angle >  1.15:
+                    if angle < 1.6 and angle >  1.15:
                         dFrame = herod[4]
                     elif angle <= 1.15 and angle > 0.42:
                         dFrame = herodr[4]
@@ -486,6 +488,7 @@ def main():
                         dFrame = herou[4]
                     else:
                         dFrame = herod[4]
+                attackDelay=False
         #enemy!
         if not enemyDead:
             frameCounter += 1
