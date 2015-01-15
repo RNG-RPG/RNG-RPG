@@ -49,7 +49,7 @@ def main(WIDTH,HEIGHT):
   # Create 3 diffrent menus.  One of them is only text, another one is only
   # images, and a third is -gasp- a mix of images and text buttons!  To
   # understand the input factors, see the menu file
-  menu0 = cMenu(50, 50, 20, 5, 'vertical', 100, screen,
+  menu0 = cMenu(100, 100, 20, 5, 'vertical', 100, screen,
               [('Play',      1, None),
               ('Directions',         2, None),
               ('Settings',         3, None),
@@ -63,7 +63,7 @@ def main(WIDTH,HEIGHT):
               ('ATTACK = Left Click', 2, None),
               ('Back', 0, None)])
 
-  menu3 = cMenu(25, 15, 20, 5, 'vertical', 7, screen,
+  menu3 = cMenu(100, 100, 20, 5, 'vertical', 7, screen,
               [('Directions',         2, None),
               ('Back',          0, None),
               ('Play',            1, None),
@@ -83,11 +83,6 @@ def main(WIDTH,HEIGHT):
   # a small portion of it changed!)
   rect_list = []
 
-#<<<<<<< HEAD
-#=======
-  # Ignore mouse motion (greatly reduces resources when not needed)
-
-#>>>>>>> 3ebdb56ba0392653a34cdd50d8527e66374c88cb
   # The main while loop
   y=0
   pygame.mixer.music.play(-1,0)

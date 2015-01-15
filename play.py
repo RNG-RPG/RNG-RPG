@@ -19,8 +19,8 @@ except:
     sys.exit()
 
 #width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
-WIDTH = 1300
-HEIGHT = 648
+WIDTH = 1200
+HEIGHT = 700
 screen = pygame.display.set_mode( (WIDTH, HEIGHT) )
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -58,7 +58,7 @@ def start():
     current_Frame = 0
     x = 0
     i = 0
-    screen.fill((255,255,255))
+    screen.fill((0,0,0))
     pygame.display.update()
 
     
@@ -66,10 +66,10 @@ def start():
             images.append( str(i) )
             if i < 10:
                 images[i] = pygame.image.load( "Title_Screen_Gif/frame_00" + str(i) + ".gif" ).convert_alpha()
-                images[i] = pygame.transform.smoothscale( images[i], (800, 700) )
+                images[i] = pygame.transform.smoothscale( images[i], (WIDTH/2, HEIGHT) )
             else:
                 images[i] = pygame.image.load( "Title_Screen_Gif/frame_0" + str(i) + ".gif" ).convert_alpha()
-                images[i] = pygame.transform.smoothscale( images[i], (800, 700) )
+                images[i] = pygame.transform.smoothscale( images[i], (WIDTH/2, HEIGHT) )
             i += 1
     
     while 10 == 10:
