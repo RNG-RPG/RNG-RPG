@@ -63,11 +63,13 @@ def start():
             images.append( str(i) )
             if i < 10:
                 images[i] = pygame.image.load( "Title_Screen_Gif/frame_00" + str(i) + ".gif" ).convert_alpha()
+                images[i] = pygame.transform.smoothscale( images[i], (722, 648) )
             else:
                 images[i] = pygame.image.load( "Title_Screen_Gif/frame_0" + str(i) + ".gif" ).convert_alpha()
+                images[i] = pygame.transform.smoothscale( images[i], (722, 648) )
             i += 1
     
-    while x == 0:
+    while 10 == 10:
         refresh = []
         start_Frame += 1
         
@@ -77,10 +79,10 @@ def start():
                 if key[pygame.K_SPACE]:
                     main()
 
-        refresh.append ( images[0].get_rect())
+        refresh.append ( images[0].get_rect().move(287,0) )
         
         if start_Frame % 2 == 0:
-            screen.blit( images[current_Frame], (0,0) )
+            screen.blit( images[current_Frame], (287,0) )
             current_Frame += 1
             if current_Frame == 71:
                 current_Frame = 0
