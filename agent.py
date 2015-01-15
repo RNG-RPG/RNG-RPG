@@ -44,8 +44,9 @@ class Enemy:
 
     #Constructor
     '''spritemap is this format (source x, source y, width, height)
+    directional: down idle, down idle2, down1,down2,righ1,righ2,up1,up2,left1,left2
     '''
-    def __init__ (self, hp, spriteMap, rect, animSpeed):
+    def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
         self.maxHP=hp
         self.HP=hp
         self.spriteMap=spriteMap
@@ -58,11 +59,37 @@ class Enemy:
         self.vertSpeed = 0
         self.xDev = 0
         self.yDev = 0
+        self.directional = directionSprites
+        self.internalDClock = 60
+        self.internalMClock = -1
+        self.idleCounter = 0
         
+    def isDirectional(self):
+        return self.directional
     def getSprites(self):
         return self.spriteMap
     def getCurrentSprite(self):
-        return self.spriteMap[self.activeSprite]
+        if self.directional:
+            self.internalDClock += 1
+            if self.internalDClock > 60:
+                self.internalDClock = 0
+            if self.hoSpeed == 0 and self.vertSpeed == 0:
+                if self.internalDClock >59:
+                    return self.spriteMap[(self.idleCounter+1) % 2]
+            else:
+                self.idleCounter = (self.idleCounter+1)%2
+                if self.hoSpeed > 0:
+                    return self.spriteMap[self.idleCounter +4]
+                elif self.hoSpeed < 0:
+                    return self.spriteMap[self.idleCounter +8]
+                elif self.vertSpeed > 0:
+                    return self.spriteMap[self.idleCounter +2]
+                else:
+                    return self.spriteMap[self.idleCounter +6]
+
+                print self.idleCounter
+        else:
+            return self.spriteMap[self.activeSprite]
     #this is a number for active sprite
     def changeSprite(self, newNum):
         self.activeSprite = newNum
