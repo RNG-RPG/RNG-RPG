@@ -1,12 +1,96 @@
 '''
 written by Mathias Dyssegaard Kallick
 1/8/2015
-play.py - holds the code necessary to display a background and the hero, for now.
+main.py - holds the code necessary to display a background and the hero, for now.
 '''
 
 # imports
 import sys, pygame, math, agent
 
+# initialize
+pygame.init()
+
+# initialize the fonts
+try:
+    pygame.font.init()
+except:
+    print "Fonts unavailable"
+    sys.exit()
+
+#width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
+screen = pygame.display.set_mode( (1296, 648) )
+
+
+# collision checker 
+def pathCollide( object_rect, agent_rect, refresh_List ):
+    if agent_rect.colliderect( object_rect ):
+        # print( "colliding" )
+        if agent_rect.left >= object_rect.right - 18:
+            #hoSpeed = 0
+            refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
+            agent_rect.left = object_rect.right
+        elif agent_rect.right <= object_rect.left + 18:
+            #hoSpeed = 0
+            refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
+            agent_rect.right = object_rect.left
+        elif agent_rect.top <= object_rect.bottom - 18:
+            #vertSpeed = 0
+            refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
+            agent_rect.bottom = object_rect.top
+            #print( "colliding with bottom" )
+            refresh_List.append( object_rect )
+        elif agent_rect.bottom >= object_rect.top + 18:
+            #vertSpeed = 0
+            refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
+            #print( "colliding with top" )
+            agent_rect.top = object_rect.bottom
+
+# START SCREEN FUNCTION
+
+def start():
+
+    images = []
+    clock = pygame.time.Clock()
+    start_Frame = 0
+    current_Frame = 0
+    x = 0
+    i = 0
+    screen.fill((255,255,255))
+    pygame.display.update()
+
+    
+    while i < 72:
+            images.append( str(i) )
+            if i < 10:
+                images[i] = pygame.image.load( "Title_Screen_Gif/frame_00" + str(i) + ".gif" ).convert_alpha()
+                images[i] = pygame.transform.smoothscale( images[i], (722, 648) )
+            else:
+                images[i] = pygame.image.load( "Title_Screen_Gif/frame_0" + str(i) + ".gif" ).convert_alpha()
+                images[i] = pygame.transform.smoothscale( images[i], (722, 648) )
+            i += 1
+    
+    while 10 == 10:
+        refresh = []
+        start_Frame += 1
+        
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                key = pygame.key.get_pressed()
+                if key[pygame.K_SPACE]:
+                    main()
+
+        refresh.append ( images[0].get_rect().move(287,0) )
+        
+        if start_Frame % 2 == 0:
+            screen.blit( images[current_Frame], (287,0) )
+            current_Frame += 1
+            if current_Frame == 71:
+                current_Frame = 0
+
+        pygame.display.update( refresh )
+         
+        clock.tick(30)
+        
             
 # MAIN ROOM FUNCTION (temp)
 def main():
@@ -26,6 +110,8 @@ def main():
     refresh = []
         
     clock = pygame.time.Clock()
+
+    
 
     background = pygame.image.load( "RockGround2.png" ).convert_alpha()
     left_side = pygame.image.load( "rock_sides.png" ).convert_alpha()
@@ -345,70 +431,11 @@ def main():
             i += 1
         
         
-
         # redrawing everything
         reset(background)
         
         #sprite control
         if not dead:
-
-            if vertSpeed == 0 and hoSpeed == 0:
-                time = -1
-                counter = 0
-                hero = direction[1]
-            else:
-                time += 1
-                if time == 29 :
-                    time = 0
-            if time % 5 == 0:
-                if vertSpeed > 0 and hoSpeed == 0:
-                    hero = herod[counter]
-                    counter = (counter + 1) % 4
-                    direction=herod
-                
-                elif vertSpeed == 0 and hoSpeed > 0:
-                    hero = heror[counter]
-                    counter = (counter + 1) % 4
-                    direction=heror
-                
-                elif vertSpeed < 0 and hoSpeed == 0:
-                    hero = herou[counter]
-                    counter = (counter + 1) % 4
-                    direction=herou
-                   
-                elif vertSpeed == 0 and hoSpeed < 0:
-                    hero = herol[counter]
-                    counter = (counter + 1) % 4
-                    direction=herol
-     
-                elif vertSpeed > 0 and hoSpeed < 0:
-                    hero = herodl[counter]
-                    counter = (counter + 1) % 4
-                    direction=herodl
-                elif vertSpeed > 0 and hoSpeed > 0:
-                    hero = herodr[counter]
-                    counter = (counter + 1) % 4
-                    direction=herodr
-                elif vertSpeed < 0 and hoSpeed < 0:
-                    hero = heroul[counter]
-                    counter = (counter + 1) % 4
-                    direction=heroul
-                elif vertSpeed < 0 and hoSpeed > 0:
-                    hero = herour[counter]
-                    counter = (counter + 1) % 4
-                    direction=herour
-                    
-        screen.blit( hero, (hero_Rect) )
-        screen.blit( enemy, (enemy_Rect) )
-
-        pygame.display.update( refresh )
-        
-        refresh = []
-        
-        clock.tick(30)
-
-    print "terminating"
-
             if attacktimer > 5:
                 if vertSpeed == 0 and hoSpeed == 0:
                     time = -1
@@ -507,6 +534,12 @@ def main():
         
         clock.tick(30)
 
-# Run the script
+# main loop:
 if __name__ == "__main__":
-  main()
+    while 1 == 1:
+        start()
+        main()
+    
+    
+
+print "terminating"
