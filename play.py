@@ -405,6 +405,7 @@ def main():
                 if arrowOn[k] == True:
                     if arrow_rects[k].colliderect( enem.getRect() ) and enem.isDead() != True:
                         enem.changeHP(-1)
+                        enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
                         arrowOn[k] = False
                 k += 1
                     
