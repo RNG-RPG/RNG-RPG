@@ -57,7 +57,7 @@ class Enemy:
         self.dead=False
         self.hoSpeed = 0
         self.vertSpeed = 0
-        self.speedBoost = 0
+        self.speedBoost = 1
         
         self.xDev = 0
         self.yDev = 0
@@ -66,6 +66,7 @@ class Enemy:
         self.internalMClock = -1
         self.idleCounter = 0
         self.directionalCache = self.spriteMap[0]
+        self.aggro = False
         
     def isDirectional(self):
         return self.directional
@@ -120,10 +121,17 @@ class Enemy:
     def setVSpeed(self, y):
         self.vertSpeed = y
     def getHSpeed(self):
-        return self.hoSpeed + self.speedBoost
+        return self.hoSpeed * self.speedBoost
     def getVSpeed(self):
-        return self.vertSpeed + self.speedBoost
+        return self.vertSpeed * self.speedBoost
+    '''in addition to the base speed'''
+    def setSpeed(self, change):
+        self.speedBoost = change
     
+    def setAggro(self, boolean):
+        self.aggro = boolean
+    def isAggro(self):
+        return self.aggro
    
     def getRect(self):
         return self.Rect
@@ -151,3 +159,6 @@ class Enemy:
     def ressurect(self):
         self.dead = False
         self.HP = self.maxHP
+        self.hoSpeed = 0
+        self.vertSpeed = 0
+        self.setAggro = False
