@@ -135,21 +135,21 @@ def main():
     counter = 0
 
     '''down'''
-    herod = [(0, 102, 87, 102), (0, 0, 87, 102), (0, 204, 87, 102), (0, 0, 87, 102)]
+    herod = [(0, 102, 87, 102), (0, 0, 87, 102), (0, 204, 87, 102), (0, 0, 87, 102), (0, 306, 87, 102)]
     '''right'''
-    heror = [(87, 102, 87, 102), (87, 0, 87, 102), (87, 204, 87, 102), (87, 0, 87, 102)]
+    heror = [(87, 102, 87, 102), (87, 0, 87, 102), (87, 204, 87, 102), (87, 0, 87, 102), (87, 306, 87, 102)]
     '''up'''
-    herou = [(174, 102, 87, 102), (174, 0, 87, 102), (174, 204, 87, 102), (174, 0, 87, 102)]
+    herou = [(174, 102, 87, 102), (174, 0, 87, 102), (174, 204, 87, 102), (174, 0, 87, 102), (174, 306, 87, 102)]
     '''left'''
-    herol = [(261, 102, 87, 102), (261, 0, 87, 102), (261, 204, 87, 102), (261, 0, 87, 102)]
+    herol = [(261, 102, 87, 102), (261, 0, 87, 102), (261, 204, 87, 102), (261, 0, 87, 102), (261, 306, 87, 102)]
     '''down left'''
-    herodl = [(348, 102, 87, 101), (348, 0, 87, 102), (348, 204, 87, 102), (348, 0, 87, 102)]
+    herodl = [(348, 102, 87, 101), (348, 0, 87, 102), (348, 204, 87, 102), (348, 0, 87, 102), (348, 306, 87, 102)]
     '''down right'''
-    herodr = [(435, 102, 87, 102), (435, 0, 87, 102), (435, 204, 87, 102), (435, 0, 87, 102)]
+    herodr = [(435, 102, 87, 102), (435, 0, 87, 102), (435, 204, 87, 102), (435, 0, 87, 102), (435, 306, 87, 102)]
     '''up left'''
-    heroul = [(522, 102, 87, 102), (522, 0, 87, 102), (522, 204, 87, 102), (522, 0, 87, 102)]
+    heroul = [(522, 102, 87, 102), (522, 0, 87, 102), (522, 204, 87, 102), (522, 0, 87, 102), (522, 306, 87, 102)]
     '''up right'''
-    herour = [(609, 102, 87, 102), (609, 0, 87, 102), (609, 204, 87, 102), (609, 0, 87, 102)]
+    herour = [(609, 102, 87, 102), (609, 0, 87, 102), (609, 204, 87, 102), (609, 0, 87, 102), (609, 306, 87, 102)]
 
     #dragon
     counter1 = 0
@@ -413,48 +413,78 @@ def main():
         
         #sprite control
         if not dead:
-            if vertSpeed == 0 and hoSpeed == 0:
-                time = -1
-                counter = 0
-                dFrame = direction[1]
-            else:
-                 time += 1
-                 if time == 29:
+            if attacktimer > 5:
+                if vertSpeed == 0 and hoSpeed == 0:
                     time = -1
-            if time % 5 == 0:
-                if vertSpeed > 0 and hoSpeed == 0:
-                    dFrame = herod[counter]
-                    counter = (counter + 1) % 4
-                    direction=herod
-                elif vertSpeed == 0 and hoSpeed > 0:
-                    dFrame = heror[counter]
-                    counter = (counter + 1) % 4
-                    direction=heror
-                elif vertSpeed < 0 and hoSpeed == 0:
-                    dFrame = herou[counter]
-                    counter = (counter + 1) % 4
-                    direction=herou  
-                elif vertSpeed == 0 and hoSpeed < 0:
-                    dFrame = herol[counter]
-                    counter = (counter + 1) % 4
-                    direction=herol
-     
-                elif vertSpeed > 0 and hoSpeed < 0:
-                    dFrame = herodl[counter]
-                    counter = (counter + 1) % 4
-                    direction=herodl
-                elif vertSpeed > 0 and hoSpeed > 0:
-                    dFrame = herodr[counter]
-                    counter = (counter + 1) % 4
-                    direction=herodr
-                elif vertSpeed < 0 and hoSpeed < 0:
-                    dFrame = heroul[counter]
-                    counter = (counter + 1) % 4
-                    direction=heroul
-                elif vertSpeed < 0 and hoSpeed > 0:
-                    dFrame = herour[counter]
-                    counter = (counter + 1) % 4
-                    direction=herour
+                    counter = 0
+                    dFrame = direction[1]
+                else:
+                     time += 1
+                     if time == 29:
+                        time = -1
+                if time % 5 == 0:
+                    if vertSpeed > 0 and hoSpeed == 0:
+                        dFrame = herod[counter]
+                        counter = (counter + 1) % 4
+                        direction=herod
+                    elif vertSpeed == 0 and hoSpeed > 0:
+                        dFrame = heror[counter]
+                        counter = (counter + 1) % 4
+                        direction=heror
+                    elif vertSpeed < 0 and hoSpeed == 0:
+                        dFrame = herou[counter]
+                        counter = (counter + 1) % 4
+                        direction=herou  
+                    elif vertSpeed == 0 and hoSpeed < 0:
+                        dFrame = herol[counter]
+                        counter = (counter + 1) % 4
+                        direction=herol
+         
+                    elif vertSpeed > 0 and hoSpeed < 0:
+                        dFrame = herodl[counter]
+                        counter = (counter + 1) % 4
+                        direction=herodl
+                    elif vertSpeed > 0 and hoSpeed > 0:
+                        dFrame = herodr[counter]
+                        counter = (counter + 1) % 4
+                        direction=herodr
+                    elif vertSpeed < 0 and hoSpeed < 0:
+                        dFrame = heroul[counter]
+                        counter = (counter + 1) % 4
+                        direction=heroul
+                    elif vertSpeed < 0 and hoSpeed > 0:
+                        dFrame = herour[counter]
+                        counter = (counter + 1) % 4
+                        direction=herour
+                #attack frames
+            else:
+                if target_Rect.centerx < hero_Rect.centerx:
+                    if angle < 1.58 and angle > 1.15:
+                        dFrame = herou[4]
+                    elif angle <= 1.15 and angle > 0.42:
+                        dFrame = heroul[4]
+                    elif angle <= 0.42 and angle >= -0.42:
+                        dFrame = herol[4]
+                    elif angle < -0.42 and angle >= -1.15:
+                        dFrame = herodl[4]
+                    elif angle < -1.15 and angle > -1.58:
+                        dFrame = herod[4]
+                elif target_Rect.centerx > hero_Rect.centerx:
+                    if angle < 1.58 and angle >  1.15:
+                        dFrame = herod[4]
+                    elif angle <= 1.15 and angle > 0.42:
+                        dFrame = herodr[4]
+                    elif angle <= 0.42 and angle >= -0.42:
+                        dFrame = heror[4]
+                    elif angle < -0.42 and angle >= -1.15:
+                        dFrame = herour[4]
+                    elif angle < -1.15 and angle > -1.58:
+                        dFrame = herou[4]
+                else:
+                    if target_Rect.centery <= hero_Rect.centery:
+                        dFrame = herou[4]
+                    else:
+                        dFrame = herod[4]
         #enemy!
         if not enemyDead:
             frameCounter += 1
