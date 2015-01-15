@@ -177,8 +177,11 @@ def main():
     enemySlime5.setDev(-20, -20)
     enemySlime6 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 500, 35, 35), 5)
     enemySlime6.setDev(-20, -20)
+    enemyVoodoo = agent.Enemy(5, [(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
+                                 (336, 229, 55, 66), (392, 229, 55, 66), (448, 229, 55, 66)], pygame.Rect(1000, 100, 36, 46), 6, True)
+    enemyVoodoo.setDev(-10,-10)            
     
-    enemies = [enemyDragon, enemySlime, enemySlime2, enemySlime3, enemySlime4, enemySlime5, enemySlime6]
+    enemies = [enemyDragon, enemySlime, enemySlime2, enemySlime3, enemySlime4, enemySlime5, enemySlime6, enemyVoodoo]
 
     #remember which direction hero was facing
     direction = herod
