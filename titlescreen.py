@@ -84,7 +84,6 @@ def main(WIDTH,HEIGHT):
   rect_list = []
 
   # Ignore mouse motion (greatly reduces resources when not needed)
-  pygame.event.set_blocked(pygame.MOUSEMOTION)
 
   # The main while loop
   y=0

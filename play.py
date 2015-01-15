@@ -20,7 +20,7 @@ except:
 
 #width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
 WIDTH = 1300
-HEIGHT = 700
+HEIGHT = 648
 screen = pygame.display.set_mode( (WIDTH, HEIGHT) )
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -96,7 +96,8 @@ def start():
             
 # MAIN ROOM FUNCTION (temp)
 def main():
-
+    pygame.event.set_allowed(pygame.MOUSEMOTION)
+    pygame.mouse.get_focused
     dead = False
     arrowOn = [False,False,False,False,False,False,False,False,False,False]
     vertSpeed = 0
