@@ -125,7 +125,8 @@ def main():
     enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
     arrowLoadImage = pygame.image.load( "arrow.png" ).convert_alpha()
     arrow = [arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage]
-    target = pygame.image.load( "Pointer.png" ).convert_alpha()
+    target = pygame.image.load( "sprites/AimingPointer.png" ).convert_alpha()
+    target = pygame.transform.scale(target, (50, 50))
     arrow_rects = [arrow[0].get_rect(),arrow[1].get_rect(),arrow[2].get_rect(),arrow[3].get_rect(),arrow[4].get_rect(),arrow[5].get_rect(),arrow[6].get_rect(),arrow[7].get_rect(),arrow[8].get_rect(),arrow[9].get_rect()]
 
     arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
@@ -198,6 +199,10 @@ def main():
         screen.blit( bottom_side, (0, 594) )
 
     screen.blit( heroSprites, (50, 50), dFrame  )
+    if enemies == None:
+        endgame = pygame.image.load( "images/congrats.png" ).convert_alpha()
+        endgame = pygame.transform.scale(endgame, (WIDTH, HEIGHT))
+        
     for enem in enemies:
         screen.blit( enemySprites, (enem.getRect().x, enem.getRect().y), enem.getCurrentSprite())
     screen.blit( background, (0,0) )

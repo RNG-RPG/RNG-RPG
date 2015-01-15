@@ -83,15 +83,12 @@ def main(WIDTH,HEIGHT):
   # a small portion of it changed!)
   rect_list = []
 
-  # Ignore mouse motion (greatly reduces resources when not needed)
-  pygame.event.set_blocked(pygame.MOUSEMOTION)
-
   # The main while loop
   y=0
+  pygame.mixer.music.play(-1,0)
   while 1:
   # Check if the state has changed, if it has, then post a user event to
   # the queue to force the menu to be shown at least once
-    pygame.mixer.music.play(-1,0)
     if prev_state != state:
       pygame.event.post(pygame.event.Event(EVENT_CHANGE_STATE, key = 0))
       prev_state = state
