@@ -5,7 +5,7 @@ main.py - holds the code necessary to display a background and the hero, for now
 '''
 
 # imports
-import sys, pygame, math
+import sys, pygame, math, agent
 
 # initialize
 pygame.init()
@@ -97,7 +97,6 @@ def main():
 
     dead = False
     arrowOn = [False,False,False,False,False,False,False,False,False,False]
-    enemyDead = False
     vertSpeed = 0
     hoSpeed = 0
     frame = 0
@@ -154,11 +153,14 @@ def main():
     '''up right'''
     herour = [(609, 102, 87, 102), (609, 0, 87, 102), (609, 204, 87, 102), (609, 0, 87, 102), (609, 306, 87, 102)]
 
-    #dragon
-    counter1 = 0
+    #DA enemies
     frameCounter = -1
-    dragond = [(0, 0, 114, 154), (114, 0, 114, 154)]
-    eFrame = dragond[0]
+    dragond = [(0, 0, 114, 154), (114, 0, 114, 154), (214, 0, 114, 154)]
+    enemyDragon = agent.Enemy(10, [(0, 0, 114, 154), (114, 0, 114, 154), (214, 0, 114, 154)], pygame.Rect(500, 100, 114, 154), 10)
+    print len(enemyDragon.getSprites())
+    enemySlime = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (150, 154, 75, 75)], pygame.Rect(700, 400, 75, 75), 3)
+    enemies = [enemyDragon, enemySlime]
+
     #remember which direction hero was facing
     direction = herod
     dFrame=herod[1]
@@ -177,7 +179,8 @@ def main():
         screen.blit( bottom_side, (0, 594) )
 
     screen.blit( heroSprites, (50, 50), dFrame  )
-    screen.blit( enemySprites, (500, 100), eFrame)
+    for enem in enemies:
+        screen.blit( enemySprites, (enem.getRect().x, enem.getRect().y), enem.getCurrentSprite())
     screen.blit( background, (0,0) )
     screen.blit( background, (648,0) )
     screen.blit( rock, (500, 180) )
@@ -190,7 +193,6 @@ def main():
 
     rock_Rect = rock.get_rect().move(500, 180)
     hero_Rect = pygame.Rect(50, 50, 87, 102)
-    enemy_Rect = pygame.Rect(500, 100, 114, 154)
     top_Rect = top_side.get_rect()
     bottom_Rect = bottom_side.get_rect().move(0, 594)
     left_Rect = left_side.get_rect()
@@ -204,6 +206,10 @@ def main():
     dOn=True
 
     while 1 == 1:
+        #counts frames for animations
+        frameCounter += 1
+        if frameCounter == 29:
+            frameCounter = -1
     
         #Catches pygame event errors
         catch=pygame.key.get_pressed()
@@ -218,8 +224,9 @@ def main():
         # adding all the rectangles to the refresh list
         refresh.append( hero_Rect )
         #refresh.append( background.get_rect() )
-        refresh.append( enemy_Rect )
         refresh.append( target_Rect )
+        for enem in enemies:
+            refresh.append( enem.getRect())
         j = 0
         while j < 10:
             if arrowOn[j] == True:
@@ -324,10 +331,11 @@ def main():
                     print ( "r is hit" )
                     reset(background)
                     dFrame = herod[1]
-                    enemyDead = False
+                    for enem in enemies:
+                        enem.changeRect(enem.getOriginalRect())
+                        enem.ressurect()
                     dead = False
                     hero_Rect = pygame.Rect(50, 50, 87, 102)
-                    enemy_Rect = pygame.Rect(500, 100, 114, 154)
                     timeReset()
                     direction=herod
                     refresh.append( background.get_rect() )
@@ -342,7 +350,8 @@ def main():
         pathCollide( bottom_Rect, hero_Rect, refresh )
         pathCollide( left_Rect, hero_Rect, refresh )
         pathCollide( right_Rect, hero_Rect, refresh )
-        pathCollide( rock_Rect, enemy_Rect, refresh )
+        for enem in enemies:
+            pathCollide( rock_Rect, enem.getRect(), refresh )
         """
         pathCollide( top_Rect, enemy_Rect, refresh )
         pathCollide( bottom_Rect, enemy_Rect, refresh )
@@ -351,55 +360,56 @@ def main():
         """
         
         # enemy AI, deciding where it needs to move
-        if enemy_Rect.bottom < hero_Rect.centery and enemyDead != True:
-            vertVar = 1
-        elif enemy_Rect.top > hero_Rect.centery and enemyDead != True:
-            vertVar = -1
-        else:
-            vertVar = 0
-        if enemy_Rect.right < hero_Rect.centerx and enemyDead != True:
-            hoVar = 1
-        elif enemy_Rect.left > hero_Rect.centerx and enemyDead != True:
-            hoVar = -1
-        else:
-            hoVar = 0
+        for enem in enemies:
+            if enem.getRect().bottom < hero_Rect.centery and enem.isDead() != True:
+                enem.setVSpeed(1)
+            elif enem.getRect().top > hero_Rect.centery and enem.isDead() != True:
+                enem.setVSpeed(-1)
+            else:
+                enem.setVSpeed(0)
+            if enem.getRect().right < hero_Rect.centerx and enem.isDead() != True:
+                enem.setHSpeed(1)
+            elif enem.getRect().left > hero_Rect.centerx and enem.isDead() != True:
+                enem.setHSpeed(-1)
+            else:
+                enem.setHSpeed(0)
             
         # enemy collision with hero checker
-        if enemy_Rect.colliderect( hero_Rect ) and enemyDead == False :
-            dFrame = (696, 0, 87, 102)
-            hoSpeed = 0
-            vertSpeed = 0
-            dead = True
-            """
-            for event in pygame.event.get(): 
-                if event.type == pygame.KEYDOWN:
-                    key = pygame.key.get_pressed()
-            """
-
-                    
+        for enem in enemies:
+            if enem.getRect().colliderect( hero_Rect ) and enem.isDead() == False :
+                dFrame = (696, 0, 87, 102)
+                hoSpeed = 0
+                vertSpeed = 0
+                dead = True
+                """
+                for event in pygame.event.get(): 
+                    if event.type == pygame.KEYDOWN:
+                        key = pygame.key.get_pressed()
+                """
+                   
         # arrow collision with enemy checker
-        k = 0
-        while k < 10:
-            if arrowOn[k] == True:
-                if arrow_rects[k].colliderect( enemy_Rect ) and enemyDead != True:
-                    eFrame = (228, 0, 114, 154)
-                    hoVar = 0
-                    vertVar = 0
-                    enemyDead = True
-                    arrowOn[k] = False
-            k += 1
+        for enem in enemies:
+            k = 0
+            while k < 10:
+                if arrowOn[k] == True:
+                    if arrow_rects[k].colliderect( enem.getRect() ) and enem.isDead() != True:
+                        enem.changeHP(-1)
+                        arrowOn[k] = False
+                k += 1
                     
         # movement code
         hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
-        enemy_Rect = enemy_Rect.move( hoVar * enemySpeed, vertVar * enemySpeed )
+        for enem in enemies:
+            enem.changeRect(enem.getRect().move( enem.getHSpeed() * enemySpeed, enem.getVSpeed() * enemySpeed ))
         
         
 
         # adding all the rectangles to the refresh list
         refresh.append( hero_Rect )
         refresh.append( rock_Rect )
-        refresh.append( enemy_Rect )
         refresh.append( target_Rect )
+        for enem in enemies:
+            refresh.append( enem.getRect())
         if frame % 60 == 0:
             refresh.append( background.get_rect() )
             refresh.append( background.get_rect().move(648, 0) )
@@ -491,17 +501,17 @@ def main():
                     else:
                         dFrame = herod[4]
                 attackDelay=False
-        #enemy!
-        if not enemyDead:
-            frameCounter += 1
-            if frameCounter == 29:
-                frameCounter = -1
-            if frameCounter % 10 == 0:
-                eFrame = dragond[counter1]
-                counter1 = (counter1 + 1) % 2
+        #enemy animations!
+        for enem in enemies:
+            if not enem.isDead():
+                if frameCounter % enem.getFrameSpeed() == 0:
+                    enem.changeSprite((enem.getSpriteNumber()+1) % (len(enem.getSprites())-1))
+            else:
+                enem.changeSprite(-1)
             
         screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
-        screen.blit( enemySprites, (enemy_Rect.x,enemy_Rect.y), eFrame) 
+        for enem in enemies:
+            screen.blit( enemySprites, (enem.getRect().x,enem.getRect().y), enem.getCurrentSprite()) 
         screen.blit( target, (target_Rect) )
         i = 0
         while i < 10:
