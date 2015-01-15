@@ -1,0 +1,30 @@
+import pygame, sys
+from pygame.locals import *
+
+pygame.init()
+
+clock = pygame.time.Clock()
+
+screen = pygame.display.set_mode((600,400),0,32)
+
+b1 = "c:\\back.jpg"
+back = pygame.image.load(b1).convert()
+back2 = pygame.image.load(b1).convert()
+x = 0
+screenWidth = 600
+
+while True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+
+    screen.blit(back, (x,0))
+    screen.blit(back2,(x-screenWidth,0))
+
+    x = x + 1
+    if x == screenWidth:
+        x = 0
+
+    msElapsed = clock.tick(100)
+    pygame.display.flip()
