@@ -22,7 +22,8 @@ def main(WIDTH,HEIGHT):
 
   # Initialize Pygame
   pygame.init()
-
+  
+  theme = pygame.mixer.Sound( "sounds/theme.wav" )
   # Create a window of 800x600 pixels
   clock = pygame.time.Clock()
   LENGTH = WIDTH
@@ -98,6 +99,7 @@ def main(WIDTH,HEIGHT):
       # Reset the screen before going to the next menu.  Also, put a
       # caption at the bottom to tell the user what is going one
         screen.blit(BKG[0],(0,0))
+        theme.play()
         pygame.display.flip()
 
     # Get the next event

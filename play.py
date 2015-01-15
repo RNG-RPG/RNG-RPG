@@ -128,6 +128,8 @@ def main():
     target = pygame.image.load( "Pointer.png" ).convert_alpha()
     arrow_rects = [arrow[0].get_rect(),arrow[1].get_rect(),arrow[2].get_rect(),arrow[3].get_rect(),arrow[4].get_rect(),arrow[5].get_rect(),arrow[6].get_rect(),arrow[7].get_rect(),arrow[8].get_rect(),arrow[9].get_rect()]
 
+    arrowsound1 = pygame.mixer.Sound( "sounds/arrowimp3.wav" )
+    	
     #making the target move
     pygame.event.pump()
     mpos = pygame.mouse.get_pos()
@@ -406,6 +408,7 @@ def main():
             while k < 10:
                 if arrowOn[k] == True:
                     if arrow_rects[k].colliderect( enem.getRect() ) and enem.isDead() != True:
+                        arrowsound1.play()
                         enem.changeHP(-1)
                         enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
                         arrowOn[k] = False
