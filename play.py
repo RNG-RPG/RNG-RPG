@@ -169,21 +169,26 @@ def main():
     enemyDragon.setDev(-40, -40)
     enemySlime = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 400, 35, 35), 5)
     enemySlime.setDev(-20, -20)
-    enemySlime2 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 350, 35, 35), 5)
+    enemySlime2 = agent.Enemy(3,  [(75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (0, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 350, 35, 35), 5)
     enemySlime2.setDev(-20, -20)
     enemySlime3 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(900, 350, 35, 35), 5)
     enemySlime3.setDev(-20, -20)
-    enemySlime4 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(900, 450, 35, 35), 5)
+    enemySlime4 = agent.Enemy(3,  [(75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (0, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(900, 450, 35, 35), 5)
     enemySlime4.setDev(-20, -20)
     enemySlime5 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 300, 35, 35), 5)
     enemySlime5.setDev(-20, -20)
     enemySlime6 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 500, 35, 35), 5)
     enemySlime6.setDev(-20, -20)
+    
+    #directional facing sprites require more complexity
     enemyVoodoo = agent.Enemy(5, [(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
                                  (336, 229, 55, 66), (392, 229, 55, 66), (448, 229, 55, 66)], pygame.Rect(1000, 100, 36, 46), 6, True)
-    enemyVoodoo.setDev(-10,-10)            
+    enemyVoodoo.setDev(-10,-10)        
+    enemySquirrel = agent.Enemy( 2, [(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
+                                    (99, 295, 34, 36), (99, 295, 34, 36), (99, 295, 34, 36)], pygame.Rect(850, 500, 10, 12), 20, True)
+    enemySquirrel.setDev(-12,-12)
     
-    enemies = [enemyDragon, enemySlime, enemySlime2, enemySlime3, enemySlime4, enemySlime5, enemySlime6]
+    enemies = [enemyDragon, enemySlime, enemySlime2, enemySlime3, enemySlime4, enemySlime5, enemySlime6, enemyVoodoo, enemySquirrel]
 
     #remember which direction hero was facing
     direction = herod
@@ -424,6 +429,7 @@ def main():
                     if arrow_rects[k].colliderect( enem.getRect() ) and enem.isDead() != True:
                         arrowhit.play()
                         enem.changeHP(-1)
+                        refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
                         enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
                         arrowOn[k] = False
                 k += 1

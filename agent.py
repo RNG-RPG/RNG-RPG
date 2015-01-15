@@ -44,7 +44,7 @@ class Enemy:
 
     #Constructor
     '''spritemap is this format (source x, source y, width, height)
-    directional: down idle, down idle2, down1,down2,righ1,righ2,up1,up2,left1,left2
+    directional: down idle, down idle2, down1,down2,righ1,righ2,up1,up2,left1,left2, dead
     '''
     def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
         self.maxHP=hp
@@ -57,37 +57,48 @@ class Enemy:
         self.dead=False
         self.hoSpeed = 0
         self.vertSpeed = 0
+        self.speedBoost = 0
+        
         self.xDev = 0
         self.yDev = 0
         self.directional = directionSprites
         self.internalDClock = 60
         self.internalMClock = -1
         self.idleCounter = 0
+        self.directionalCache = self.spriteMap[0]
         
     def isDirectional(self):
         return self.directional
     def getSprites(self):
         return self.spriteMap
+        
+    #if spriteMap has directional movements -> automatically grabs the right sprite
     def getCurrentSprite(self):
         if self.directional:
+            if self.dead:
+                return self.spriteMap[-1]
             self.internalDClock += 1
             if self.internalDClock > 60:
                 self.internalDClock = 0
             if self.hoSpeed == 0 and self.vertSpeed == 0:
                 if self.internalDClock >59:
-                    return self.spriteMap[(self.idleCounter+1) % 2]
+                    self.directionalCache = self.spriteMap[(self.idleCounter+1) % 2]
             else:
-                self.idleCounter = (self.idleCounter+1)%2
-                if self.hoSpeed > 0:
-                    return self.spriteMap[self.idleCounter +4]
-                elif self.hoSpeed < 0:
-                    return self.spriteMap[self.idleCounter +8]
-                elif self.vertSpeed > 0:
-                    return self.spriteMap[self.idleCounter +2]
-                else:
-                    return self.spriteMap[self.idleCounter +6]
-
-                print self.idleCounter
+                self.internalMClock += 1
+                if self.internalMClock > 29:
+                    self.internalMClock = 0
+                if self.internalMClock % self.animSpeed == 0:
+                    
+                    self.idleCounter = (self.idleCounter+1)%2
+                    if self.hoSpeed > 0:
+                        self.directionalCache = self.spriteMap[self.idleCounter +4]
+                    elif self.hoSpeed < 0:
+                        self.directionalCache =  self.spriteMap[self.idleCounter +8]
+                    elif self.vertSpeed > 0:
+                        self.directionalCache = self.spriteMap[self.idleCounter +2]
+                    else:
+                        self.directionalCache = self.spriteMap[self.idleCounter +6]
+            return self.directionalCache
         else:
             return self.spriteMap[self.activeSprite]
     #this is a number for active sprite
@@ -109,9 +120,9 @@ class Enemy:
     def setVSpeed(self, y):
         self.vertSpeed = y
     def getHSpeed(self):
-        return self.hoSpeed
+        return self.hoSpeed + self.speedBoost
     def getVSpeed(self):
-        return self.vertSpeed
+        return self.vertSpeed + self.speedBoost
     
    
     def getRect(self):
