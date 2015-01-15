@@ -24,7 +24,7 @@ def main(WIDTH,HEIGHT):
   pygame.init()
   pygame.mixer.pre_init()
   
-  theme = pygame.mixer.Sound( "sounds/theme.wav" )
+  pygame.mixer.music.load("sounds/theme.wav")
   # Create a window of 800x600 pixels
   clock = pygame.time.Clock()
   LENGTH = WIDTH
@@ -41,7 +41,7 @@ def main(WIDTH,HEIGHT):
     back= load_image(bkg,"",LENGTH,HEIGHT)
     BKG.append(back)
   
-  image1  = load_image('1.png', 'images',50,50)bbb
+  image1  = load_image('1.png', 'images',50,50)
   image2  = load_image('2.png', 'images',50,50)
   image3  = load_image('3.png', 'images',50,50)
   image4  = load_image('4.png', 'images',5,50)
@@ -91,7 +91,7 @@ def main(WIDTH,HEIGHT):
   while 1:
   # Check if the state has changed, if it has, then post a user event to
   # the queue to force the menu to be shown at least once
-    
+    pygame.mixer.music.play(-1,0)
     if prev_state != state:
       pygame.event.post(pygame.event.Event(EVENT_CHANGE_STATE, key = 0))
       prev_state = state
@@ -100,7 +100,6 @@ def main(WIDTH,HEIGHT):
       # Reset the screen before going to the next menu.  Also, put a
       # caption at the bottom to tell the user what is going one
         screen.blit(BKG[0],(0,0))
-        theme.play()
         pygame.display.flip()
 
     # Get the next event

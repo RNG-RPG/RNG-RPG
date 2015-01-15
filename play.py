@@ -128,7 +128,9 @@ def main():
     target = pygame.image.load( "Pointer.png" ).convert_alpha()
     arrow_rects = [arrow[0].get_rect(),arrow[1].get_rect(),arrow[2].get_rect(),arrow[3].get_rect(),arrow[4].get_rect(),arrow[5].get_rect(),arrow[6].get_rect(),arrow[7].get_rect(),arrow[8].get_rect(),arrow[9].get_rect()]
 
-    arrowsound1 = pygame.mixer.Sound( "sounds/arrowimp3.wav" )
+    arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
+    arrowshot = pygame.mixer.Sound("sounds/arrowshot.wav")
+    arrowready = pygame.mixer.Sound("sounds/arrowshot.wav")
     	
     #making the target move
     pygame.event.pump()
@@ -254,6 +256,7 @@ def main():
                 target_Rect = target.get_rect().move( mpos[0], mpos[1] )
         
             if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 30 and dead == False:
+                arrowready.play()
                 attackDelay = True
                 attacktimer = 0
                 if arrownum < 9:
@@ -261,6 +264,7 @@ def main():
                 else:
                     arrownum = 0
                 arrow[arrownum] = pygame.image.load( "arrow.png" ).convert_alpha() 
+                arrowshot.play()
                 if target_Rect.centerx - hero_Rect.centerx == 0:
                     arrowSpeedX[arrownum] = 0
                     arrowSpeedY[arrownum] = 10
@@ -408,7 +412,7 @@ def main():
             while k < 10:
                 if arrowOn[k] == True:
                     if arrow_rects[k].colliderect( enem.getRect() ) and enem.isDead() != True:
-                        arrowsound1.play()
+                        arrowhit.play()
                         enem.changeHP(-1)
                         enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
                         arrowOn[k] = False
