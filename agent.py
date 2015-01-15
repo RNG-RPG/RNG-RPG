@@ -56,6 +56,8 @@ class Enemy:
         self.dead=False
         self.hoSpeed = 0
         self.vertSpeed = 0
+        self.xDev = 0
+        self.yDev = 0
         
     def getSprites(self):
         return self.spriteMap
@@ -66,6 +68,14 @@ class Enemy:
         self.activeSprite = newNum
     def getSpriteNumber(self):
         return self.activeSprite
+    #Deviation for drawn images and hitboxes
+    def setDev(self, x, y):
+        self.xDev = x
+        self.yDev = y
+    def getxDev(self):
+        return self.xDev
+    def getyDev(self):
+        return self.yDev
         
     def setHSpeed(self, x):
         self.hoSpeed = x

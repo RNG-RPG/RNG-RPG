@@ -27,21 +27,21 @@ def pathCollide( object_rect, agent_rect, refresh_List ):
         # print( "colliding" )
         if agent_rect.left >= object_rect.right - 18:
             #hoSpeed = 0
-            refresh_List.append( agent_rect )
+            refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
             agent_rect.left = object_rect.right
         elif agent_rect.right <= object_rect.left + 18:
             #hoSpeed = 0
-            refresh_List.append( agent_rect )
+            refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
             agent_rect.right = object_rect.left
         elif agent_rect.top <= object_rect.bottom - 18:
             #vertSpeed = 0
-            refresh_List.append( agent_rect )
+            refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
             agent_rect.bottom = object_rect.top
             #print( "colliding with bottom" )
             refresh_List.append( object_rect )
         elif agent_rect.bottom >= object_rect.top + 18:
             #vertSpeed = 0
-            refresh_List.append( agent_rect )
+            refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
             #print( "colliding with top" )
             agent_rect.top = object_rect.bottom
 
@@ -156,9 +156,11 @@ def main():
     #DA enemies
     frameCounter = -1
     dragond = [(0, 0, 114, 154), (114, 0, 114, 154), (214, 0, 114, 154)]
-    enemyDragon = agent.Enemy(10, [(0, 0, 114, 154), (114, 0, 114, 154), (214, 0, 114, 154)], pygame.Rect(500, 100, 114, 154), 10)
-    print len(enemyDragon.getSprites())
-    enemySlime = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (150, 154, 75, 75)], pygame.Rect(700, 400, 75, 75), 3)
+    #hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
+    enemyDragon = agent.Enemy(10, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 84, 124), 10)
+    enemyDragon.setDev(-15, -15)
+    enemySlime = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 400, 55, 55), 5)
+    enemySlime.setDev(-10, -10)
     enemies = [enemyDragon, enemySlime]
 
     #remember which direction hero was facing
@@ -225,8 +227,6 @@ def main():
         refresh.append( hero_Rect )
         #refresh.append( background.get_rect() )
         refresh.append( target_Rect )
-        for enem in enemies:
-            refresh.append( enem.getRect())
         j = 0
         while j < 10:
             if arrowOn[j] == True:
@@ -409,11 +409,8 @@ def main():
         refresh.append( rock_Rect )
         refresh.append( target_Rect )
         for enem in enemies:
-            refresh.append( enem.getRect())
-        if frame % 60 == 0:
-            refresh.append( background.get_rect() )
-            refresh.append( background.get_rect().move(648, 0) )
-
+            refresh.append( (enem.getRect().x-30, enem.getRect().y-30, enem.getRect().width+60, enem.getRect().height+60))
+ 
         i = 0
         while i < 10:
             if arrowOn[i] == True:
@@ -511,7 +508,7 @@ def main():
             
         screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
         for enem in enemies:
-            screen.blit( enemySprites, (enem.getRect().x,enem.getRect().y), enem.getCurrentSprite()) 
+            screen.blit( enemySprites, (enem.getRect().x+enem.getxDev(),enem.getRect().y+enem.getyDev()), enem.getCurrentSprite()) 
         screen.blit( target, (target_Rect) )
         i = 0
         while i < 10:
