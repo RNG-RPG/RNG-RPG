@@ -49,7 +49,7 @@ def main(WIDTH,HEIGHT):
   # Create 3 diffrent menus.  One of them is only text, another one is only
   # images, and a third is -gasp- a mix of images and text buttons!  To
   # understand the input factors, see the menu file
-  menu0 = cMenu(100, 100, 20, 5, 'vertical', 100, screen,
+  menu0 = cMenu(HEIGHT/5, WIDTH/5, 20, 5, 'vertical', 100, screen,
               [('Play',      1, None),
               ('Directions',         2, None),
               ('Settings',         3, None),
@@ -63,7 +63,7 @@ def main(WIDTH,HEIGHT):
               ('ATTACK = Left Click', 2, None),
               ('Back', 0, None)])
 
-  menu3 = cMenu(100, 100, 20, 5, 'vertical', 7, screen,
+  menu3 = cMenu(HEIGHT/5, WIDTH/5, 20, 5, 'vertical', 7, screen,
               [('Directions',         2, None),
               ('Back',          0, None),
               ('Play',            1, None),
