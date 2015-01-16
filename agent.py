@@ -161,4 +161,4 @@ class Enemy:
         self.HP = self.maxHP
         self.hoSpeed = 0
         self.vertSpeed = 0
-        self.setAggro = False
+        self.aggro = False
