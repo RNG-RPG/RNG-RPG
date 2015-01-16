@@ -61,6 +61,7 @@ def start():
     screen.fill((0,0,0))
     pygame.display.update()
     
+    crickets = pygame.mixer.Sound("sounds/crickets.wav")
     pygame.mixer.music.load("sounds/BKGmusic/MenuTitle/Sunnybreeze.wav")
     pygame.mixer.music.play(-1,0)
     
@@ -77,11 +78,14 @@ def start():
     while 10 == 10:
         refresh = []
         start_Frame += 1
-        
+        crickets.play()
+        crickets.fadeout(500)
+        crickets.play()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 key = pygame.key.get_pressed()
                 if key[pygame.K_SPACE]:
+                    crickets.stop()
                     titlescreen.main(WIDTH,HEIGHT)
 
         refresh.append ( images[0].get_rect().move(287,0) )
