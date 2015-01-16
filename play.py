@@ -136,7 +136,7 @@ def main():
     heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
     rock = pygame.image.load( "rock.png" ).convert_alpha()
     enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
-    arrowLoadImage = pygame.image.load( "arrow.png" ).convert_alpha()
+    arrowLoadImage = pygame.image.load( "sprites/particle_main.png" ).convert_alpha()
     arrow = [arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage]
     target = pygame.image.load( "sprites/AimingPointer.png" ).convert_alpha()
     target = pygame.transform.scale(target, (50, 50))
@@ -147,7 +147,11 @@ def main():
     arrowready = pygame.mixer.Sound("sounds/arrowshot.wav")
     footsteps = pygame.mixer.Sound("sounds/footsteps.wav")
     deathsound = pygame.mixer.Sound("sounds/death.wav")
+<<<<<<< HEAD
     bloodexplode = pygame.mixer.Sound("sounds/bloodexplode.wav")
+=======
+    slimedeath = pygame.mixer.Sound("sounds/slimedeath.wav")
+>>>>>>> a368401913f2674bc146f241f333a095642b660a
     	
     #making the target move
     pygame.event.pump()
@@ -160,21 +164,21 @@ def main():
     counter = 0
 
     '''down'''
-    herod = [(0, 102, 87, 102), (0, 0, 87, 102), (0, 204, 87, 102), (0, 0, 87, 102), (0, 306, 87, 102)]
+    herod = [(0, 68, 58, 68), (0, 0, 58, 68), (0, 136, 58, 68), (0, 0, 58, 68), (0, 204, 58, 68)]
     '''right'''
-    heror = [(87, 102, 87, 102), (87, 0, 87, 102), (87, 204, 87, 102), (87, 0, 87, 102), (87, 306, 87, 102)]
+    heror = [(58, 68, 58, 68), (58, 0, 58, 68), (58, 136, 58, 68), (58, 0, 58, 68), (58, 204, 58, 68)]
     '''up'''
-    herou = [(174, 102, 87, 102), (174, 0, 87, 102), (174, 204, 87, 102), (174, 0, 87, 102), (174, 306, 87, 102)]
+    herou = [(116, 68, 58, 68), (116, 0, 58, 68), (116, 136, 58, 68), (116, 0, 58, 68), (116, 204, 58, 68)]
     '''left'''
-    herol = [(261, 102, 87, 102), (261, 0, 87, 102), (261, 204, 87, 102), (261, 0, 87, 102), (261, 306, 87, 102)]
+    herol = [(174, 68, 58, 68), (174, 0, 58, 68), (174, 136, 58, 68), (174, 0, 58, 68), (174, 204, 58, 68)]
     '''down left'''
-    herodl = [(348, 102, 87, 101), (348, 0, 87, 102), (348, 204, 87, 102), (348, 0, 87, 102), (348, 306, 87, 102)]
+    herodl = [(232, 68, 58, 68), (232, 0, 58, 68), (232, 136, 58, 68), (232, 0, 58, 68), (232, 204, 58, 68)]
     '''down right'''
-    herodr = [(435, 102, 87, 102), (435, 0, 87, 102), (435, 204, 87, 102), (435, 0, 87, 102), (435, 306, 87, 102)]
+    herodr = [(290, 68, 58, 68), (290, 0, 58, 68), (290, 136, 58, 68), (290, 0, 58, 68), (290, 204, 58, 68)]
     '''up left'''
-    heroul = [(522, 102, 87, 102), (522, 0, 87, 102), (522, 204, 87, 102), (522, 0, 87, 102), (522, 306, 87, 102)]
+    heroul = [(348, 68, 58, 68), (348, 0, 58, 68), (348, 136, 58, 68), (348, 0, 58, 68), (348, 204, 58, 68)]
     '''up right'''
-    herour = [(609, 102, 87, 102), (609, 0, 87, 102), (609, 204, 87, 102), (609, 0, 87, 102), (609, 306, 87, 102)]
+    herour = [(406, 68, 58, 68), (406, 0, 58, 68), (406, 136, 58, 68), (406, 0, 58, 68), (406, 204, 58, 68)]
 
     #Add DA enemies HERE
     frameCounter = -1
@@ -182,6 +186,7 @@ def main():
     #hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
     enemyDragon = agent.Dragon(10, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 34, 74), 10)
     enemyDragon.setDev(-40, -40)
+<<<<<<< HEAD
     enemySlime = agent.Slime(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 400, 35, 35), 5)
     enemySlime.setDev(-20, -20)
     enemySlime2 = agent.Slime(3,  [(75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (0, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 350, 35, 35), 5)
@@ -193,6 +198,19 @@ def main():
     enemySlime5 = agent.Slime(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 300, 35, 35), 5)
     enemySlime5.setDev(-20, -20)
     enemySlime6 = agent.Slime(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 500, 35, 35), 5)
+=======
+    enemySlime = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 400, 10, 10), 5)
+    enemySlime.setDev(-20, -20)
+    enemySlime2 = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 350, 10, 10), 5)
+    enemySlime2.setDev(-20, -20)
+    enemySlime3 = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 350, 10, 10), 5)
+    enemySlime3.setDev(-20, -20)
+    enemySlime4 = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 450, 10, 10), 5)
+    enemySlime4.setDev(-20, -20)
+    enemySlime5 = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 300, 10, 10), 5)
+    enemySlime5.setDev(-20, -20)
+    enemySlime6 = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 500, 10, 10), 5)
+>>>>>>> a368401913f2674bc146f241f333a095642b660a
     enemySlime6.setDev(-20, -20)
     
     #directional facing sprites require more complexity
@@ -221,7 +239,7 @@ def main():
         screen.blit( left_side, (0,0) )
         screen.blit( right_side, (1242, 0) )
         screen.blit( top_side, (0,0) )
-        screen.blit( bottom_side, (0, 594) )
+        screen.blit( bottom_side, (0, 648) )
 
     screen.blit( heroSprites, (50, 50), dFrame  )
     if enemies == None:
@@ -236,14 +254,14 @@ def main():
     screen.blit( left_side, (0,0) )
     screen.blit( right_side, (1242, 0) )
     screen.blit( top_side, (0,0) )
-    screen.blit( bottom_side, (0, 594) )
+    screen.blit( bottom_side, (0, 648) )
 
     
 
     rock_Rect = rock.get_rect().move(500, 180)
-    hero_Rect = pygame.Rect(50, 50, 87, 102)
+    hero_Rect = pygame.Rect(50, 50, 58, 68)
     top_Rect = top_side.get_rect()
-    bottom_Rect = bottom_side.get_rect().move(0, 594)
+    bottom_Rect = bottom_side.get_rect().move(0, 648)
     left_Rect = left_side.get_rect()
     right_Rect = right_side.get_rect().move(1242, 0)
 
@@ -296,8 +314,12 @@ def main():
                     arrownum += 1
                 else:
                     arrownum = 0
+<<<<<<< HEAD
                 arrow[arrownum] = pygame.image.load( "arrow.png" ).convert_alpha() 
                 arrowshot.set_volume(.5)
+=======
+                arrow[arrownum] = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
+>>>>>>> a368401913f2674bc146f241f333a095642b660a
                 arrowshot.play()
                 if target_Rect.centerx - hero_Rect.centerx == 0:
                     arrowSpeedX[arrownum] = 0
@@ -391,11 +413,11 @@ def main():
                     reset(background)
                     loopdeath = 0
                     dFrame = herod[1]
+                    hero_Rect = pygame.Rect(50, 50, 87, 102)
                     for enem in enemies:
                         enem.changeRect(enem.getOriginalRect())
                         enem.ressurect()
                     dead = False
-                    hero_Rect = pygame.Rect(50, 50, 87, 102)
                     timeReset()
                     direction=herod
                     refresh.append( background.get_rect() )
@@ -423,6 +445,7 @@ def main():
         # enemy AI, deciding where it needs to move
         for enem in enemies:
             if math.sqrt((enem.getRect().centerx - hero_Rect.centerx)**2 + (enem.getRect().centery - hero_Rect.centery)**2) < 400 or enem.isAggro():
+                enem.setAggro(True)
                 if enem.getRect().bottom < hero_Rect.centery and enem.isDead() != True:
                     enem.setVSpeed(1)
                     enem.movesound.play()
@@ -441,7 +464,7 @@ def main():
         # enemy collision with hero checker
         for enem in enemies:
             if enem.getRect().colliderect( hero_Rect ) and enem.isDead() == False :
-                dFrame = (696, 0, 87, 102)
+                dFrame = (464, 0, 58, 68)
                 hoSpeed = 0
                 vertSpeed = 0
                 dead = True
@@ -456,12 +479,17 @@ def main():
             k = 0
             while k < 10:
                 if arrowOn[k] == True:
+<<<<<<< HEAD
                     if arrow_rects[k].colliderect( enem.getRect() ) and enem.isDead() != True:
                         print "before", enem.isAggro()
                         if enem.isAggro() != True:
                             enem.setAggro(True)
                             print "after", enem.isAggro()
                         arrowhit.set_volume(.5)
+=======
+                    if arrow_rects[k].colliderect( enem.getRect() ) and not enem.isDead():
+                        enem.setAggro(True)
+>>>>>>> a368401913f2674bc146f241f333a095642b660a
                         arrowhit.play()
                         enem.changeHP(-1)
                         refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))

@@ -164,6 +164,7 @@ class Enemy(object):
         self.HP = self.maxHP
         self.hoSpeed = 0
         self.vertSpeed = 0
+<<<<<<< HEAD
         self.setAggro = False
 
 class Slime(Enemy):
@@ -191,3 +192,6 @@ class Squirrel(Enemy):
 		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
 		self.deadcount= 0
 	
+=======
+        self.aggro = False
+>>>>>>> a368401913f2674bc146f241f333a095642b660a
