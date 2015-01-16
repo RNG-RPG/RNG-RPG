@@ -625,7 +625,6 @@ class cMenu:
          elif (o == 'horizontal') and ((s) % n != 0):
             self.selection -= 1
       elif e.key == pygame.K_RETURN or e.key == pygame.K_SPACE:
-         buttonsound.play()
          return [None], self.menu_items[s]['state']
 
       if self.selection >= len(self.menu_items) or self.selection < 0:

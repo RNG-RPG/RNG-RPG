@@ -25,6 +25,7 @@ def main(WIDTH,HEIGHT):
   pygame.mixer.pre_init()
   rain = pygame.mixer.Sound("sounds/rain.wav")
   beginsound= pygame.mixer.Sound("sounds/begin.wav")
+  beginsound.set_volume(1)
   
   # Create a window of 800x600 pixels
   clock = pygame.time.Clock()

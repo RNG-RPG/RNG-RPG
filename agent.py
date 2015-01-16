@@ -2,6 +2,8 @@
 #1/9/15
 #basic unit template
 
+import pygame
+pygame.init()
 class Agent:
 
     #Constructor
@@ -40,7 +42,7 @@ class Agent:
     def changeEXP(self,change):
         self.exp+=change
         
-class Enemy:
+class Enemy(object):
 
     #Constructor
     '''spritemap is this format (source x, source y, width, height)
@@ -130,6 +132,7 @@ class Enemy:
     
     def setAggro(self, boolean):
         self.aggro = boolean
+    
     def isAggro(self):
         return self.aggro
    
@@ -162,3 +165,29 @@ class Enemy:
         self.hoSpeed = 0
         self.vertSpeed = 0
         self.setAggro = False
+
+class Slime(Enemy):
+	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
+		super(Slime,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
+		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
+		self.deadcount= 0
+
+class Dragon(Enemy):
+	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
+		super(Dragon,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
+		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
+		self.deadcount= 0
+	
+class Voodoo(Enemy):
+	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
+		super(Voodoo,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
+		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
+		self.deadcount= 0
+	
+
+class Squirrel(Enemy):
+	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
+		super(Squirrel,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
+		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
+		self.deadcount= 0
+	

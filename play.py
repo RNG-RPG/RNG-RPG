@@ -9,6 +9,7 @@ import sys, pygame, math, agent, os
 import titlescreen
 
 # initialize
+pygame.mixer.pre_init()
 pygame.init()
 
 # initialize the fonts
@@ -109,7 +110,7 @@ def main():
     pygame.event.set_allowed(pygame.MOUSEMOTION)
     pygame.mouse.get_focused
     dead = False
-    arrowOn = [False,False,False,False,False,False,False,False,False,False]
+    arrowOn = [False]*10
     vertSpeed = 0
     hoSpeed = 0
     frame = 0
@@ -146,7 +147,7 @@ def main():
     arrowready = pygame.mixer.Sound("sounds/arrowshot.wav")
     footsteps = pygame.mixer.Sound("sounds/footsteps.wav")
     deathsound = pygame.mixer.Sound("sounds/death.wav")
-    slimedeath = pygame.mixer.SOund("sounds/slimedeath.wav")
+    bloodexplode = pygame.mixer.Sound("sounds/bloodexplode.wav")
     	
     #making the target move
     pygame.event.pump()
@@ -179,26 +180,26 @@ def main():
     frameCounter = -1
     dragond = [(0, 0, 114, 154), (114, 0, 114, 154), (214, 0, 114, 154)]
     #hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-    enemyDragon = agent.Enemy(10, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 34, 74), 10)
+    enemyDragon = agent.Dragon(10, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 34, 74), 10)
     enemyDragon.setDev(-40, -40)
-    enemySlime = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 400, 35, 35), 5)
+    enemySlime = agent.Slime(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 400, 35, 35), 5)
     enemySlime.setDev(-20, -20)
-    enemySlime2 = agent.Enemy(3,  [(75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (0, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 350, 35, 35), 5)
+    enemySlime2 = agent.Slime(3,  [(75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (0, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 350, 35, 35), 5)
     enemySlime2.setDev(-20, -20)
-    enemySlime3 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(900, 350, 35, 35), 5)
+    enemySlime3 = agent.Slime(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(900, 350, 35, 35), 5)
     enemySlime3.setDev(-20, -20)
-    enemySlime4 = agent.Enemy(3,  [(75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (0, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(900, 450, 35, 35), 5)
+    enemySlime4 = agent.Slime(3,  [(75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (0, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(900, 450, 35, 35), 5)
     enemySlime4.setDev(-20, -20)
-    enemySlime5 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 300, 35, 35), 5)
+    enemySlime5 = agent.Slime(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 300, 35, 35), 5)
     enemySlime5.setDev(-20, -20)
-    enemySlime6 = agent.Enemy(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 500, 35, 35), 5)
+    enemySlime6 = agent.Slime(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 500, 35, 35), 5)
     enemySlime6.setDev(-20, -20)
     
     #directional facing sprites require more complexity
-    enemyVoodoo = agent.Enemy(5, [(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
+    enemyVoodoo = agent.Voodoo(5, [(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
                                  (336, 229, 55, 66), (392, 229, 55, 66), (448, 229, 55, 66)], pygame.Rect(1000, 100, 36, 46), 6, True)
     enemyVoodoo.setDev(-10,-10)        
-    enemySquirrel = agent.Enemy( 2, [(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
+    enemySquirrel = agent.Squirrel( 2, [(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
                                     (99, 295, 34, 36), (99, 295, 34, 36), (99, 295, 34, 36)], pygame.Rect(950, 500, 10, 12), 20, True)
     enemySquirrel.setDev(-12,-12)
     enemySquirrel.setSpeed(5)
@@ -287,6 +288,7 @@ def main():
                 target_Rect = target.get_rect().move( mpos[0], mpos[1] )
         
             if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 30 and dead == False:
+                arrowready.set_volume(.5)
                 arrowready.play()
                 attackDelay = True
                 attacktimer = 0
@@ -295,6 +297,7 @@ def main():
                 else:
                     arrownum = 0
                 arrow[arrownum] = pygame.image.load( "arrow.png" ).convert_alpha() 
+                arrowshot.set_volume(.5)
                 arrowshot.play()
                 if target_Rect.centerx - hero_Rect.centerx == 0:
                     arrowSpeedX[arrownum] = 0
@@ -335,6 +338,7 @@ def main():
             if event.type == pygame.KEYDOWN and dead != True:
                 key = pygame.key.get_pressed()
                 if key[pygame.K_w] and wOn:
+                    footsteps.set_volume(1)
                     footsteps.play()
                     print "W"
                     vertSpeed-=1
@@ -421,12 +425,14 @@ def main():
             if math.sqrt((enem.getRect().centerx - hero_Rect.centerx)**2 + (enem.getRect().centery - hero_Rect.centery)**2) < 400 or enem.isAggro():
                 if enem.getRect().bottom < hero_Rect.centery and enem.isDead() != True:
                     enem.setVSpeed(1)
+                    enem.movesound.play()
                 elif enem.getRect().top > hero_Rect.centery and enem.isDead() != True:
                     enem.setVSpeed(-1)
                 else:
                     enem.setVSpeed(0)
                 if enem.getRect().right < hero_Rect.centerx and enem.isDead() != True:
                     enem.setHSpeed(1)
+                    enem.movesound.play()
                 elif enem.getRect().left > hero_Rect.centerx and enem.isDead() != True:
                     enem.setHSpeed(-1)
                 else:
@@ -451,7 +457,11 @@ def main():
             while k < 10:
                 if arrowOn[k] == True:
                     if arrow_rects[k].colliderect( enem.getRect() ) and enem.isDead() != True:
-                        enem.setAggro(True)
+                        print "before", enem.isAggro()
+                        if enem.isAggro() != True:
+                            enem.setAggro(True)
+                            print "after", enem.isAggro()
+                        arrowhit.set_volume(.5)
                         arrowhit.play()
                         enem.changeHP(-1)
                         refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
@@ -563,7 +573,7 @@ def main():
                 attackDelay=False
         else:
         	   if loopdeath == 0:
-        	   	 deathsound.set_volume(.3)
+        	   	 deathsound.set_volume(.5)
         	   	 deathsound.play()
         	   	 loopdeath += 1
         	   
@@ -574,6 +584,13 @@ def main():
                     enem.changeSprite((enem.getSpriteNumber()+1) % (len(enem.getSprites())-1))
             else:
                 enem.changeSprite(-1)
+                enem.deadcount += 1
+                if enem.deadcount == 1:
+                	enem.deathsound.set_volume(1)
+                	bloodexplode.set_volume(.5)
+                	bloodexplode.play()
+                	enem.deathsound.play()
+                	
             
         screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
         for enem in enemies:
