@@ -147,11 +147,11 @@ def main():
     arrowready = pygame.mixer.Sound("sounds/arrowshot.wav")
     footsteps = pygame.mixer.Sound("sounds/footsteps.wav")
     deathsound = pygame.mixer.Sound("sounds/death.wav")
-<<<<<<< HEAD
+
     bloodexplode = pygame.mixer.Sound("sounds/bloodexplode.wav")
-=======
+
     slimedeath = pygame.mixer.Sound("sounds/slimedeath.wav")
->>>>>>> a368401913f2674bc146f241f333a095642b660a
+
     	
     #making the target move
     pygame.event.pump()
@@ -186,7 +186,7 @@ def main():
     #hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
     enemyDragon = agent.Dragon(10, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 34, 74), 10)
     enemyDragon.setDev(-40, -40)
-<<<<<<< HEAD
+
     enemySlime = agent.Slime(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 400, 35, 35), 5)
     enemySlime.setDev(-20, -20)
     enemySlime2 = agent.Slime(3,  [(75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (0, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 350, 35, 35), 5)
@@ -198,19 +198,19 @@ def main():
     enemySlime5 = agent.Slime(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(700, 300, 35, 35), 5)
     enemySlime5.setDev(-20, -20)
     enemySlime6 = agent.Slime(3,  [(0, 154, 75, 75), (75, 154, 75, 75), (0, 154, 75, 75), (150, 154, 75, 75), (225, 154, 75, 75)], pygame.Rect(800, 500, 35, 35), 5)
-=======
-    enemySlime = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 400, 10, 10), 5)
+
+    enemySlime = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 400, 10, 10), 5)
     enemySlime.setDev(-20, -20)
-    enemySlime2 = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 350, 10, 10), 5)
+    enemySlime2 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 350, 10, 10), 5)
     enemySlime2.setDev(-20, -20)
-    enemySlime3 = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 350, 10, 10), 5)
+    enemySlime3 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 350, 10, 10), 5)
     enemySlime3.setDev(-20, -20)
-    enemySlime4 = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 450, 10, 10), 5)
+    enemySlime4 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 450, 10, 10), 5)
     enemySlime4.setDev(-20, -20)
-    enemySlime5 = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 300, 10, 10), 5)
+    enemySlime5 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 300, 10, 10), 5)
     enemySlime5.setDev(-20, -20)
-    enemySlime6 = agent.Enemy(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 500, 10, 10), 5)
->>>>>>> a368401913f2674bc146f241f333a095642b660a
+    enemySlime6 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 500, 10, 10), 5)
+
     enemySlime6.setDev(-20, -20)
     
     #directional facing sprites require more complexity
@@ -314,12 +314,12 @@ def main():
                     arrownum += 1
                 else:
                     arrownum = 0
-<<<<<<< HEAD
+
                 arrow[arrownum] = pygame.image.load( "arrow.png" ).convert_alpha() 
                 arrowshot.set_volume(.5)
-=======
+
                 arrow[arrownum] = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
->>>>>>> a368401913f2674bc146f241f333a095642b660a
+
                 arrowshot.play()
                 if target_Rect.centerx - hero_Rect.centerx == 0:
                     arrowSpeedX[arrownum] = 0
@@ -479,17 +479,17 @@ def main():
             k = 0
             while k < 10:
                 if arrowOn[k] == True:
-<<<<<<< HEAD
+
                     if arrow_rects[k].colliderect( enem.getRect() ) and enem.isDead() != True:
                         print "before", enem.isAggro()
                         if enem.isAggro() != True:
                             enem.setAggro(True)
                             print "after", enem.isAggro()
                         arrowhit.set_volume(.5)
-=======
+
                     if arrow_rects[k].colliderect( enem.getRect() ) and not enem.isDead():
                         enem.setAggro(True)
->>>>>>> a368401913f2674bc146f241f333a095642b660a
+
                         arrowhit.play()
                         enem.changeHP(-1)
                         refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
