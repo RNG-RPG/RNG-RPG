@@ -120,6 +120,7 @@ def main():
     arrowSpeedX = [0,0,0,0,0,0,0,0,0,0]
     arrowSpeedY = [0,0,0,0,0,0,0,0,0,0]
     arrownum = 0
+    loopdeath= 0
     refresh = []
         
     clock = pygame.time.Clock()
@@ -143,6 +144,8 @@ def main():
     arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
     arrowshot = pygame.mixer.Sound("sounds/arrowshot.wav")
     arrowready = pygame.mixer.Sound("sounds/arrowshot.wav")
+    footsteps = pygame.mixer.Sound("sounds/footsteps.wav")
+    deathsound = pygame.mixer.Sound("sounds/death.wav")
     	
     #making the target move
     pygame.event.pump()
@@ -250,6 +253,7 @@ def main():
     dOn=True
 
     while 1 == 1:
+        
         #counts frames for animations
         frameCounter += 1
         if frameCounter == 29:
@@ -330,18 +334,22 @@ def main():
             if event.type == pygame.KEYDOWN and dead != True:
                 key = pygame.key.get_pressed()
                 if key[pygame.K_w] and wOn:
+                    footsteps.play()
                     print "W"
                     vertSpeed-=1
                     wOn=False
                 if key[pygame.K_a] and aOn:
+                    footsteps.play()
                     print "A"
                     hoSpeed-=1
                     aOn=False
                 if key[pygame.K_s] and sOn:
+                    footsteps.play()
                     print "S"
                     vertSpeed+=1
                     sOn=False
                 if key[pygame.K_d] and dOn:
+                    footsteps.play()
                     print "D"
                     hoSpeed+=1
                     dOn=False
@@ -476,6 +484,7 @@ def main():
         reset(background)
         
         #sprite control
+        
         if not dead:
             if attacktimer > 5:
                 if vertSpeed == 0 and hoSpeed == 0:
@@ -550,6 +559,12 @@ def main():
                     else:
                         dFrame = herod[4]
                 attackDelay=False
+        else:
+        	   if loopdeath == 0:
+        	   	 deathsound.set_volume(.3)
+        	   	 deathsound.play()
+        	   	 loopdeath += 1
+        	   
         #enemy animations!
         for enem in enemies:
             if not enem.isDead():

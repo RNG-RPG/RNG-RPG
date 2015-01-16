@@ -23,7 +23,7 @@ def main(WIDTH,HEIGHT):
   # Initialize Pygame
   pygame.init()
   pygame.mixer.pre_init()
-  
+  rain = pygame.mixer.Sound("sounds/rain.wav")
   
   # Create a window of 800x600 pixels
   clock = pygame.time.Clock()
@@ -85,6 +85,8 @@ def main(WIDTH,HEIGHT):
   y=0
   pygame.mixer.music.load("sounds/BKGmusic/MenuStart/TowardsFate.wav")
   pygame.mixer.music.play(-1,0)
+  rain.play(-1)
+  rain.set_volume(.5)
   
   while 1:
   # Check if the state has changed, if it has, then post a user event to
@@ -109,6 +111,7 @@ def main(WIDTH,HEIGHT):
       if state == 0:
         rect_list, state = menu0.update(e, state)
       elif state == 1:
+        rain.stop()
         play.main()
       elif state == 2:
         rect_list, state = menu2.update(e, state)
