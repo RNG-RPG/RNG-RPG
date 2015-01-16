@@ -24,7 +24,7 @@ def main(WIDTH,HEIGHT):
   pygame.init()
   pygame.mixer.pre_init()
   
-  pygame.mixer.music.load("sounds/theme.wav")
+  
   # Create a window of 800x600 pixels
   clock = pygame.time.Clock()
   LENGTH = WIDTH
@@ -46,9 +46,7 @@ def main(WIDTH,HEIGHT):
   image3  = load_image('3.png', 'images',50,50)
   image4  = load_image('4.png', 'images',5,50)
   
-  # Create 3 diffrent menus.  One of them is only text, another one is only
-  # images, and a third is -gasp- a mix of images and text buttons!  To
-  # understand the input factors, see the menu file
+  # Create the menus. 
   menu0 = cMenu(HEIGHT/5, WIDTH/5, 20, 5, 'vertical', 100, screen,
               [('Play',      1, None),
               ('Directions',         2, None),
@@ -69,7 +67,7 @@ def main(WIDTH,HEIGHT):
               ('Play',            1, None),
               ('Exit',               9, None)])
 
-  # Center menu2 at the center of the draw_surface (the entire screen here)
+  # Center menu2 at the center of the screen
   menu2.set_center(True, True)
 
   # Create the state variables (make them different so that the user event is
@@ -85,7 +83,9 @@ def main(WIDTH,HEIGHT):
 
   # The main while loop
   y=0
+  pygame.mixer.music.load("sounds/BKGmusic/MenuStart/TowardsFate.wav")
   pygame.mixer.music.play(-1,0)
+  
   while 1:
   # Check if the state has changed, if it has, then post a user event to
   # the queue to force the menu to be shown at least once

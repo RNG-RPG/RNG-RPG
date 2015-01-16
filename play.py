@@ -60,7 +60,9 @@ def start():
     i = 0
     screen.fill((0,0,0))
     pygame.display.update()
-
+    
+    pygame.mixer.music.load("sounds/BKGmusic/MenuTitle/Sunnybreeze.wav")
+    pygame.mixer.music.play(-1,0)
     
     while i < 72:
             images.append( str(i) )
@@ -96,6 +98,10 @@ def start():
             
 # MAIN ROOM FUNCTION (temp)
 def main():
+    
+    pygame.mixer.music.load("sounds/BKGmusic/TownBoss/VictoryAtLast.wav")
+    pygame.mixer.music.play(-1,0)
+    
     pygame.event.set_allowed(pygame.MOUSEMOTION)
     pygame.mouse.get_focused
     dead = False

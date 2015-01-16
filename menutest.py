@@ -599,34 +599,32 @@ class cMenu:
       o = self.orientation
       s = self.selection
       n = self.change_number
+      
+      buttonsound = pygame.mixer.Sound("sounds/buttonclick.wav")
 
-      if e.key == pygame.K_DOWN:
+      if e.key == pygame.K_DOWN or e.key == pygame.K_s:
+         buttonsound.play()
          if (o == 'vertical') and ((s + 1) % n != 0):
             self.selection += 1
          elif o == 'horizontal':
             self.selection += n
-      elif e.key == pygame.K_UP:
+      elif e.key == pygame.K_UP or e.key == pygame.K_w:
+         buttonsound.play()
          if (o == 'vertical') and ((s) % n != 0):
             self.selection -= 1
          elif o == 'horizontal':
             self.selection -= n
-      elif e.key == pygame.K_RIGHT:
+      elif e.key == pygame.K_RIGHT or e.key == pygame.K_d:
          if o == 'vertical':
             self.selection += n
          elif (o == 'horizontal') and ((s + 1) % n != 0):
             self.selection += 1
-      elif e.key == pygame.K_LEFT:
+      elif e.key == pygame.K_LEFT or e.key == pygame.K_a:
          if o == 'vertical':
             self.selection -= n
          elif (o == 'horizontal') and ((s) % n != 0):
             self.selection -= 1
-      elif e.key == pygame.K_r:
-         original_contained_rect = self.remove_buttons([s])
-         if self.selection -1 >= 0:
-            self.selection -= 1
-            self.selection_prev -= 1
-         redraw_full_menu = True
-      elif e.key == pygame.K_RETURN:
+      elif e.key == pygame.K_RETURN or e.key == pygame.K_SPACE:
          return [None], self.menu_items[s]['state']
 
       if self.selection >= len(self.menu_items) or self.selection < 0:
