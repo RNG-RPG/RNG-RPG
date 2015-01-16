@@ -8,7 +8,7 @@
 import sys, pygame, random, os, os.path, glob, itertools, ntpath
 from random import shuffle
 from pygame.locals import *
-from menutest import *
+from menu import *
 from image import *
 import play
 
@@ -24,6 +24,7 @@ def main(WIDTH,HEIGHT):
   pygame.init()
   pygame.mixer.pre_init()
   rain = pygame.mixer.Sound("sounds/rain.wav")
+  beginsound= pygame.mixer.Sound("sounds/begin.wav")
   
   # Create a window of 800x600 pixels
   clock = pygame.time.Clock()
@@ -112,6 +113,7 @@ def main(WIDTH,HEIGHT):
         rect_list, state = menu0.update(e, state)
       elif state == 1:
         rain.stop()
+        beginsound.play()
         play.main()
       elif state == 2:
         rect_list, state = menu2.update(e, state)

@@ -1,7 +1,7 @@
 #! /usr/bin/python
 
 import os, pygame
-from menutest import *
+from menu import *
 
 # ---[ READ THE NOTE - THIS IS NOT PART OF THE EXAMPLE ]------------------------
 # NOTE!  This function is PURPOSELY not commented since it is not part of this

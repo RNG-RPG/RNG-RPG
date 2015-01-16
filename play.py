@@ -146,6 +146,7 @@ def main():
     arrowready = pygame.mixer.Sound("sounds/arrowshot.wav")
     footsteps = pygame.mixer.Sound("sounds/footsteps.wav")
     deathsound = pygame.mixer.Sound("sounds/death.wav")
+    slimedeath = pygame.mixer.SOund("sounds/slimedeath.wav")
     	
     #making the target move
     pygame.event.pump()
@@ -384,6 +385,7 @@ def main():
                     refresh.append( background.get_rect() )
                     print ( "r is hit" )
                     reset(background)
+                    loopdeath = 0
                     dFrame = herod[1]
                     for enem in enemies:
                         enem.changeRect(enem.getOriginalRect())
