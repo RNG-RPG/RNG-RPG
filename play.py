@@ -448,14 +448,14 @@ def main():
                 enem.setAggro(True)
                 if enem.getRect().bottom < hero_Rect.centery and enem.isDead() != True:
                     enem.setVSpeed(1)
-                    enem.movesound.play()
+
                 elif enem.getRect().top > hero_Rect.centery and enem.isDead() != True:
                     enem.setVSpeed(-1)
                 else:
                     enem.setVSpeed(0)
                 if enem.getRect().right < hero_Rect.centerx and enem.isDead() != True:
                     enem.setHSpeed(1)
-                    enem.movesound.play()
+                    
                 elif enem.getRect().left > hero_Rect.centerx and enem.isDead() != True:
                     enem.setHSpeed(-1)
                 else:

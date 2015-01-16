@@ -171,22 +171,25 @@ class Slime(Enemy):
 		super(Slime,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
 		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
+		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.deadcount= 0
 
 class Dragon(Enemy):
 	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
 		super(Dragon,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
-		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
+		self.deathsound = pygame.mixer.Sound("sounds/dragondeath.wav")
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
+		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.deadcount= 0
 	
 class Voodoo(Enemy):
 	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
 		super(Voodoo,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
-		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
+		self.deathsound = pygame.mixer.Sound("sounds/voodoodeath.wav")
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
+		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.deadcount= 0
 	
@@ -194,8 +197,9 @@ class Voodoo(Enemy):
 class Squirrel(Enemy):
 	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
 		super(Squirrel,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
-		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
+		self.deathsound = pygame.mixer.Sound("sounds/squirreldeath.wav")
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
+		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.deadcount= 0
 	
