@@ -129,6 +129,7 @@ def main():
     
 
     background = pygame.image.load( "RockGround2.png" ).convert_alpha()
+    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     left_side = pygame.image.load( "rock_sides.png" ).convert_alpha()
     right_side = pygame.image.load( "rock_sides.png" ).convert_alpha()
     top_side = pygame.image.load( "rock_top.png" ).convert_alpha()
@@ -615,8 +616,6 @@ def main():
                 enem.deadcount += 1
                 if enem.deadcount == 1:
                 	enem.deathsound.set_volume(1)
-                	bloodexplode.set_volume(.5)
-                	bloodexplode.play()
                 	enem.deathsound.play()
                 	
             
