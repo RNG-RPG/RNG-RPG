@@ -149,11 +149,12 @@ def main():
     arrowready = pygame.mixer.Sound("sounds/arrowready.wav")
     footsteps = pygame.mixer.Sound("sounds/footsteps.wav")
     deathsound = pygame.mixer.Sound("sounds/death.wav")
-
-    deathsound.set_volume(.5)
-    arrowshot.set_volume(.5)
+    
+    deathsound.set_volume(.6)
+    arrowshot.set_volume(.6)
     arrowready.set_volume(.5)
     footsteps.set_volume(1)
+    arrowhit.set_volume(.5)
 
     	
     #making the target move
@@ -308,10 +309,12 @@ def main():
                 mpos = pygame.mouse.get_pos()
                 target_Rect = target.get_rect().move( mpos[0], mpos[1] )
         
-            if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 30 and dead == False:
+            if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 15 and dead == False:
 
-                arrowready.play()
-                print "arrowready"
+                chan= pygame.mixer.find_channel(True)
+                chan.play(arrowready)
+                #arrowready.play()
+                print "arrowready",arrowready.get_num_channels()
                 attackDelay = True
                 attacktimer = 0
                 if arrownum < 9:
@@ -322,8 +325,10 @@ def main():
                 arrow[arrownum] = pygame.image.load( "arrow.png" ).convert_alpha()  
                 arrow[arrownum] = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
 
-                arrowshot.play()
-                print "arrowshot"
+                chan= pygame.mixer.find_channel(True)
+                chan.play(arrowshot)
+                #arrowshot.play()
+                print "arrowshot", arrowshot.get_num_channels()
                 if target_Rect.centerx - hero_Rect.centerx == 0:
                     arrowSpeedX[arrownum] = 0
                     arrowSpeedY[arrownum] = 10
@@ -363,26 +368,26 @@ def main():
             if event.type == pygame.KEYDOWN and dead != True:
                 key = pygame.key.get_pressed()
                 if key[pygame.K_w] and wOn:
-                    footsteps.play()
-                    print "footsteps up"
+                    footsteps.play(maxtime=1200)
+                    print "footsteps up", footsteps.get_num_channels()
                     print "W"
                     vertSpeed-=1
                     wOn=False
                 if key[pygame.K_a] and aOn:
-                    footsteps.play()
-                    print "footsteps left"
+                    footsteps.play(maxtime=1200)
+                    print "footsteps left", footsteps.get_num_channels()
                     print "A"
                     hoSpeed-=1
                     aOn=False
                 if key[pygame.K_s] and sOn:
-                    footsteps.play()
-                    print "footsteps down"
+                    footsteps.play(maxtime=1200)
+                    print "footsteps down", footsteps.get_num_channels()
                     print "S"
                     vertSpeed+=1
                     sOn=False
                 if key[pygame.K_d] and dOn:
-                    footsteps.play()
-                    print "footsteps right"
+                    footsteps.play(maxtime=1200)
+                    print "footsteps right", footsteps.get_num_channels()
                     print "D"
                     hoSpeed+=1
                     dOn=False
@@ -487,18 +492,14 @@ def main():
             while k < 10:
                 if arrowOn[k] == True:
 
-                    if arrow_rects[k].colliderect( enem.getRect() ) and enem.isDead() != True:
-                        if enem.isAggro() != True:
-                            enem.setAggro(True)
-                        arrowhit.play()
-                        print "arrowhit"
-
                     if arrow_rects[k].colliderect( enem.getRect() ) and not enem.isDead():
                         if enem.isAggro() != True:
                             enem.setAggro(True)
 
-                        arrowhit.play()
-                        print "arrowhit"
+                        chan= pygame.mixer.find_channel(True)
+                        chan.play(arrowhit)
+                        #arrowhit.play()
+                        print "arrowhit", arrowhit.get_num_channels()
                         enem.changeHP(-1)
                         refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
                         enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
@@ -577,7 +578,7 @@ def main():
                         dFrame = herour[counter]
                         counter = (counter + 1) % 4
                         direction=herour
-                #attack frames
+            #attack frames
             elif attackDelay == True:
                 if target_Rect.centerx < hero_Rect.centerx:
                     if angle < 1.6 and angle > 1.15:
@@ -609,8 +610,10 @@ def main():
                 attackDelay=False
         else:
         	   if loopdeath == 0:
-        	   	 deathsound.play()
-        	   	 print "deathsound character"
+        	   	 chan= pygame.mixer.find_channel(True)
+        	   	 chan.play(deathsound)
+        	   	 #deathsound.play()
+        	   	 print "deathsound character", deathsound.get_num_channels()
         	   	 loopdeath += 1
         	   
         #enemy animations!
@@ -622,12 +625,14 @@ def main():
                 enem.changeSprite(-1)
                 
                 if enem.deadcount == 0:
-                	enem.deathsound.play()
-                	print "deathsound enemy"
+                	#print "deadcount at death", enem.deadcount
+                	chan = pygame.mixer.find_channel(True)
+                	chan.play(enem.deathsound)
+                	#enem.deathsound.play()
+                	print "deathsound enemy",enem.deathsound.get_num_channels()
                 	enem.deadcount += 1
-                	print "at death", enem.deadcount
+                	#print "deadcount after death", enem.deadcount
                 	
-            
         screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
         for enem in enemies:
             screen.blit( enemySprites, (enem.getRect().x+enem.getxDev(),enem.getRect().y+enem.getyDev()), enem.getCurrentSprite()) 
