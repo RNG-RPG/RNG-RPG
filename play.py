@@ -127,7 +127,8 @@ def main():
         
     clock = pygame.time.Clock()
 
-    
+    #Character stats
+    attspeed = 10  
 
     background = pygame.image.load( "RockGround2.png" ).convert_alpha()
     background = pygame.transform.scale(background, (WIDTH, HEIGHT))
@@ -309,7 +310,7 @@ def main():
                 mpos = pygame.mouse.get_pos()
                 target_Rect = target.get_rect().move( mpos[0], mpos[1] )
         
-            if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 15 and dead == False:
+            if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= attspeed and dead == False:
 
                 chan= pygame.mixer.find_channel(True)
                 chan.play(arrowready)
