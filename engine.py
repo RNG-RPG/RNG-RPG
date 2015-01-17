@@ -136,10 +136,6 @@ class engine:
 		   time=-1
 		   
 	    self.screen.blit( heroSprites, (50, 50), dFrame  )
-	    if self.room.enemies == None:
-		   endgame = pygame.image.load( "images/congrats.png" ).convert_alpha()
-		   endgame = pygame.transform.scale(endgame, (WIDTH, HEIGHT))
-		   self.screen.blit( endgame, (0,0) )
 		   
 	    for enem in self.room.enemies:
 		   self.screen.blit( self.room.enemySprites, (enem.getRect().x, enem.getRect().y), enem.getCurrentSprite())
@@ -584,10 +580,7 @@ class engine:
 		       if self.room.right_side != None:
 			      right_Rect = self.room.right_side.get_rect().move(self.width-50, 0)
 		       
-		       if self.room.left_side == None:
-		           hero_Rect = pygame.Rect(50, 50, 87, 102)
-		       elif self.room.right_side == None:
-		           hero_Rect = pygame.Rect(self.width-50, self.height-50,87,102)
+		       hero_Rect = pygame.Rect(50, 100, 87, 102)
 		       
 		       pygame.mixer.music.load(self.room.music)
 		       pygame.mixer.music.play(-1,0)

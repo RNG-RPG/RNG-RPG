@@ -146,7 +146,7 @@ class secondroom:
 		self.height = height
 		self.background = pygame.image.load( "RockGround2.png" ).convert_alpha()
 		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.left_side = None
+		self.left_side = pygame.image.load( "rock_sides.png" ).convert_alpha()
 		self.right_side = pygame.image.load( "rock_sides.png" ).convert_alpha()
 		self.top_side = pygame.image.load( "rock_top.png" ).convert_alpha()
 		self.bottom_side = pygame.image.load( "rock_top.png" ).convert_alpha()
