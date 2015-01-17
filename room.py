@@ -219,9 +219,7 @@ class secondroom:
         self.screen.blit( self.right_side, (self.width-50, 0) )
         self.screen.blit( self.top_side, (0,0) )
         self.screen.blit( self.bottom_side, (0, self.height-50) )
-        enemlist = self.enemies
-        self.enemies= []
-        self.enemies= enemlist
+       
         
     def judge(self, hero_Rect):
         if hero_Rect.x < 0:

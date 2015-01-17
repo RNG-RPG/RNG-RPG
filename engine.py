@@ -13,10 +13,19 @@ class engine:
         self.height = height
         self.screen = screen
         self.clock = clock
-        self.level = 0
+        self.rooms = []
+        self.roomNum = 0
+        self.level = 1
         
         #Character stats
         self.attspeed = 10 
+        
+    def getScreen(self):
+        return self.screen
+    def getWidth(self):
+        return self.width
+    def getHeight(self):
+        return self.height
         
     # collision checker 
     def pathCollide(self, object_rect, agent_rect, refresh_List ):
@@ -42,15 +51,21 @@ class engine:
                #print( "colliding with top" )
                agent_rect.top = object_rect.bottom
     
+    #caches to remember room states
+    def setUpRooms(self):
+        self.rooms = []
+        if self.level == 1:
+            self.rooms.append(room.firstroom(self.getScreen(), self.getWidth(), self.getHeight()))
+            self.rooms.append(room.secondroom(self.getScreen(), self.getWidth(), self.getHeight()))
     def setState(self):
         if self.state == "tutorial":
             self.room = room.tutorial(self.screen, self.width, self.height)
         if self.state == "main":
-            if self.level == 0:
-                self.room = room.firstroom(self.screen, self.width, self.height)
-            elif self.level == 1:
-                self.room = room.secondroom(self.screen, self.width, self.height)
-    
+            if self.roomNum == 0:
+                self.room = self.rooms[0]
+                
+            elif self.roomNum == 1:
+                self.room = self.rooms[1]
     def reset(self):
            self.room.reset()
            
@@ -100,6 +115,7 @@ class engine:
         target = pygame.transform.scale(target, (50, 50))
         target_Rect = target.get_rect().move( mpos[0], mpos[1] )
         
+        self.setUpRooms()
         self.setState()
         self.reset()
                  
@@ -549,9 +565,10 @@ class engine:
            
             refresh = []
             
+            #Room transitions
             if hero_Rect.x > self.width or hero_Rect.x < 0 or hero_Rect.y > self.height or hero_Rect.y < 0:
-                self.level = self.room.judge(hero_Rect)
-                print "LEVEL", self.level
+                self.roomNum = self.room.judge(hero_Rect)
+                print "ROOM: ", self.roomNum + 1
                 self.setState()
                 self.reset()
                 pygame.display.update()

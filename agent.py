@@ -86,7 +86,8 @@ class Enemy(object):
                 self.internalDClock = 0
             if self.hoSpeed == 0 and self.vertSpeed == 0:
                 if self.internalDClock >59:
-                    self.directionalCache = self.spriteMap[(self.idleCounter+1) % 2]
+                    self.idleCounter = (self.idleCounter+1) % 2
+                    self.directionalCache = self.spriteMap[self.idleCounter]
             else:
                 self.internalMClock += 1
                 if self.internalMClock > 29:
