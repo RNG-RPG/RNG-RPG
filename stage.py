@@ -1,3 +1,6 @@
+# created by Raymond Chung
+# file  stage.py
+
 # imports
 import sys, pygame, math, agent, os
 import titlescreen, stage
