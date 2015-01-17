@@ -583,7 +583,14 @@ class engine:
 		           left_Rect = self.room.left_side.get_rect()   
 		       if self.room.right_side != None:
 			      right_Rect = self.room.right_side.get_rect().move(self.width-50, 0)
-		       hero_Rect = pygame.Rect(50, 50, 87, 102)
+		       
+		       if self.room.left_side == None:
+		           hero_Rect = pygame.Rect(50, 50, 87, 102)
+		       elif self.room.right_side == None:
+		           hero_Rect = pygame.Rect(self.width-50, self.height-50,87,102)
+		       
+		       pygame.mixer.music.load(self.room.music)
+		       pygame.mixer.music.play(-1,0)
 		       
 		   
 		   self.clock.tick(30)

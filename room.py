@@ -32,31 +32,30 @@ class tutorial:
 		self.frameCounter = -1
 		dragond = [(0, 0, 114, 154), (114, 0, 114, 154), (214, 0, 114, 154)]
 		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyDragon = agent.Dragon(10, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 34, 74), 10)
+		enemyDragon = agent.Dragon([(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 34, 74), 10)
 		enemyDragon.setDev(-40, -40)
 
-		enemySlime = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 400, 10, 10), 5)
+		enemySlime = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 400, 10, 10), 5)
 		enemySlime.setDev(-20, -20)
-		enemySlime2 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 350, 10, 10), 5)
+		enemySlime2 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 350, 10, 10), 5)
 		enemySlime2.setDev(-20, -20)
-		enemySlime3 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 350, 10, 10), 5)
+		enemySlime3 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 350, 10, 10), 5)
 		enemySlime3.setDev(-20, -20)
-		enemySlime4 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 450, 10, 10), 5)
+		enemySlime4 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 450, 10, 10), 5)
 		enemySlime4.setDev(-20, -20)
-		enemySlime5 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 300, 10, 10), 5)
+		enemySlime5 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 300, 10, 10), 5)
 		enemySlime5.setDev(-20, -20)
-		enemySlime6 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 500, 10, 10), 5)
+		enemySlime6 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 500, 10, 10), 5)
 
 		enemySlime6.setDev(-20, -20)
 
 		#directional facing sprites require more complexity
-		enemyVoodoo = agent.Voodoo(5, [(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
+		enemyVoodoo = agent.Voodoo([(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
 				             (336, 229, 55, 66), (392, 229, 55, 66), (448, 229, 55, 66)], pygame.Rect(1000, 100, 36, 46), 6, True)
 		enemyVoodoo.setDev(-10,-10)        
-		enemySquirrel = agent.Squirrel( 2, [(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
+		enemySquirrel = agent.Squirrel([(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
 				                (99, 295, 34, 36), (99, 295, 34, 36), (99, 295, 34, 36)], pygame.Rect(950, 500, 10, 12), 20, True)
 		enemySquirrel.setDev(-12,-12)
-		enemySquirrel.setSpeed(5)
 
 		self.enemies = [enemyDragon, enemySlime, enemySlime2, enemySlime3, enemySlime4, enemySlime5, enemySlime6, enemyVoodoo, enemySquirrel]
 		
@@ -82,7 +81,7 @@ class firstroom:
 		
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/TownBoss/VictoryAtLast.wav"
+		self.music= "sounds/BKGmusic/Cave/MagmaWormHunt.wav"
 		
 		self.width = width
 		self.height = height
@@ -104,32 +103,21 @@ class firstroom:
 		self.frameCounter = -1
 		dragond = [(0, 0, 114, 154), (114, 0, 114, 154), (214, 0, 114, 154)]
 		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyDragon = agent.Dragon(10, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 34, 74), 10)
-		enemyDragon.setDev(-40, -40)
 
-		enemySlime = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(400, 400, 10, 10), 5)
+		enemySlime = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 400, 10, 10), 5)
 		enemySlime.setDev(-20, -20)
-		enemySlime2 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(500, 350, 10, 10), 5)
+		enemySlime2 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 350, 10, 10), 5)
 		enemySlime2.setDev(-20, -20)
-		enemySlime3 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(600, 350, 10, 10), 5)
+		enemySlime3 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(600, 350, 10, 10), 5)
 		enemySlime3.setDev(-20, -20)
-		enemySlime4 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(710, 450, 10, 10), 5)
+		enemySlime4 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(720, 450, 10, 10), 5)
 		enemySlime4.setDev(-20, -20)
-		enemySlime5 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(730, 300, 10, 10), 5)
+		enemySlime5 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(740, 300, 10, 10), 5)
 		enemySlime5.setDev(-20, -20)
-		enemySlime6 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(810, 500, 10, 10), 5)
+		enemySlime6 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(820, 500, 10, 10), 5)
 		enemySlime6.setDev(-20, -20)
 
-		#directional facing sprites require more complexity
-		enemyVoodoo = agent.Voodoo(5, [(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
-				             (336, 229, 55, 66), (392, 229, 55, 66), (448, 229, 55, 66)], pygame.Rect(1000, 100, 36, 46), 6, True)
-		enemyVoodoo.setDev(-10,-10)        
-		enemySquirrel = agent.Squirrel( 2, [(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
-				                (99, 295, 34, 36), (99, 295, 34, 36), (99, 295, 34, 36)], pygame.Rect(950, 500, 10, 12), 20, True)
-		enemySquirrel.setDev(-12,-12)
-		enemySquirrel.setSpeed(5)
-
-		self.enemies = [enemyDragon, enemySlime, enemySlime2, enemySlime3, enemySlime4, enemySlime5, enemySlime6, enemyVoodoo, enemySquirrel]
+		self.enemies = [enemySlime, enemySlime2, enemySlime3, enemySlime4, enemySlime5, enemySlime6]
 		
 		self.screen.blit( self.rock, (self.rockx[0], self.rocky[0]) )
 	
@@ -152,7 +140,7 @@ class secondroom:
 		
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/TownBoss/VictoryAtLast.wav"
+		self.music= "sounds/BKGmusic/CaveBoss/FiresOfHell.wav"
 		
 		self.width = width
 		self.height = height
@@ -174,44 +162,39 @@ class secondroom:
 		self.frameCounter = -1
 		dragond = [(0, 0, 114, 154), (114, 0, 114, 154), (214, 0, 114, 154)]
 		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyDragon = agent.Dragon(10, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 34, 74), 10)
+		enemyDragon = agent.Dragon([(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(500, 100, 34, 74), 10)
 		enemyDragon.setDev(-40, -40)
 		
-		enemySlime = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(400, 400, 10, 10), 5)
+		enemySlime = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(400, 400, 10, 10), 5)
 		enemySlime.setDev(-20, -20)
-		enemySlime2 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(450, 350, 10, 10), 5)
+		enemySlime2 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(450, 350, 10, 10), 5)
 		enemySlime2.setDev(-20, -20)
-		enemySlime3 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(470, 350, 10, 10), 5)
+		enemySlime3 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(470, 350, 10, 10), 5)
 		enemySlime3.setDev(-20, -20)
-		enemySlime4 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(480, 450, 10, 10), 5)
+		enemySlime4 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(480, 450, 10, 10), 5)
 		enemySlime4.setDev(-20, -20)
-		enemySlime5 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(510, 300, 10, 10), 5)
+		enemySlime5 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(510, 300, 10, 10), 5)
 		enemySlime5.setDev(-20, -20)
-		enemySlime6 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(530, 500, 10, 10), 5)
+		enemySlime6 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(530, 500, 10, 10), 5)
 		enemySlime6.setDev(-20, -20)
-		enemySlime7 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 400, 10, 10), 5)
+		enemySlime7 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 400, 10, 10), 5)
 		enemySlime7.setDev(-20, -20)
-		enemySlime8 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 350, 10, 10), 5)
+		enemySlime8 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 350, 10, 10), 5)
 		enemySlime8.setDev(-20, -20)
-		enemySlime9 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 350, 10, 10), 5)
+		enemySlime9 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 350, 10, 10), 5)
 		enemySlime9.setDev(-20, -20)
-		enemySlime10 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 450, 10, 10), 5)
+		enemySlime10 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(900, 450, 10, 10), 5)
 		enemySlime10.setDev(-20, -20)
-		enemySlime11 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 300, 10, 10), 5)
+		enemySlime11 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(700, 300, 10, 10), 5)
 		enemySlime11.setDev(-20, -20)
-		enemySlime12 = agent.Slime(3,  [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 500, 10, 10), 5)
+		enemySlime12 = agent.Slime([(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], pygame.Rect(800, 500, 10, 10), 5)
 		enemySlime12.setDev(-20, -20)
 
-		#directional facing sprites require more complexity
-		enemyVoodoo = agent.Voodoo(5, [(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
-				             (336, 229, 55, 66), (392, 229, 55, 66), (448, 229, 55, 66)], pygame.Rect(1000, 100, 36, 46), 6, True)
-		enemyVoodoo.setDev(-10,-10)        
-		enemySquirrel = agent.Squirrel( 2, [(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
+		enemySquirrel = agent.Squirrel([(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
 				                (99, 295, 34, 36), (99, 295, 34, 36), (99, 295, 34, 36)], pygame.Rect(950, 500, 10, 12), 20, True)
 		enemySquirrel.setDev(-12,-12)
-		enemySquirrel.setSpeed(5)
 
-		self.enemies = [enemyDragon, enemySlime, enemySlime2, enemySlime3, enemySlime4, enemySlime5, enemySlime6, enemySlime7, enemySlime8, enemySlime9, enemySlime10, enemySlime11, enemySlime12, enemyVoodoo, enemySquirrel]
+		self.enemies = [enemyDragon, enemySlime, enemySlime2, enemySlime3, enemySlime4, enemySlime5, enemySlime6, enemySlime7, enemySlime8, enemySlime9, enemySlime10, enemySlime11, enemySlime12, enemySquirrel]
 			
 		self.screen.blit( self.rock, (self.rockx[0], self.rocky[0]) )
 	

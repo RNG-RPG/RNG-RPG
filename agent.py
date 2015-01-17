@@ -170,39 +170,42 @@ class Enemy(object):
         
 
 class Slime(Enemy):
-	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
-		super(Slime,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
+	def __init__ (self, spriteMap, rect, animSpeed, directionSprites=False):
+		super(Slime,self).__init__(3, spriteMap, rect, animSpeed, directionSprites)
 		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
-		self.deadcount= 0
+		self.setSpeed(3)
 
 class Dragon(Enemy):
-	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
-		super(Dragon,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
+	def __init__ (self, spriteMap, rect, animSpeed, directionSprites=False):
+		super(Dragon,self).__init__(20, spriteMap, rect, animSpeed, directionSprites)
 		self.deathsound = pygame.mixer.Sound("sounds/dragondeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
+		self.setSpeed(1)
 		
 class Voodoo(Enemy):
-	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
-		super(Voodoo,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
+	def __init__ (self, spriteMap, rect, animSpeed, directionSprites=False):
+		super(Voodoo,self).__init__(5, spriteMap, rect, animSpeed, directionSprites)
 		self.deathsound = pygame.mixer.Sound("sounds/voodoodeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
+		self.setSpeed(2)
 	
 class Squirrel(Enemy):
-	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
-		super(Squirrel,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
+	def __init__ (self, spriteMap, rect, animSpeed, directionSprites=False):
+		super(Squirrel,self).__init__(2, spriteMap, rect, animSpeed, directionSprites)
 		self.deathsound = pygame.mixer.Sound("sounds/squirreldeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
+		self.setSpeed(5)
 	
