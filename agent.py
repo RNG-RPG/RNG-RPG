@@ -69,6 +69,7 @@ class Enemy(object):
         self.idleCounter = 0
         self.directionalCache = self.spriteMap[0]
         self.aggro = False
+        self.deadcount= 0
         
     def isDirectional(self):
         return self.directional
@@ -164,12 +165,15 @@ class Enemy(object):
         self.HP = self.maxHP
         self.hoSpeed = 0
         self.vertSpeed = 0
-        self.setAggro = False
+        self.setAggro(False)
+        self.deadcount= 0
+        
 
 class Slime(Enemy):
 	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
 		super(Slime,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
 		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
+		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
@@ -179,27 +183,26 @@ class Dragon(Enemy):
 	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
 		super(Dragon,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
 		self.deathsound = pygame.mixer.Sound("sounds/dragondeath.wav")
+		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
-		self.deadcount= 0
-	
+		
 class Voodoo(Enemy):
 	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
 		super(Voodoo,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
 		self.deathsound = pygame.mixer.Sound("sounds/voodoodeath.wav")
+		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
-		self.deadcount= 0
 	
-
 class Squirrel(Enemy):
 	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
 		super(Squirrel,self).__init__(hp, spriteMap, rect, animSpeed, directionSprites)
 		self.deathsound = pygame.mixer.Sound("sounds/squirreldeath.wav")
+		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
-		self.deadcount= 0
 	

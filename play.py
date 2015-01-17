@@ -11,6 +11,7 @@ import titlescreen
 # initialize
 pygame.mixer.pre_init()
 pygame.init()
+pygame.mixer.init()
 
 # initialize the fonts
 try:
@@ -145,13 +146,14 @@ def main():
 
     arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
     arrowshot = pygame.mixer.Sound("sounds/arrowshot.wav")
-    arrowready = pygame.mixer.Sound("sounds/arrowshot.wav")
+    arrowready = pygame.mixer.Sound("sounds/arrowready.wav")
     footsteps = pygame.mixer.Sound("sounds/footsteps.wav")
     deathsound = pygame.mixer.Sound("sounds/death.wav")
 
-    bloodexplode = pygame.mixer.Sound("sounds/bloodexplode.wav")
-
-    slimedeath = pygame.mixer.Sound("sounds/slimedeath.wav")
+    deathsound.set_volume(.5)
+    arrowshot.set_volume(.5)
+    arrowready.set_volume(.5)
+    footsteps.set_volume(1)
 
     	
     #making the target move
@@ -307,8 +309,9 @@ def main():
                 target_Rect = target.get_rect().move( mpos[0], mpos[1] )
         
             if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= 30 and dead == False:
-                arrowready.set_volume(.5)
+
                 arrowready.play()
+                print "arrowready"
                 attackDelay = True
                 attacktimer = 0
                 if arrownum < 9:
@@ -316,12 +319,11 @@ def main():
                 else:
                     arrownum = 0
 
-                arrow[arrownum] = pygame.image.load( "arrow.png" ).convert_alpha() 
-                arrowshot.set_volume(.5)
-
+                arrow[arrownum] = pygame.image.load( "arrow.png" ).convert_alpha()  
                 arrow[arrownum] = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
 
                 arrowshot.play()
+                print "arrowshot"
                 if target_Rect.centerx - hero_Rect.centerx == 0:
                     arrowSpeedX[arrownum] = 0
                     arrowSpeedY[arrownum] = 10
@@ -361,23 +363,26 @@ def main():
             if event.type == pygame.KEYDOWN and dead != True:
                 key = pygame.key.get_pressed()
                 if key[pygame.K_w] and wOn:
-                    footsteps.set_volume(1)
                     footsteps.play()
+                    print "footsteps up"
                     print "W"
                     vertSpeed-=1
                     wOn=False
                 if key[pygame.K_a] and aOn:
                     footsteps.play()
+                    print "footsteps left"
                     print "A"
                     hoSpeed-=1
                     aOn=False
                 if key[pygame.K_s] and sOn:
                     footsteps.play()
+                    print "footsteps down"
                     print "S"
                     vertSpeed+=1
                     sOn=False
                 if key[pygame.K_d] and dOn:
                     footsteps.play()
+                    print "footsteps right"
                     print "D"
                     hoSpeed+=1
                     dOn=False
@@ -446,7 +451,8 @@ def main():
         # enemy AI, deciding where it needs to move
         for enem in enemies:
             if math.sqrt((enem.getRect().centerx - hero_Rect.centerx)**2 + (enem.getRect().centery - hero_Rect.centery)**2) < 400 or enem.isAggro():
-                enem.setAggro(True)
+                if enem.isAggro() != True:
+                	enem.setAggro(True)
                 if enem.getRect().bottom < hero_Rect.centery and enem.isDead() != True:
                     enem.setVSpeed(1)
 
@@ -482,16 +488,17 @@ def main():
                 if arrowOn[k] == True:
 
                     if arrow_rects[k].colliderect( enem.getRect() ) and enem.isDead() != True:
-                        print "before", enem.isAggro()
                         if enem.isAggro() != True:
                             enem.setAggro(True)
-                            print "after", enem.isAggro()
-                        arrowhit.set_volume(.5)
+                        arrowhit.play()
+                        print "arrowhit"
 
                     if arrow_rects[k].colliderect( enem.getRect() ) and not enem.isDead():
-                        enem.setAggro(True)
+                        if enem.isAggro() != True:
+                            enem.setAggro(True)
 
                         arrowhit.play()
+                        print "arrowhit"
                         enem.changeHP(-1)
                         refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
                         enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
@@ -602,8 +609,8 @@ def main():
                 attackDelay=False
         else:
         	   if loopdeath == 0:
-        	   	 deathsound.set_volume(.5)
         	   	 deathsound.play()
+        	   	 print "deathsound character"
         	   	 loopdeath += 1
         	   
         #enemy animations!
@@ -613,10 +620,12 @@ def main():
                     enem.changeSprite((enem.getSpriteNumber()+1) % (len(enem.getSprites())-1))
             else:
                 enem.changeSprite(-1)
-                enem.deadcount += 1
-                if enem.deadcount == 1:
-                	enem.deathsound.set_volume(1)
+                
+                if enem.deadcount == 0:
                 	enem.deathsound.play()
+                	print "deathsound enemy"
+                	enem.deadcount += 1
+                	print "at death", enem.deadcount
                 	
             
         screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
