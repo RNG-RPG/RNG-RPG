@@ -113,7 +113,7 @@ class engine:
         
         target = pygame.image.load( "sprites/AimingPointer.png" ).convert_alpha()
         target = pygame.transform.scale(target, (50, 50))
-        target_Rect = target.get_rect().move( mpos[0], mpos[1] )
+        target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
         
         self.setUpRooms()
         self.setState()
@@ -217,7 +217,7 @@ class engine:
                 if event.type == pygame.MOUSEMOTION:
                     pygame.mouse.set_visible(False)
                     mpos = pygame.mouse.get_pos()
-                    target_Rect = target.get_rect().move( mpos[0], mpos[1] )
+                    target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
            
                 if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False:
 
@@ -231,8 +231,7 @@ class engine:
                         arrownum += 1
                     else:
                         arrownum = 0
-
-                    arrow[arrownum] = pygame.image.load( "arrow.png" ).convert_alpha()  
+  
                     arrow[arrownum] = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
 
                     chan= pygame.mixer.find_channel(True)
