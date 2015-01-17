@@ -7,7 +7,7 @@ import titlescreen, room
 		    
 class tutorial:		   
 	def __init__ (self, screen, width, height):
-		
+		self.identity = 0
 		self.screen= screen
 		
 		self.music= "sounds/BKGmusic/TownBoss/VictoryAtLast.wav"
@@ -74,11 +74,17 @@ class tutorial:
 		enemlist = self.enemies
 		self.enemies= []
 		self.enemies= enemlist
+	
+	def judge(self):
+		return 0
+			
+	def enter(self):		
+		return pygame.Rect(50, 100, 87, 102)
 		
 
 class firstroom:		   
 	def __init__ (self, screen, width, height):
-		
+		self.identity = 1
 		self.screen= screen
 		
 		self.music= "sounds/BKGmusic/Cave/MagmaWormHunt.wav"
@@ -133,11 +139,18 @@ class firstroom:
 		enemlist = self.enemies
 		self.enemies= []
 		self.enemies= enemlist
+	
+	def judge(self):
+		if hero_Rect.x > self.width:
+			return self.identity+1
+			
+	def enter(self):		
+		return pygame.Rect(50, 100, 87, 102)
 		
 
 class secondroom:		   
 	def __init__ (self, screen, width, height):
-		
+		self.identity = 2
 		self.screen= screen
 		
 		self.music= "sounds/BKGmusic/CaveBoss/FiresOfHell.wav"
