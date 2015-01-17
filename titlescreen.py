@@ -51,29 +51,32 @@ def main(WIDTH,HEIGHT):
   # Create the menus. 
   menu0 = cMenu(HEIGHT/5, WIDTH/5, 20, 5, 'vertical', 100, screen,
               [('Play',      1, None),
-              ('Directions',         2, None),
-              ('Credits',         3, None),
+              ('Tutorial',      2, None),
+              ('Directions',         3, None),
+              ('Credits',         4, None),
               ('Exit',           9, None)])
 
   menu2 = cMenu(0, 0, 5, 5, 'vertical', 7, screen,
-              [("UP = W", 2, None),
-              ('DOWN = S', 2, None),
-              ('LEFT = D', 2, None),
-              ('RIGHT = A', 2, None),
-              ('ATTACK = Left Click', 2, None),
+              [("UP = W", 3, None),
+              ('DOWN = S', 3, None),
+              ('LEFT = D', 3, None),
+              ('RIGHT = A', 3, None),
+              ('ATTACK = Left Click', 3, None),
               ('Back', 0, None)])
 
-  menu3 = cMenu(HEIGHT/5, WIDTH/5, 20, 5, 'vertical', 7, screen,
-              [('PRODUCER - Larry Patrizio',         3, None),
-              ('LEAD GAME DESIGNER - Shawn Jiang',         3, None),
-              ('LEAD PROGRAMMER- Mathias Kallick',         3, None),
-              ('LEAD ARTIST- Ed Zhou',         3, None),
-              ('LEAD SOUND SPECIALIST- Raymond Chung',         3, None),
+  menu3 = cMenu(0, 0, 20, 5, 'vertical', 20, screen,
+              [('PRODUCER - Larry Patrizio',               4, None),
+              ('LEAD GAME DESIGNER - Shawn Jiang',         4, None),
+              ('LEAD PROGRAMMER- Mathias Kallick',         4, None),
+              ('LEAD ARTIST- Ed Zhou',                     4, None),
+              ('LEAD SOUND SPECIALIST- Raymond Chung',     4, None),
+              ('',          4, None),
               ('Back',          0, None),
               ('Exit',               9, None)])
 
-  # Center menu2 at the center of the screen
+  # Place menus at the center of the screen
   menu2.set_center(True, True)
+  menu3.set_center(True, True)
 
   # Create the state variables (make them different so that the user event is
   # triggered at the start of the "while 1" loop so that the initial display
@@ -100,7 +103,7 @@ def main(WIDTH,HEIGHT):
       pygame.event.post(pygame.event.Event(EVENT_CHANGE_STATE, key = 0))
       prev_state = state
     
-      if state in [0, 1, 2, 3]:
+      if state in [0, 1, 2, 3, 4]:
       # Reset the screen before going to the next menu.  Also, put a
       # caption at the bottom to tell the user what is going one
         screen.blit(BKG[0],(0,0))
@@ -120,8 +123,11 @@ def main(WIDTH,HEIGHT):
         beginsound.play()
         play.main()
       elif state == 2:
-        rect_list, state = menu2.update(e, state)
+        rain.stop()
+        play.tutorial()
       elif state == 3:
+        rect_list, state = menu2.update(e, state)
+      elif state == 4:
         rect_list, state = menu3.update(e, state)
       elif state == 9:
         pygame.quit()
