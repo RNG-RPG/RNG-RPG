@@ -52,7 +52,7 @@ def main(WIDTH,HEIGHT):
   menu0 = cMenu(HEIGHT/5, WIDTH/5, 20, 5, 'vertical', 100, screen,
               [('Play',      1, None),
               ('Directions',         2, None),
-              ('Settings',         3, None),
+              ('Credits',         3, None),
               ('Exit',           9, None)])
 
   menu2 = cMenu(0, 0, 5, 5, 'vertical', 7, screen,
@@ -64,9 +64,12 @@ def main(WIDTH,HEIGHT):
               ('Back', 0, None)])
 
   menu3 = cMenu(HEIGHT/5, WIDTH/5, 20, 5, 'vertical', 7, screen,
-              [('Directions',         2, None),
+              [('PRODUCER - Larry Patrizio',         3, None),
+              ('LEAD GAME DESIGNER - Shawn Jiang',         3, None),
+              ('LEAD PROGRAMMER- Mathias Kallick',         3, None),
+              ('LEAD ARTIST- Ed Zhou',         3, None),
+              ('LEAD SOUND SPECIALIST- Raymond Chung',         3, None),
               ('Back',          0, None),
-              ('Play',            1, None),
               ('Exit',               9, None)])
 
   # Center menu2 at the center of the screen
