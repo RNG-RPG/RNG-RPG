@@ -6,7 +6,7 @@ main.py - holds the code necessary to display a background and the hero, for now
 
 # imports
 import sys, pygame, math, agent, os
-import titlescreen, engine, stage
+import titlescreen, engine, room
 
 # initialize
 pygame.mixer.pre_init()
@@ -111,7 +111,7 @@ def tutorial():
 # MAIN ROOM FUNCTION
 def main():
     clock = pygame.time.Clock()
-    mainengine  = engine.engine("tutorial", screen, clock, WIDTH,HEIGHT)
+    mainengine  = engine.engine("main", screen, clock, WIDTH,HEIGHT)
     mainengine.main()
     
 # main loop:

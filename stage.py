@@ -1,5 +1,5 @@
 # created by Raymond Chung
-# file  stage.py
+# file  room.py
 
 # imports
 import sys, pygame, math, agent, os

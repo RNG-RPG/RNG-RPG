@@ -3,7 +3,7 @@
 
 # imports
 import sys, pygame, math, agent, os
-import titlescreen, stage
+import titlescreen, room
 
 class engine:
 	
@@ -13,6 +13,7 @@ class engine:
 		self.height = height
 		self.screen = screen
 		self.clock = clock
+		self.level = 0
 		
 		#Character stats
 		self.attspeed = 10 
@@ -40,7 +41,19 @@ class engine:
 		       refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
 		       #print( "colliding with top" )
 		       agent_rect.top = object_rect.bottom
-
+	
+	def setState(self):
+	    if self.state == "tutorial":
+	        self.room = room.tutorial(self.screen, self.width, self.height)
+	    if self.state == "main":
+	        if self.level == 0:
+	            self.room = room.firstroom(self.screen, self.width, self.height)
+	        elif self.level == 1:
+	            self.room = room.secondroom(self.screen, self.width, self.height)
+	
+	def reset(self):
+		   self.room.reset()
+		   
 	def main(self):    
 	    pygame.event.set_allowed(pygame.MOUSEMOTION)
 	    pygame.mouse.get_focused
@@ -87,10 +100,10 @@ class engine:
 	    target = pygame.transform.scale(target, (50, 50))
 	    target_Rect = target.get_rect().move( mpos[0], mpos[1] )
 	    
-	    if self.state == "tutorial":
-		    self.stage = stage.tutorial(self.screen, self.width, self.height)
-	    
-	    pygame.mixer.music.load(self.stage.music)
+	    self.setState()
+	    self.reset()
+	             
+	    pygame.mixer.music.load(self.room.music)
     	    pygame.mixer.music.play(-1,0)
 	    
 	    
@@ -121,28 +134,38 @@ class engine:
 	    def timeReset():
 		   counter=0
 		   time=-1
-
-	    def reset():
-		   self.stage.reset()
 		   
 	    self.screen.blit( heroSprites, (50, 50), dFrame  )
-	    if self.stage.enemies == None:
+	    if self.room.enemies == None:
 		   endgame = pygame.image.load( "images/congrats.png" ).convert_alpha()
 		   endgame = pygame.transform.scale(endgame, (WIDTH, HEIGHT))
 		   self.screen.blit( endgame, (0,0) )
 		   
-	    for enem in self.stage.enemies:
-		   self.screen.blit( self.stage.enemySprites, (enem.getRect().x, enem.getRect().y), enem.getCurrentSprite())
+	    for enem in self.room.enemies:
+		   self.screen.blit( self.room.enemySprites, (enem.getRect().x, enem.getRect().y), enem.getCurrentSprite())
 	    
-	    reset()
+	    self.reset()
 
-	    if self.stage.rock != None:
-	        rock_Rect = self.stage.rock.get_rect().move(500, 180)
-	    hero_Rect = pygame.Rect(50, 50, 58, 68)
-	    top_Rect = self.stage.top_side.get_rect()
-	    bottom_Rect = self.stage.bottom_side.get_rect().move(0, 648)
-	    left_Rect = self.stage.left_side.get_rect()
-	    right_Rect = self.stage.right_side.get_rect().move(1242, 0)
+	    hero_Rect = pygame.Rect(150, 150, 58, 68)
+	    
+	    top_Rect = None
+	    bottom_Rect = None
+	    left_Rect = None
+	    right_Rect = None
+	    
+	    rock_Rects = []
+	    if self.room.rock != None:
+	        for i in range(len(self.room.rockx)):
+	            rock_Rect = self.room.rock.get_rect().move(self.room.rockx[i], self.room.rocky[i])
+	            rock_Rects.append(rock_Rect)
+	    if self.room.top_side != None:
+	        top_Rect = self.room.top_side.get_rect()
+	    if self.room.bottom_side != None:
+	        bottom_Rect = self.room.bottom_side.get_rect().move(0, self.height-50)
+	    if self.room.left_side != None:
+	        left_Rect = self.room.left_side.get_rect()
+	    if self.room.right_side != None:
+	        right_Rect = self.room.right_side.get_rect().move(self.width-50, 0)
 
 	    pygame.display.update()
 	    #Control limits 
@@ -154,9 +177,9 @@ class engine:
 	    while 1 == 1:
 		   
 		   #counts frames for animations
-		   self.stage.frameCounter += 1
-		   if self.stage.frameCounter == 29:
-			  self.stage.frameCounter = -1
+		   self.room.frameCounter += 1
+		   if self.room.frameCounter == 29:
+			  self.room.frameCounter = -1
 	    
 		   #Catches pygame event errors
 		   catch=pygame.key.get_pressed()
@@ -294,33 +317,42 @@ class engine:
 			  if event.type == pygame.KEYDOWN:
 				 key = pygame.key.get_pressed()
 				 if key[pygame.K_r]:
-				     refresh.append( self.stage.background.get_rect() )
+				     refresh.append( self.room.background.get_rect() )
 				     print ( "r is hit" )
-				     reset()
+				     self.reset()
 				     loopdeath = 0
 				     dFrame = herod[1]
 				     hero_Rect = pygame.Rect(50, 50, 87, 102)
-				     for enem in self.stage.enemies:
+				     for enem in self.room.enemies:
 				         enem.changeRect(enem.getOriginalRect())
 				         enem.ressurect()
 				     dead = False
 				     timeReset()
 				     direction=herod
-				     refresh.append( self.stage.background.get_rect() )
-				     refresh.append( self.stage.background.get_rect().move(648, 0) )
+				     refresh.append( self.room.background.get_rect() )
+				     refresh.append( self.room.background.get_rect().move(648, 0) )
 				 elif key[pygame.K_ESCAPE]:
 				     titlescreen.main(self.width,self.height)
 		   
 
 
 		   # collision checker
-		   self.pathCollide( rock_Rect, hero_Rect, refresh )
-		   self.pathCollide( top_Rect, hero_Rect, refresh )
-		   self.pathCollide( bottom_Rect, hero_Rect, refresh )
-		   self.pathCollide( left_Rect, hero_Rect, refresh )
-		   self.pathCollide( right_Rect, hero_Rect, refresh )
-		   for enem in self.stage.enemies:
-			  self.pathCollide( rock_Rect, enem.getRect(), refresh )
+		   if rock_Rects[0] != None:
+		       for i in range(len(rock_Rects)):
+		           self.pathCollide( rock_Rects[i], hero_Rect, refresh )
+		   if top_Rect != None:
+		       self.pathCollide( top_Rect, hero_Rect, refresh )
+		   if bottom_Rect != None:
+		       self.pathCollide( bottom_Rect, hero_Rect, refresh )
+		   if left_Rect != None:
+		       self.pathCollide( left_Rect, hero_Rect, refresh )
+		   if right_Rect != None:
+		       self.pathCollide( right_Rect, hero_Rect, refresh )
+		   
+		   for enem in self.room.enemies:
+			  if rock_Rects[0] != None:
+		           for i in range(len(rock_Rects)):
+		               self.pathCollide( rock_Rects[i], enem.Rect, refresh )
 		   """
 		   pathCollide( top_Rect, enemy_Rect, refresh )
 		   pathCollide( bottom_Rect, enemy_Rect, refresh )
@@ -329,7 +361,7 @@ class engine:
 		   """
 		   
 		   # enemy AI, deciding where it needs to move
-		   for enem in self.stage.enemies:
+		   for enem in self.room.enemies:
 			  if math.sqrt((enem.getRect().centerx - hero_Rect.centerx)**2 + (enem.getRect().centery - hero_Rect.centery)**2) < 400 or enem.isAggro():
 				 if enem.isAggro() != True:
 				 	enem.setAggro(True)
@@ -349,7 +381,7 @@ class engine:
 				     enem.setHSpeed(0)
 			  
 		   # enemy collision with hero checker
-		   for enem in self.stage.enemies:
+		   for enem in self.room.enemies:
 			  if enem.getRect().colliderect( hero_Rect ) and enem.isDead() == False :
 				 dFrame = (464, 0, 58, 68)
 				 hoSpeed = 0
@@ -362,7 +394,7 @@ class engine:
 				 """
 				    
 		   # arrow collision with enemy checker
-		   for enem in self.stage.enemies:
+		   for enem in self.room.enemies:
 			  k = 0
 			  while k < 10:
 				 if arrowOn[k] == True:
@@ -383,16 +415,18 @@ class engine:
 				     
 		   # movement code
 		   hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
-		   for enem in self.stage.enemies:
+		   for enem in self.room.enemies:
 			  enem.changeRect(enem.getRect().move( enem.getHSpeed() * enemySpeed, enem.getVSpeed() * enemySpeed ))
 		   
 		   
 
 		   # adding all the rectangles to the refresh list
 		   refresh.append( hero_Rect )
-		   refresh.append( rock_Rect )
+		   if rock_Rects[0] != None:
+		       for i in range(len(rock_Rects)):
+		           refresh.append( rock_Rects[i] )
 		   refresh.append( target_Rect )
-		   for enem in self.stage.enemies:
+		   for enem in self.room.enemies:
 			  refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
 	 
 		   i = 0
@@ -405,7 +439,7 @@ class engine:
 		   
 		   
 		   # redrawing everything
-		   reset()
+		   self.reset()
 		   
 		   #sprite control
 		   
@@ -492,9 +526,9 @@ class engine:
 		   	   	 loopdeath += 1
 		   	   
 		   #enemy animations!
-		   for enem in self.stage.enemies:
+		   for enem in self.room.enemies:
 			  if not enem.isDead():
-				 if self.stage.frameCounter % enem.getFrameSpeed() == 0:
+				 if self.room.frameCounter % enem.getFrameSpeed() == 0:
 				     enem.changeSprite((enem.getSpriteNumber()+1) % (len(enem.getSprites())-1))
 			  else:
 				 enem.changeSprite(-1)
@@ -509,8 +543,8 @@ class engine:
 				 	#print "deadcount after death", enem.deadcount
 				 	
 		   self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
-		   for enem in self.stage.enemies:
-			  self.screen.blit( self.stage.enemySprites, (enem.getRect().x+enem.getxDev(),enem.getRect().y+enem.getyDev()), enem.getCurrentSprite()) 
+		   for enem in self.room.enemies:
+			  self.screen.blit( self.room.enemySprites, (enem.getRect().x+enem.getxDev(),enem.getRect().y+enem.getyDev()), enem.getCurrentSprite()) 
 		   self.screen.blit( target, (target_Rect) )
 		   i = 0
 		   while i < 10:
@@ -522,5 +556,34 @@ class engine:
 		   pygame.display.update( refresh )
 		   
 		   refresh = []
+		   
+		   if hero_Rect.x > self.width or hero_Rect.x < 0 or hero_Rect.y > self.height or hero_Rect.y < 0:
+		       self.level += 1
+		       print "LEVEL", self.level
+		       self.setState()
+		       self.reset()
+		       pygame.display.update()
+		       
+		       top_Rect = None
+		       bottom_Rect = None
+		       left_Rect = None
+		       right_Rect = None
+		       
+		       rock_Rects = []
+		       
+		       if self.room.rock != None:
+			      for i in range(len(self.room.rockx)):
+				     rock_Rect = self.room.rock.get_rect().move(self.room.rockx[i], self.room.rocky[i])
+				     rock_Rects.append(rock_Rect)
+		       if self.room.top_side != None:
+		           top_Rect = self.room.top_side.get_rect()
+		       if self.room.bottom_side != None:
+		           bottom_Rect = self.room.bottom_side.get_rect().move(0, self.height-50)
+		       if self.room.left_side != None:
+		           left_Rect = self.room.left_side.get_rect()   
+		       if self.room.right_side != None:
+			      right_Rect = self.room.right_side.get_rect().move(self.width-50, 0)
+		       hero_Rect = pygame.Rect(50, 50, 87, 102)
+		       
 		   
 		   self.clock.tick(30)
