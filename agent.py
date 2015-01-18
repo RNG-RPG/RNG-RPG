@@ -86,7 +86,8 @@ class Enemy(object):
                 self.internalDClock = 0
             if self.hoSpeed == 0 and self.vertSpeed == 0:
                 if self.internalDClock >59:
-                    self.directionalCache = self.spriteMap[(self.idleCounter+1) % 2]
+                    self.idleCounter = (self.idleCounter+1) % 2
+                    self.directionalCache = self.spriteMap[self.idleCounter]
             else:
                 self.internalMClock += 1
                 if self.internalMClock > 29:
@@ -170,8 +171,8 @@ class Enemy(object):
         
 
 class Slime(Enemy):
-	def __init__ (self, spriteMap, rect, animSpeed, directionSprites=False):
-		super(Slime,self).__init__(3, spriteMap, rect, animSpeed, directionSprites)
+	def __init__ (self, rect, animSpeed = 5):
+		super(Slime,self).__init__(3, [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], rect, animSpeed)
 		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
@@ -180,8 +181,8 @@ class Slime(Enemy):
 		self.setSpeed(3)
 
 class Dragon(Enemy):
-	def __init__ (self, spriteMap, rect, animSpeed, directionSprites=False):
-		super(Dragon,self).__init__(20, spriteMap, rect, animSpeed, directionSprites)
+	def __init__ (self, rect, animSpeed = 10):
+		super(Dragon,self).__init__(20, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], rect, animSpeed, False)
 		self.deathsound = pygame.mixer.Sound("sounds/dragondeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
@@ -190,8 +191,9 @@ class Dragon(Enemy):
 		self.setSpeed(1)
 		
 class Voodoo(Enemy):
-	def __init__ (self, spriteMap, rect, animSpeed, directionSprites=False):
-		super(Voodoo,self).__init__(5, spriteMap, rect, animSpeed, directionSprites)
+	def __init__ (self, rect, animSpeed = 6):
+		super(Voodoo,self).__init__(5, [(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
+                             (336, 229, 55, 66), (392, 229, 55, 66), (448, 229, 55, 66)], rect, animSpeed, True)
 		self.deathsound = pygame.mixer.Sound("sounds/voodoodeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
@@ -200,8 +202,9 @@ class Voodoo(Enemy):
 		self.setSpeed(2)
 	
 class Squirrel(Enemy):
-	def __init__ (self, spriteMap, rect, animSpeed, directionSprites=False):
-		super(Squirrel,self).__init__(2, spriteMap, rect, animSpeed, directionSprites)
+	def __init__ (self, rect, animSpeed = 20):
+		super(Squirrel,self).__init__(2, [(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
+                                (99, 295, 34, 36), (99, 295, 34, 36), (99, 295, 34, 36)], rect, animSpeed, True)
 		self.deathsound = pygame.mixer.Sound("sounds/squirreldeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
