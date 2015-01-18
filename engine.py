@@ -58,19 +58,14 @@ class engine:
             self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight()))
             self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight()))
             self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight()))
+            self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight()))
     
     def setState(self):
         if self.state == "tutorial":
             self.room = room.tutorial(self.screen, self.width, self.height)
         if self.state == "main":
-            if self.roomNum == 0:
-                self.room = self.rooms[0]
-                
-            elif self.roomNum == 1:
-                self.room = self.rooms[1]
-            
-            elif self.roomNum == 2:
-                self.room = self.rooms[2]
+            if self.level == 1:
+                self.room = self.rooms[self.roomNum]
     
     def reset(self):
            self.room.reset()
@@ -166,25 +161,15 @@ class engine:
 
         hero_Rect = pygame.Rect(150, 150, 58, 68)
         
-        top_Rect = None
-        bottom_Rect = None
-        left_Rect = None
-        right_Rect = None
+        wall_Rects = []
         
         rock_Rects = []
         if self.room.rock != None:
             for i in range(len(self.room.rockx)):
                 rock_Rect = self.room.rock.get_rect().move(self.room.rockx[i], self.room.rocky[i])
                 rock_Rects.append(rock_Rect)
-        if self.room.top_side != None:
-            top_Rect = self.room.top_side.get_rect()
-        if self.room.bottom_side != None:
-            bottom_Rect = self.room.bottom_side.get_rect().move(0, self.height-50)
-        if self.room.left_side != None:
-            left_Rect = self.room.left_side.get_rect()
-        if self.room.right_side != None:
-            right_Rect = self.room.right_side.get_rect().move(self.width-50, 0)
-
+        for wall in self.room.walls:
+            wall_Rects.append(wall)
         pygame.display.update()
         #Control limits 
         wOn=True
@@ -210,7 +195,7 @@ class engine:
             frame = frame + 1
             attacktimer = attacktimer + 1
             # adding all the rectangles to the refresh list
-            refresh.append( hero_Rect )
+            refresh.append( pygame.Rect(hero_Rect.x-20, hero_Rect.y-20, 98, 108 ))
             #refresh.append( background.get_rect() )
             refresh.append( target_Rect )
             j = 0
@@ -336,7 +321,7 @@ class engine:
                         self.reset()
                         loopdeath = 0
                         dFrame = herod[1]
-                        hero_Rect = pygame.Rect(50, 50, 87, 102)
+                        hero_Rect = pygame.Rect(50, 50, 58, 68)
                         for enem in self.room.enemies:
                             enem.changeRect(enem.getOriginalRect())
                             enem.ressurect()
@@ -351,29 +336,16 @@ class engine:
 
 
             # collision checker
-            if rock_Rects[0] != None:
-                for i in range(len(rock_Rects)):
-                    self.pathCollide( rock_Rects[i], hero_Rect, refresh )
-            if top_Rect != None:
-                self.pathCollide( top_Rect, hero_Rect, refresh )
-            if bottom_Rect != None:
-                self.pathCollide( bottom_Rect, hero_Rect, refresh )
-            if left_Rect != None:
-                self.pathCollide( left_Rect, hero_Rect, refresh )
-            if right_Rect != None:
-                self.pathCollide( right_Rect, hero_Rect, refresh )
-           
+            for rock in rock_Rects:
+                self.pathCollide( rock, hero_Rect, refresh )
+            for wall in wall_Rects:
+                self.pathCollide( wall, hero_Rect, refresh)
+                for enem in self.room.enemies:
+                    self.pathCollide(wall, enem.Rect, refresh)
             for enem in self.room.enemies:
-                if rock_Rects[0] != None:
-                    for i in range(len(rock_Rects)):
-                        self.pathCollide( rock_Rects[i], enem.Rect, refresh )
-            """
-            pathCollide( top_Rect, enemy_Rect, refresh )
-            pathCollide( bottom_Rect, enemy_Rect, refresh )
-            pathCollide( left_Rect, enemy_Rect, refresh )
-            pathCollide( right_Rect, enemy_Rect, refresh )
-            """
-           
+                for rock in rock_Rects:
+                    self.pathCollide( rock, enem.Rect, refresh )
+
             # enemy AI, deciding where it needs to move
             for enem in self.room.enemies:
 		      if enem.aggressive == True:
@@ -437,9 +409,6 @@ class engine:
 
             # adding all the rectangles to the refresh list
             refresh.append( hero_Rect )
-            if rock_Rects[0] != None:
-                for i in range(len(rock_Rects)):
-                    refresh.append( rock_Rects[i] )
             refresh.append( target_Rect )
             for enem in self.room.enemies:
                 refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
@@ -577,32 +546,23 @@ class engine:
             if hero_Rect.x > self.width or hero_Rect.x < 0 or hero_Rect.y > self.height or hero_Rect.y < 0:
                 thismusic = self.room.music
                 print "ROOM before: ", self.roomNum
+                roomCache = self.roomNum
                 self.roomNum = self.room.judge(hero_Rect)
                 print "ROOM: ", self.roomNum
                 self.setState()
                 self.reset()
-                pygame.display.update()
+                if roomCache != self.roomNum:
+                    pygame.display.update()
                 
-                top_Rect = None
-                bottom_Rect = None
-                left_Rect = None
-                right_Rect = None
-               
+                wall_Rects = []
                 rock_Rects = []
                 
                 if self.room.rock != None:
                     for i in range(len(self.room.rockx)):
                         rock_Rect = self.room.rock.get_rect().move(self.room.rockx[i], self.room.rocky[i])
                         rock_Rects.append(rock_Rect)
-                if self.room.top_side != None:
-                    top_Rect = self.room.top_side.get_rect()
-                if self.room.bottom_side != None:
-                    bottom_Rect = self.room.bottom_side.get_rect().move(0, self.height-50)
-                if self.room.left_side != None:
-                    left_Rect = self.room.left_side.get_rect()   
-                if self.room.right_side != None:
-                    right_Rect = self.room.right_side.get_rect().move(self.width-50, 0)
-               
+                for wall in self.room.walls:
+                    wall_Rects.append(wall)
                 hero_Rect = self.room.checkroom(hero_Rect)
                 
                 if thismusic != self.room.music:

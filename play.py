@@ -26,30 +26,6 @@ HEIGHT = 700
 screen = pygame.display.set_mode( (WIDTH, HEIGHT) )
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
-# collision checker 
-def pathCollide( object_rect, agent_rect, refresh_List ):
-	if agent_rect.colliderect( object_rect ):
-		# print( "colliding" )
-		if agent_rect.left >= object_rect.right - 18:
-			#hoSpeed = 0
-			refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
-			agent_rect.left = object_rect.right
-		elif agent_rect.right <= object_rect.left + 18:
-			#hoSpeed = 0
-			refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
-			agent_rect.right = object_rect.left
-		elif agent_rect.top <= object_rect.bottom - 18:
-			#vertSpeed = 0
-			refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
-			agent_rect.bottom = object_rect.top
-			#print( "colliding with bottom" )
-			refresh_List.append( object_rect )
-		elif agent_rect.bottom >= object_rect.top + 18:
-			#vertSpeed = 0
-			refresh_List.append( (agent_rect.x-30, agent_rect.y-30, agent_rect.width+60, agent_rect.height+60) )
-			#print( "colliding with top" )
-			agent_rect.top = object_rect.bottom
-
 # START SCREEN FUNCTION
 
 def start():
