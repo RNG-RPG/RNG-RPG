@@ -55,8 +55,10 @@ class engine:
     def setUpRooms(self):
         self.rooms = []
         if self.level == 1:
-            self.rooms.append(room.firstroom(self.getScreen(), self.getWidth(), self.getHeight()))
-            self.rooms.append(room.secondroom(self.getScreen(), self.getWidth(), self.getHeight()))
+            self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight()))
+            self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight()))
+            self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight()))
+    
     def setState(self):
         if self.state == "tutorial":
             self.room = room.tutorial(self.screen, self.width, self.height)
@@ -66,6 +68,10 @@ class engine:
                 
             elif self.roomNum == 1:
                 self.room = self.rooms[1]
+            
+            elif self.roomNum == 2:
+                self.room = self.rooms[2]
+    
     def reset(self):
            self.room.reset()
            
@@ -112,7 +118,7 @@ class engine:
         heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
         
         target = pygame.image.load( "sprites/AimingPointer.png" ).convert_alpha()
-        target = pygame.transform.scale(target, (50, 50))
+        target = pygame.transform.scale(target, (45, 50))
         target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
         
         self.setUpRooms()
@@ -370,23 +376,24 @@ class engine:
            
             # enemy AI, deciding where it needs to move
             for enem in self.room.enemies:
-                if math.sqrt((enem.getRect().centerx - hero_Rect.centerx)**2 + (enem.getRect().centery - hero_Rect.centery)**2) < 400 or enem.isAggro():
-                    if enem.isAggro() != True:
-                        enem.setAggro(True)
-                    if enem.getRect().bottom < hero_Rect.centery and enem.isDead() != True:
-                        enem.setVSpeed(1)
+		      if enem.aggressive == True:
+		           if math.sqrt((enem.getRect().centerx - hero_Rect.centerx)**2 + (enem.getRect().centery - hero_Rect.centery)**2) < 400 or enem.isAggro():
+		               if enem.isAggro() != True:
+		                   enem.setAggro(True)
+		               if enem.getRect().bottom < hero_Rect.centery and enem.isDead() != True:
+		                   enem.setVSpeed(1)
 
-                    elif enem.getRect().top > hero_Rect.centery and enem.isDead() != True:
-                     enem.setVSpeed(-1)
-                    else:
-                        enem.setVSpeed(0)
-                    if enem.getRect().right < hero_Rect.centerx and enem.isDead() != True:
-                        enem.setHSpeed(1)
-                        
-                    elif enem.getRect().left > hero_Rect.centerx and enem.isDead() != True:
-                        enem.setHSpeed(-1)
-                    else:
-                        enem.setHSpeed(0)
+		               elif enem.getRect().top > hero_Rect.centery and enem.isDead() != True:
+		                   enem.setVSpeed(-1)
+		               else:
+		                   enem.setVSpeed(0)
+		               if enem.getRect().right < hero_Rect.centerx and enem.isDead() != True:
+		                   enem.setHSpeed(1)
+		                   
+		               elif enem.getRect().left > hero_Rect.centerx and enem.isDead() != True:
+		                   enem.setHSpeed(-1)
+		               else:
+		                   enem.setHSpeed(0)
               
             # enemy collision with hero checker
             for enem in self.room.enemies:
@@ -407,7 +414,8 @@ class engine:
                 while k < 10:
                     if arrowOn[k] == True:
                         if arrow_rects[k].colliderect( enem.getRect() ) and not enem.isDead():
-                    
+                            if enem.aggressive != True:
+                                enem.setAggress(True)
                             if enem.isAggro() != True:
                                 enem.setAggro(True)
                             chan= pygame.mixer.find_channel(True)
@@ -564,10 +572,13 @@ class engine:
            
             refresh = []
             
+            
             #Room transitions
             if hero_Rect.x > self.width or hero_Rect.x < 0 or hero_Rect.y > self.height or hero_Rect.y < 0:
+                thismusic = self.room.music
+                print "ROOM before: ", self.roomNum
                 self.roomNum = self.room.judge(hero_Rect)
-                print "ROOM: ", self.roomNum + 1
+                print "ROOM: ", self.roomNum
                 self.setState()
                 self.reset()
                 pygame.display.update()
@@ -592,17 +603,11 @@ class engine:
                 if self.room.right_side != None:
                     right_Rect = self.room.right_side.get_rect().move(self.width-50, 0)
                
-                if hero_Rect.x > self.width:
-                    hero_Rect = pygame.Rect(0, hero_Rect.y, 58, 68)
-                elif hero_Rect.x < 0:
-                    hero_Rect = pygame.Rect(self.width - 58, hero_Rect.y, 58, 68)
-                elif hero_Rect.y > self.height:
-                    hero_Rect = pygame.Rect(hero_Rect.x, 0, 58, 68)
-                elif hero_Rect.y < 0:
-                    hero_Rect = pygame.Rect(hero_Rect.x, self.height, 58, 68)
-               
-                pygame.mixer.music.load(self.room.music)
-                pygame.mixer.music.play(-1,0)
-               
+                hero_Rect = self.room.checkroom(hero_Rect)
+                
+                if thismusic != self.room.music:
+			      pygame.mixer.music.load(self.room.music)
+			      pygame.mixer.music.play(-1,0)
+		          
            
             self.clock.tick(30)

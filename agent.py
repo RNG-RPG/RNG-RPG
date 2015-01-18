@@ -60,6 +60,7 @@ class Enemy(object):
         self.hoSpeed = 0
         self.vertSpeed = 0
         self.speedBoost = 1
+        self.aggressive = True
         
         self.xDev = 0
         self.yDev = 0
@@ -106,6 +107,8 @@ class Enemy(object):
             return self.directionalCache
         else:
             return self.spriteMap[self.activeSprite]
+    def setAggress(self, aggressive):
+        self.aggressive = aggressive
     #this is a number for active sprite
     def changeSprite(self, newNum):
         self.activeSprite = newNum
@@ -171,8 +174,9 @@ class Enemy(object):
         
 
 class Slime(Enemy):
-	def __init__ (self, rect, animSpeed = 5):
+	def __init__ (self, rect, aggress = True, animSpeed = 5):
 		super(Slime,self).__init__(3, [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], rect, animSpeed)
+		self.setAggress(aggress)
 		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
@@ -181,8 +185,9 @@ class Slime(Enemy):
 		self.setSpeed(3)
 
 class Dragon(Enemy):
-	def __init__ (self, rect, animSpeed = 10):
+	def __init__ (self, rect, aggress = True, animSpeed = 10):
 		super(Dragon,self).__init__(20, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], rect, animSpeed, False)
+		self.setAggress(aggress)
 		self.deathsound = pygame.mixer.Sound("sounds/dragondeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
@@ -191,9 +196,10 @@ class Dragon(Enemy):
 		self.setSpeed(1)
 		
 class Voodoo(Enemy):
-	def __init__ (self, rect, animSpeed = 6):
+	def __init__ (self, rect, aggress = True, animSpeed = 6):
 		super(Voodoo,self).__init__(5, [(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
                              (336, 229, 55, 66), (392, 229, 55, 66), (448, 229, 55, 66)], rect, animSpeed, True)
+		self.setAggress(aggress)
 		self.deathsound = pygame.mixer.Sound("sounds/voodoodeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
@@ -202,9 +208,10 @@ class Voodoo(Enemy):
 		self.setSpeed(2)
 	
 class Squirrel(Enemy):
-	def __init__ (self, rect, animSpeed = 20):
+	def __init__ (self, rect, aggress = True, animSpeed = 20):
 		super(Squirrel,self).__init__(2, [(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
                                 (99, 295, 34, 36), (99, 295, 34, 36), (99, 295, 34, 36)], rect, animSpeed, True)
+		self.setAggress(aggress)
 		self.deathsound = pygame.mixer.Sound("sounds/squirreldeath.wav")
 		self.deathsound.set_volume(1)
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
