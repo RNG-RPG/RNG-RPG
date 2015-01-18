@@ -55,12 +55,15 @@ def main(WIDTH,HEIGHT):
               ('Credits',         4, None),
               ('Exit',           9, None)])
 
-  menu2 = cMenu(0, 0, 5, 5, 'vertical', 7, screen,
-              [("UP = W", 3, None),
-              ('DOWN = S', 3, None),
-              ('LEFT = D', 3, None),
-              ('RIGHT = A', 3, None),
-              ('ATTACK = Left Click', 3, None),
+  menu2 = cMenu(0, 0, 5, 5, 'vertical', 20, screen,
+              [("W = UP", 3, None),
+              ('S = DOWN', 3, None),
+              ('D = LEFT', 3, None),
+              ('A = RIGHT', 3, None),
+              ('R = RETRY', 3, None),
+              ('P = PAUSE', 3, None),
+              ('Esc = QUIT', 3, None),
+              ('Left Click = ATTACK', 3, None),
               ('Back', 0, None)])
 
   menu3 = cMenu(0, 0, 20, 5, 'vertical', 20, screen,
