@@ -16,6 +16,7 @@ class engine:
         self.rooms = []
         self.roomNum = 0
         self.level = 1
+        self.pause = False
         
         #Character stats
         self.attspeed = 10 
@@ -54,6 +55,11 @@ class engine:
     #caches to remember room states
     def setUpRooms(self):
         self.rooms = []
+        if self.level == 0:
+            self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight()))
+            self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight()))
+            self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight()))
+            self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight()))
         if self.level == 1:
             self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight()))
             self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight()))
@@ -61,15 +67,31 @@ class engine:
             self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight()))
     
     def setState(self):
+        if self.state == "sandbox":
+            self.room = room.sandbox(self.screen, self.width, self.height)
         if self.state == "tutorial":
-            self.room = room.tutorial(self.screen, self.width, self.height)
+            self.level = 0
+            self.room = self.rooms[self.roomNum]
         if self.state == "main":
-            if self.level == 1:
-                self.room = self.rooms[self.roomNum]
+            self.level = 1
+            self.room = self.rooms[self.roomNum]
     
     def reset(self):
            self.room.reset()
-           
+    
+    def paused(self):
+	    while self.pause:
+		   for event in pygame.event.get():
+		       if event.type == pygame.KEYDOWN:
+				  if event.key == pygame.K_p:
+				      self.pause = False
+				      self.paused()
+	 
+		   pygame.display.update()
+		   self.clock.tick(15)  
+
+
+    
     def main(self):    
         pygame.event.set_allowed(pygame.MOUSEMOTION)
         pygame.mouse.get_focused
@@ -176,9 +198,14 @@ class engine:
         aOn=True
         sOn=True
         dOn=True
-
-        while 1 == 1:
-            
+        
+        tutorialcount = 0
+        
+        while 1 == 1:    
+            if self.state == "tutorial":
+                if self.room.identity == 1:
+                    return
+		               
             #counts frames for animations
             self.room.frameCounter += 1
             if self.room.frameCounter == 29:
@@ -209,7 +236,12 @@ class engine:
                     pygame.mouse.set_visible(False)
                     mpos = pygame.mouse.get_pos()
                     target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
-           
+                
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+		              self.pause = True
+		              self.paused()
+           	 
                 if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False:
 
                     chan= pygame.mixer.find_channel(True)
@@ -260,10 +292,10 @@ class engine:
                     #print( arrowSpeedX )
                     #print( "############" )
                     self.screen.blit( arrow[arrownum], (arrow_rects[arrownum]) )
-
-                
+		               
                 if event.type == pygame.KEYDOWN and dead != True:
                     key = pygame.key.get_pressed()
+                    
                     if key[pygame.K_w] and wOn:
                         footsteps.play(maxtime=1200)
                         print "footsteps up", footsteps.get_num_channels()

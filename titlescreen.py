@@ -55,9 +55,9 @@ def main(WIDTH,HEIGHT):
               ('Credits',         4, None),
               ('Exit',           9, None)])
 
-  menu1 = cMenu(0, 0, 5, 5, 'vertical', 20, screen,
-              [("Tutorial", 2, None),
-              ('Sandbox', 2, None),
+  menu1 = cMenu(HEIGHT/5, WIDTH/5, 5, 5, 'vertical', 20, screen,
+              [("Tutorial", 5, None),
+              ('Sandbox', 6, None),
               ('Back', 0, None)])
   
   menu2 = cMenu(0, 0, 5, 5, 'vertical', 20, screen,
@@ -136,11 +136,11 @@ def main(WIDTH,HEIGHT):
       elif state == 4:
         rect_list, state = menu3.update(e, state)
       elif state == 5:
-        pygame.quit()
-        sys.exit()
-      elif state == 9:
-        pygame.quit()
-        sys.exit()
+        rain.stop()
+        play.tutorial()
+      elif state == 6:
+        rain.stop()
+        play.sandbox()
       elif state == 9:
         pygame.quit()
         sys.exit()

@@ -5,7 +5,7 @@
 import sys, pygame, math, agent, os
 import titlescreen, room
             
-class tutorial:		   
+class sandbox:		   
     def __init__ (self, screen, width, height):
         self.identity = 0
         self.screen= screen

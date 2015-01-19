@@ -76,7 +76,13 @@ def start():
 
 		pygame.display.update( refresh )
 		clock.tick(30)
-					
+	
+# SANDBOX ROOM FUNCTION					
+def sandbox():
+	clock = pygame.time.Clock()
+	mainengine	= engine.engine("sandbox", screen, clock, WIDTH,HEIGHT)
+	mainengine.main()
+
 # TUTORIAL ROOM FUNCTION
 def tutorial():
 	clock = pygame.time.Clock()
