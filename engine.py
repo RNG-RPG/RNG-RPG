@@ -292,6 +292,10 @@ class engine:
 				elif self.room.identity == 1 and self.tutorialcount < 10:
 					for event in pygame.event.get():
 						print "looking for movement 2"
+						if event.type == pygame.MOUSEMOTION:
+							pygame.mouse.set_visible(False)
+							mpos = pygame.mouse.get_pos()
+							target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
 						if event.type == pygame.MOUSEBUTTONDOWN:
 							
 							chan= pygame.mixer.find_channel(True)
