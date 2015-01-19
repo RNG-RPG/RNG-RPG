@@ -55,17 +55,21 @@ class engine:
 	
 	#caches to remember room states
 	def setUpRooms(self):
+             
 		self.rooms = []
 		if self.level == 0:
 			self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight()))
 			self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight()))
 			self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight()))
 			self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight()))
-		if self.level == 1:
+                if self.level == 1:
+                        self.rooms = grasslands.gatherRooms(self.getScreen(), self.getWidth(), self.getHeight())
+		if self.level == 2:
 			self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight()))
 			self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight()))
 			self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight()))
 			self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight()))
+            
 	
 	def setState(self):
 		if self.state == "sandbox":
