@@ -227,7 +227,8 @@ class engine:
 					elif self.tutorialcount > 9:
 						for event in pygame.event.get():
 							print "looking for movement pause 3"
-							if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.KEYDOWN:
+							if event.type == pygame.KEYDOWN:
+								pygame.display.update()
 								print "found movement pause 3"
 								self.pause = False
 								tutpaused()
@@ -256,6 +257,7 @@ class engine:
 					for event in pygame.event.get():
 						print "looking for movement"
 						if event.type == pygame.KEYDOWN:
+							pygame.display.update()
 							if event.key == pygame.K_w or event.key == pygame.K_a or event.key == pygame.K_s or event.key == pygame.K_d:
 								
 								if event.key == pygame.K_w:
@@ -296,6 +298,7 @@ class engine:
 							pygame.mouse.set_visible(False)
 							mpos = pygame.mouse.get_pos()
 							target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
+							pygame.display.update()
 						if event.type == pygame.MOUSEBUTTONDOWN:
 							
 							chan= pygame.mixer.find_channel(True)
@@ -357,6 +360,8 @@ class engine:
 					pygame.display.update()
 					self.pause = True
 					tutpaused()
+				elif self.tutorialcount > 10:
+					pygame.display.update()
 										   
 			#counts frames for animations
 			self.room.frameCounter += 1
