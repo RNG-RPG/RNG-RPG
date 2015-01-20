@@ -136,6 +136,8 @@ class engine:
 		arrowLoadImage = pygame.image.load( "sprites/particle_main.png" ).convert_alpha()
 		arrow = [arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage]
 		arrow_rects = [arrow[0].get_rect(),arrow[1].get_rect(),arrow[2].get_rect(),arrow[3].get_rect(),arrow[4].get_rect(),arrow[5].get_rect(),arrow[6].get_rect(),arrow[7].get_rect(),arrow[8].get_rect(),arrow[9].get_rect()]
+		arrow_posX = [None,None,None,None,None,None,None,None,None,None]
+		arrow_posY = [None,None,None,None,None,None,None,None,None,None]
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 		
@@ -322,26 +324,36 @@ class engine:
 							chan= pygame.mixer.find_channel(True)
 							chan.play(arrowshot)
 							#arrowshot.play()
-							print "arrowshot", arrowshot.get_num_channels()
+							#print "arrowshot", arrowshot.get_num_channels()
+							print 'hibish1'
 							if target_Rect.centerx - hero_Rect.centerx == 0:
 								arrowSpeedX[arrownum] = 0
 								arrowSpeedY[arrownum] = 10
 							elif target_Rect.centery - hero_Rect.centery == 0:
 								arrowSpeedX[arrownum] = 10
 								arrowSpeedY[arrownum] = 0
+								print 'hibish2'
 							else:
 								temp_tan_var = ((float(target_Rect.centery) - float(hero_Rect.centery))/(float(target_Rect.centerx) - float(hero_Rect.centerx)))
 								#print( "temp_tan_var" )
 								#print( temp_tan_var )
 								#print( "############" )
 								angle = (math.atan( temp_tan_var ))
-
+							print 'hibish3'
 							if (hero_Rect.centerx > target_Rect.centerx):
-								arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (angle * 57.29) + 180 ))
+								arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (math.degrees(angle)) + 180 ))
 							else:
-								arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (angle * 57.29) ))
+								arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (math.degrees(angle)) ))
+							print 'hibish'
 							arrow_rects[arrownum] = arrow[arrownum].get_rect().move( hero_Rect.centerx - (arrow[arrownum].get_rect().width/2), hero_Rect.centery - (arrow[arrownum].get_rect().height/2) )
+							arrow_posX[arrownum] = arrow_rects[arrownum].left
+							arrow_posY[arrownum] = arrow_rects[arrownum].top
+							print( "arrow_posX : " )
+							print( arrow_posX[arrownum] )
+							print( "arrow_posY : " )
+							print( arrow_posY[arrownum] )
 							arrowOn[arrownum] = True
+							print 'hibish4'
 							arrowSpeedY[arrownum] =	 ( math.sin(angle) * 10.0 )
 							#print( "arrowSpeedY" )
 							#print( arrowSpeedY )
@@ -441,6 +453,14 @@ class engine:
 					else:
 						arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (angle * 57.29) ))
 					arrow_rects[arrownum] = arrow[arrownum].get_rect().move( hero_Rect.centerx - (arrow[arrownum].get_rect().width/2), hero_Rect.centery - (arrow[arrownum].get_rect().height/2) )
+					arrow_posX[arrownum] = arrow_rects[arrownum].left
+					arrow_posY[arrownum] = arrow_rects[arrownum].top
+					print( "arrow_posX : " )
+					print( arrow_posX[arrownum] )
+					print( "arrow_posY : " )
+					print( arrow_posY[arrownum] )
+					arrowOn[arrownum] = True
+					print 'hibish4'
 					arrowOn[arrownum] = True
 					arrowSpeedY[arrownum] =	 ( math.sin(angle) * 10.0 )
 					#print( "arrowSpeedY" )
@@ -609,8 +629,13 @@ class engine:
 	 
 			i = 0
 			while i < 10:
+				refresh.append( arrow_rects[i] )
 				if arrowOn[i] == True:
-					arrow_rects[i] = arrow_rects[i].move( arrowSpeedX[i], arrowSpeedY[i] )
+					arrow_posX[i] = arrow_posX[i] + arrowSpeedX[i]
+					arrow_posY[i] = arrow_posY[i] + arrowSpeedY[i]
+					arrow_rects[i].left = arrow_posX[i]
+					arrow_rects[i].top = arrow_posY[i]
+					#arrow_rects[i] = arrow_rects[i].move( arrowSpeedX[i], arrowSpeedY[i] )
 				if arrowOn[i] == True:
 					refresh.append( arrow_rects[i] )
 				i += 1
