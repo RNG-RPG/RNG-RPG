@@ -629,8 +629,8 @@ class engine:
 	 
 			i = 0
 			while i < 10:
-				refresh.append( arrow_rects[i] )
 				if arrowOn[i] == True:
+					refresh.append( arrow_rects[i] )
 					arrow_posX[i] = arrow_posX[i] + arrowSpeedX[i]
 					arrow_posY[i] = arrow_posY[i] + arrowSpeedY[i]
 					arrow_rects[i].left = arrow_posX[i]
