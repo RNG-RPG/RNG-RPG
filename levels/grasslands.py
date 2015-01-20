@@ -26,9 +26,13 @@ class grassland0:
 		self.rockx= []
 		self.rocky= []
 		
-		rockBro = agent.HelpRock(50, 335)
-		rockBro.setMessage(["Cleanse this land of your enemies... or perish (gotta eat somehow!)"])
-		self.NPCs = [rockBro]
+		rockBro = agent.HelpRock(150, 85)
+		rockBro1 = agent.HelpRock(500, 600)
+		rockBro2 = agent.HelpRock(1100, 100)
+		rockBro.setMessage(["I'm a talking rock~ you should bump into my friends to see what they have to say!"])
+		rockBro1.setMessage(["Cleanse this land of your enemies... or perish... (P.S. Rockbros are not your enemy)"])
+		rockBro2.setMessage(["I hear strange monsters roam these parts of the woods...", "Best to not get too friendly..."])
+		self.NPCs = [rockBro, rockBro1, rockBro2]
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
@@ -276,6 +280,7 @@ class grassland5:
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
+		self.NPCs =[]
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
@@ -368,6 +373,7 @@ class grassland7:
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
+		self.NPCs = []
 
 		#Add DA enemies HERE
 		self.frameCounter = -1

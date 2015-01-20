@@ -47,7 +47,7 @@ class NPC(object):
 	'''spriteMap format: down, right, up, left'''
 	def __init__(self, sprites, x, y):
 		self.spriteMap = sprites
-		self.rect = pygame.Rect(x, y, 54, 60 )
+		self.rect = pygame.Rect(x, y, 40, 60 )
 		self.message = []
 		self.messageCounter = -1
 		
@@ -70,6 +70,7 @@ class NPC(object):
 	def getMessage(self):
 		self.messageCounter +=1
 		if self.messageCounter > len(self.message)-1:
+			self.messageCounter = -1
 			return None
 		return self.message[self.messageCounter]
 	
