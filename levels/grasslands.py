@@ -3,13 +3,14 @@
 #
 
 import agent, room, pygame
-def gatherRooms(screen, width, height):
-	return [grassland0(screen, width, height), grassland1(screen, width, height), grassland2(screen, width, height), grassland3(screen, width, height), grassland4(screen, width, height),
-			grassland5(screen, width, height), grassland6(screen, width, height), grassland7(screen, width, height), grassland8(screen, width, height), grassland9(screen, width, height),
-			grassland10(screen, width, height), grassland11(screen, width, height), grassland12(screen, width, height)]
-
+def gatherRooms(screen, width, height, sprites):
+	return [grassland0(screen, width, height, sprites), grassland1(screen, width, height, sprites), grassland2(screen, width, height, sprites), grassland3(screen, width, height, sprites),
+			grassland4(screen, width, height, sprites), grassland5(screen, width, height, sprites), grassland6(screen, width, height, sprites), grassland7(screen, width, height, sprites), 
+			grassland8(screen, width, height, sprites), grassland9(screen, width, height, sprites), grassland10(screen, width, height, sprites), grassland11(screen, width, height, sprites), 
+			grassland12(screen, width, height, sprites)]
+'''sprites are in this format: background, walls, enemies, anything extra'''
 class grassland0:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 0
 		self.screen= screen
 		
@@ -17,11 +18,10 @@ class grassland0:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
 		self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(0, 50, 50, 600), pygame.Rect(0, 650, 1200, 50)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -59,7 +59,7 @@ class grassland0:
 			return 1
 			
 class grassland1:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 1
 		self.screen= screen
 		
@@ -67,11 +67,10 @@ class grassland1:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
 		self.walls = [pygame.Rect(0, 0, 50, 50), pygame.Rect(0, 650, 50, 50)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -115,7 +114,7 @@ class grassland1:
 			return 3
 			
 class grassland2:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 2
 		self.screen= screen
 		
@@ -123,11 +122,10 @@ class grassland2:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
 		self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(0, 50, 50, 650)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -163,7 +161,7 @@ class grassland2:
 			return 1
 
 class grassland3:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 3
 		self.screen= screen
 		
@@ -171,11 +169,10 @@ class grassland3:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
-		self.walls = [pygame.Rect(0,0, 50, 700)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
+		self.walls = [pygame.Rect(0,0, 50, 700), pygame.Rect(1150,650, 50, 50)]
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -195,6 +192,7 @@ class grassland3:
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
 		self.screen.blit( self.wallSprites, (0,0), (55, 170, 50, 700))
+		self.screen.blit( self.wallSprites, (1150,650), (163, 170, 50, 50))
 		
 	def checkroom(self,hero_Rect):
 		print "room3"
@@ -215,7 +213,7 @@ class grassland3:
 			return 4
 
 class grassland4:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 4
 		self.screen= screen
 		
@@ -223,11 +221,10 @@ class grassland4:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
 		self.walls = [pygame.Rect(0, 0, 50, 700), pygame.Rect(1150, 0, 50, 700)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -264,7 +261,7 @@ class grassland4:
 			return 3
 
 class grassland5:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 5
 		self.screen= screen
 		
@@ -272,11 +269,10 @@ class grassland5:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
 		self.walls = [pygame.Rect(0, 0, 50, 700), pygame.Rect(1150, 0, 50, 700),  pygame.Rect(0, 650, 1200, 50)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -308,7 +304,7 @@ class grassland5:
 		return 4
 
 class grassland6:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 6
 		self.screen= screen
 		
@@ -316,11 +312,10 @@ class grassland6:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
 		self.walls = [pygame.Rect(0, 650, 1200, 50), pygame.Rect(1150, 0, 50, 700)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -357,7 +352,7 @@ class grassland6:
 			return 3
 
 class grassland7:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 7
 		self.screen= screen
 		
@@ -365,11 +360,10 @@ class grassland7:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
-		self.walls = []
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
+		self.walls = [pygame.Rect(1150,650, 50, 50)]
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -388,6 +382,7 @@ class grassland7:
 		self.screen.blit( self.background, (0,0) )
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
+		self.screen.blit( self.wallSprites, (1150,650), (163, 170, 50, 50))
 		
 	def checkroom(self,hero_Rect):
 		print "room7"
@@ -411,7 +406,7 @@ class grassland7:
 			return 6
 			
 class grassland8:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 8
 		self.screen= screen
 		
@@ -419,11 +414,10 @@ class grassland8:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
 		self.walls = [pygame.Rect(0, 0, 445, 50), pygame.Rect(675, 0, 525, 50)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -467,7 +461,7 @@ class grassland8:
 			return 7
 			
 class grassland9:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 9
 		self.screen= screen
 		
@@ -475,11 +469,10 @@ class grassland9:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
 		self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(0, 50, 50, 600),  pygame.Rect(1150, 50, 50, 600),  pygame.Rect(0, 50, 50, 600), pygame.Rect(0, 650, 445, 50), pygame.Rect(675, 650, 525, 50)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -513,7 +506,7 @@ class grassland9:
 		return 8
 		
 class grassland10:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 10
 		self.screen= screen
 		
@@ -521,11 +514,10 @@ class grassland10:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
-		self.walls = [pygame.Rect(0, 0, 1200, 50)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
+		self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(1150,650, 50, 50)]
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -545,6 +537,7 @@ class grassland10:
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
 		self.screen.blit( self.wallSprites, (0,0), (0, 0, 1200, 85) )
+		self.screen.blit( self.wallSprites, (1150,650), (163, 170, 50, 50))
 		
 	def checkroom(self,hero_Rect):
 		print "room10"
@@ -564,7 +557,7 @@ class grassland10:
 			return 11
 			
 class grassland11:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 11
 		self.screen= screen
 		
@@ -572,11 +565,10 @@ class grassland11:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
 		self.walls = [pygame.Rect(0, 650, 1200, 50), pygame.Rect(1150, 0, 50, 650)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -612,7 +604,7 @@ class grassland11:
 			return 10
 			
 class grassland12:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 12
 		self.screen= screen
 		
@@ -620,12 +612,11 @@ class grassland12:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "GrassGround.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/treewall_main.png').convert_alpha()
-		self.cave = pygame.image.load('sprites/rockwall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
+		self.enemySprites = sprites[2]
+		self.cave = sprites[3]
 		self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(1150, 50, 50, 600), pygame.Rect(0, 650, 1200, 50)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		self.rock = None
 		self.rockx= []
 		self.rocky= []

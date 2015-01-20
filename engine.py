@@ -65,8 +65,11 @@ class engine:
 			self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight()))
 			self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight()))
 			self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight()))
-                if self.level == 1:
-                        self.rooms = grasslands.gatherRooms(self.getScreen(), self.getWidth(), self.getHeight())
+		if self.level == 1:
+			temp = pygame.image.load( "GrassGround.png" ).convert_alpha()
+			spritos = [pygame.transform.scale(temp, (self.width, self.height)), pygame.image.load('sprites/treewall_main.png').convert_alpha(), pygame.image.load( "sprites/enemy_main.png" ).convert_alpha(),
+						pygame.image.load('sprites/rockwall_main.png').convert_alpha()]
+			self.rooms = grasslands.gatherRooms(self.getScreen(), self.getWidth(), self.getHeight(), spritos)
 		if self.level == 2:
 			self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight()))
 			self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight()))
