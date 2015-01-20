@@ -114,6 +114,9 @@ class engine:
 		arrownum = 0
 		loopdeath= 0
 		refresh = [] 
+		talking = False
+		displayText = None
+		bestFont = pygame.font.SysFont("Helvetica", 20)
 		
 		#make sounds	
 		arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
@@ -140,7 +143,7 @@ class engine:
 		arrow_posY = [None,None,None,None,None,None,None,None,None,None]
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
-		
+		npcSprites = pygame.image.load( " sprites/npc_main.png" ).convert_alpha()
 		target = pygame.image.load( "sprites/AimingPointer.png" ).convert_alpha()
 		target = pygame.transform.scale(target, (45, 50))
 		target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
@@ -191,14 +194,15 @@ class engine:
 		hero_Rect = pygame.Rect(150, 150, 58, 68)
 		
 		wall_Rects = []
-		
 		rock_Rects = []
 		if self.room.rock != None:
 			for i in range(len(self.room.rockx)):
 				rock_Rect = self.room.rock.get_rect().move(self.room.rockx[i], self.room.rocky[i])
 				rock_Rects.append(rock_Rect)
+                        
 		for wall in self.room.walls:
 			wall_Rects.append(wall)
+            
 		pygame.display.update()
 		#Control limits 
 		wOn=True
@@ -387,7 +391,7 @@ class engine:
 		
 			#Catches pygame event errors
 			catch=pygame.key.get_pressed()
-			if catch[pygame.K_w] == False and catch[pygame.K_a] == False and catch[pygame.K_s] == False and catch[pygame.K_d] == False:
+			if catch[pygame.K_w] == False and catch[pygame.K_a] == False and catch[pygame.K_s] == False and catch[pygame.K_d] == False or talking:
 				hoSpeed=0
 				vertSpeed=0
 		
@@ -417,65 +421,67 @@ class engine:
 					  self.paused()
 			 
 				if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False:
+					if talking:
+						displayText=activeNPC.getMessage()
+					else:	
+						chan= pygame.mixer.find_channel(True)
+						chan.play(arrowready)
+						#arrowready.play()
+						print "arrowready",arrowready.get_num_channels()
+						attackDelay = True
+						attacktimer = 0
+						if arrownum < 9:
+							arrownum += 1
+						else:
+							arrownum = 0
+	  
+						arrow[arrownum] = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
 
-					chan= pygame.mixer.find_channel(True)
-					chan.play(arrowready)
-					#arrowready.play()
-					print "arrowready",arrowready.get_num_channels()
-					attackDelay = True
-					attacktimer = 0
-					if arrownum < 9:
-						arrownum += 1
-					else:
-						arrownum = 0
-  
-					arrow[arrownum] = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
+						chan= pygame.mixer.find_channel(True)
+						chan.play(arrowshot)
+						#arrowshot.play()
+						print "arrowshot", arrowshot.get_num_channels()
+						if target_Rect.centerx - hero_Rect.centerx == 0:
+							arrowSpeedX[arrownum] = 0
+							arrowSpeedY[arrownum] = 10
+						elif target_Rect.centery - hero_Rect.centery == 0:
+							arrowSpeedX[arrownum] = 10
+							arrowSpeedY[arrownum] = 0
+						else:
+							temp_tan_var = ((float(target_Rect.centery) - float(hero_Rect.centery))/(float(target_Rect.centerx) - float(hero_Rect.centerx)))
+							#print( "temp_tan_var" )
+							#print( temp_tan_var )
+							#print( "############" )
+							angle = (math.atan( temp_tan_var ))
 
-					chan= pygame.mixer.find_channel(True)
-					chan.play(arrowshot)
-					#arrowshot.play()
-					print "arrowshot", arrowshot.get_num_channels()
-					if target_Rect.centerx - hero_Rect.centerx == 0:
-						arrowSpeedX[arrownum] = 0
-						arrowSpeedY[arrownum] = 10
-					elif target_Rect.centery - hero_Rect.centery == 0:
-						arrowSpeedX[arrownum] = 10
-						arrowSpeedY[arrownum] = 0
-					else:
-						temp_tan_var = ((float(target_Rect.centery) - float(hero_Rect.centery))/(float(target_Rect.centerx) - float(hero_Rect.centerx)))
-						#print( "temp_tan_var" )
-						#print( temp_tan_var )
+						if (hero_Rect.centerx > target_Rect.centerx):
+							arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (angle * 57.29) + 180 ))
+						else:
+							arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (angle * 57.29) ))
+						arrow_rects[arrownum] = arrow[arrownum].get_rect().move( hero_Rect.centerx - (arrow[arrownum].get_rect().width/2), hero_Rect.centery - (arrow[arrownum].get_rect().height/2) )
+						arrow_posX[arrownum] = arrow_rects[arrownum].left
+						arrow_posY[arrownum] = arrow_rects[arrownum].top
+						print( "arrow_posX : " )
+						print( arrow_posX[arrownum] )
+						print( "arrow_posY : " )
+						print( arrow_posY[arrownum] )
+						arrowOn[arrownum] = True
+						print 'hibish4'
+						arrowOn[arrownum] = True
+						arrowSpeedY[arrownum] =	 ( math.sin(angle) * 10.0 )
+						#print( "arrowSpeedY" )
+						#print( arrowSpeedY )
 						#print( "############" )
-						angle = (math.atan( temp_tan_var ))
-
-					if (hero_Rect.centerx > target_Rect.centerx):
-						arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (angle * 57.29) + 180 ))
-					else:
-						arrow[arrownum] = pygame.transform.rotate(arrow[arrownum], ( - (angle * 57.29) ))
-					arrow_rects[arrownum] = arrow[arrownum].get_rect().move( hero_Rect.centerx - (arrow[arrownum].get_rect().width/2), hero_Rect.centery - (arrow[arrownum].get_rect().height/2) )
-					arrow_posX[arrownum] = arrow_rects[arrownum].left
-					arrow_posY[arrownum] = arrow_rects[arrownum].top
-					print( "arrow_posX : " )
-					print( arrow_posX[arrownum] )
-					print( "arrow_posY : " )
-					print( arrow_posY[arrownum] )
-					arrowOn[arrownum] = True
-					print 'hibish4'
-					arrowOn[arrownum] = True
-					arrowSpeedY[arrownum] =	 ( math.sin(angle) * 10.0 )
-					#print( "arrowSpeedY" )
-					#print( arrowSpeedY )
-					#print( "############" )
-					arrowSpeedX[arrownum] =	 ( math.cos(angle) * 10.0 )
-					if (hero_Rect.centerx > target_Rect.centerx):
-						arrowSpeedX[arrownum] = -arrowSpeedX[arrownum]
-						arrowSpeedY[arrownum] = -arrowSpeedY[arrownum]
-					#print( "arrowSpeedX" )
-					#print( arrowSpeedX )
-					#print( "############" )
-					self.screen.blit( arrow[arrownum], (arrow_rects[arrownum]) )
-					   
-				if event.type == pygame.KEYDOWN and dead != True:
+						arrowSpeedX[arrownum] =	 ( math.cos(angle) * 10.0 )
+						if (hero_Rect.centerx > target_Rect.centerx):
+							arrowSpeedX[arrownum] = -arrowSpeedX[arrownum]
+							arrowSpeedY[arrownum] = -arrowSpeedY[arrownum]
+						#print( "arrowSpeedX" )
+						#print( arrowSpeedX )
+						#print( "############" )
+						self.screen.blit( arrow[arrownum], (arrow_rects[arrownum]) )
+						   
+				if event.type == pygame.KEYDOWN and dead != True and not talking:
 					key = pygame.key.get_pressed()
 					
 					if key[pygame.K_w] and wOn:
@@ -503,7 +509,7 @@ class engine:
 						hoSpeed+=1
 						dOn=False
 				 
-				if event.type == pygame.KEYUP:
+				if event.type == pygame.KEYUP and not talking:
 					keyAfter = pygame.key.get_pressed()
 					if catch[pygame.K_w] and not keyAfter[pygame.K_w] and wOn != True:
 						print "UPW"
@@ -556,6 +562,9 @@ class engine:
 				self.pathCollide( wall, hero_Rect, refresh)
 				for enem in self.room.enemies:
 					self.pathCollide(wall, enem.Rect, refresh)
+			for NPC in self.room.NPCs:
+				self.pathCollide( NPC.getRect(), hero_Rect, refresh)
+				talking = True
 			for enem in self.room.enemies:
 				for rock in rock_Rects:
 					self.pathCollide( rock, enem.Rect, refresh )
@@ -745,15 +754,23 @@ class engine:
 						enem.deadcount += 1
 						#print "deadcount after death", enem.deadcount
 					
-			self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
 			for enem in self.room.enemies:
 				self.screen.blit( self.room.enemySprites, (enem.getRect().x+enem.getxDev(),enem.getRect().y+enem.getyDev()), enem.getCurrentSprite()) 
 			self.screen.blit( target, (target_Rect) )
+			self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
+			for NPC in self.room.NPCs:
+				self.screen.blit( npcSprites, (NPC.getRect().x -1,NPC.getRect().y), NPC.getCurrentSprite(hero_Rect.x,hero_Rect.y))
 			i = 0
 			while i < 10:
 				if arrowOn[i] == True:
 					self.screen.blit( arrow[i], (arrow_rects[i]) )
 				i += 1
+			if talking:
+				if displayText is not None:
+					txt = bestFont.Render(displayText, True, (255,255,255))
+					self.screen.blit(txt, (50, 600))
+				else:
+					talking = False
 			  
 
 			pygame.display.update( refresh )
@@ -775,13 +792,13 @@ class engine:
 				
 				wall_Rects = []
 				rock_Rects = []
-				
 				if self.room.rock != None:
 					for i in range(len(self.room.rockx)):
 						rock_Rect = self.room.rock.get_rect().move(self.room.rockx[i], self.room.rocky[i])
 						rock_Rects.append(rock_Rect)
 				for wall in self.room.walls:
 					wall_Rects.append(wall)
+					
 				hero_Rect = self.room.checkroom(hero_Rect)
 				
 				if thismusic != self.room.music:

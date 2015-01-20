@@ -41,6 +41,45 @@ class Agent:
         
     def changeEXP(self,change):
         self.exp+=change
+
+class NPC(object):
+    #Constructor
+    '''spriteMap format: down, right, up, left'''
+    def __init__(self, sprites, x, y)
+        self.spriteMap = sprites
+        self.rect = (x, y, 27, 30 )
+        self.message = []
+		self.messageCounter = -1
+        
+    def getRect(self):
+        return self.rect
+            
+    '''depends on hero location'''
+    def getCurrentSprite(self, herox, heroy):
+        if abs(herox-self.rect.x) > abs(heroy - self.rect.y):
+            if herox - self.rect.x > 0:
+                return self.spriteMap[1]
+            else: 
+                return self.spriteMap[3]
+        else:
+            if heroy - self.rect.y > 0:
+                return self.spriteMap[0]
+            else:
+                return self.spriteMap[2]
+    
+    def getMessage(self):
+		self.messageCounter +=1
+		if self.messageCounter > len(self.message)-1
+			return None
+        return self.message[self.messageCounter]
+    
+    def setMessage(self, mes):
+        self.message = mes
+		self.messageCounter = -1
+        
+class HelpRock(Enemy):
+    def __init__(self, x, y)
+        super(NPC, self).__init__([(76, 0, 29, 30),(76, 0, 29, 30),(76, 0, 29, 30),(76, 0, 29, 30)], x, y)
         
 class Enemy(object):
 
