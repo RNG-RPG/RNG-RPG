@@ -27,8 +27,8 @@ class grassland0:
 		self.rocky= []
 		
 		rockBro = agent.HelpRock(50, 335)
-		rockBro.setMessage("Cleanse this land of your enemies... or perish (gotta eat somehow!)")
-		self.NPCs = []
+		rockBro.setMessage(["Cleanse this land of your enemies... or perish (gotta eat somehow!)"])
+		self.NPCs = [rockBro]
 
 		#Add DA enemies HERE
 		self.frameCounter = -1

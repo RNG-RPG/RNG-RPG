@@ -146,7 +146,7 @@ class engine:
 		health_Rect = pygame.Rect((4, 574), (17, 91))
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
-		npcSprites = pygame.image.load( " sprites/npc_main.png" ).convert_alpha()
+		npcSprites = pygame.image.load( "sprites/npc_main.png" ).convert_alpha()
 		target = pygame.image.load( "sprites/AimingPointer.png" ).convert_alpha()
 		target = pygame.transform.scale(target, (45, 50))
 		target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
@@ -640,7 +640,8 @@ class engine:
 			refresh.append( healthBar_Rect )
 			for enem in self.room.enemies:
 				refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
-	 
+			for NPC in self.room.NPCs:
+				refresh.append(( NPC.getRect().x-2, NPC.getRect().y,NPC.getRect().x+40, NPC.getRect().y))
 			i = 0
 			while i < 10:
 				if arrowOn[i] == True:
@@ -764,7 +765,7 @@ class engine:
 			self.screen.blit( target, (target_Rect) )
 			self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
 			for NPC in self.room.NPCs:
-				self.screen.blit( npcSprites, (NPC.getRect().x -1,NPC.getRect().y), NPC.getCurrentSprite(hero_Rect.x,hero_Rect.y))
+				self.screen.blit( npcSprites, (NPC.getRect().x -2,NPC.getRect().y), NPC.getCurrentSprite(hero_Rect.x,hero_Rect.y))
 			i = 0
 			while i < 10:
 				if arrowOn[i] == True:
