@@ -96,6 +96,14 @@ def main(WIDTH,HEIGHT):
   # a small portion of it changed!)
   rect_list = []
 
+<<<<<<< Updated upstream
+=======
+# <<<<<<< HEAD
+# =======
+  # Ignore mouse motion (greatly reduces resources when not needed)
+
+# >>>>>>> 3ebdb56ba0392653a34cdd50d8527e66374c88cb
+>>>>>>> Stashed changes
   # The main while loop
   y=0
   pygame.mixer.music.load("sounds/BKGmusic/MenuStart/TowardsFate.wav")
