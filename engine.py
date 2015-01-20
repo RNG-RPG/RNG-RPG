@@ -138,6 +138,9 @@ class engine:
 		arrow_rects = [arrow[0].get_rect(),arrow[1].get_rect(),arrow[2].get_rect(),arrow[3].get_rect(),arrow[4].get_rect(),arrow[5].get_rect(),arrow[6].get_rect(),arrow[7].get_rect(),arrow[8].get_rect(),arrow[9].get_rect()]
 		arrow_posX = [None,None,None,None,None,None,None,None,None,None]
 		arrow_posY = [None,None,None,None,None,None,None,None,None,None]
+		healthBar = pygame.image.load( "HP_Bar.png" ).convert_alpha()
+		healthBar_Rect = healthBar.get_rect().move(0, 539)
+		health_Rect = pygame.Rect((4, 574), (17, 91))
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 		
@@ -587,6 +590,7 @@ class engine:
 					dFrame = (464, 0, 58, 68)
 					hoSpeed = 0
 					vertSpeed = 0
+					#health_Rect = pygame.Rect((4, (574 - (health_LOST))), (17, (91 - (health_LOST))))
 					dead = True
 					"""
 					for event in pygame.event.get(): 
@@ -618,12 +622,13 @@ class engine:
 			hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
 			for enem in self.room.enemies:
 				enem.changeRect(enem.getRect().move( enem.getHSpeed() * enemySpeed, enem.getVSpeed() * enemySpeed ))
-		   
-		   
 
+			
+			
 			# adding all the rectangles to the refresh list
 			refresh.append( hero_Rect )
 			refresh.append( target_Rect )
+			refresh.append( healthBar_Rect )
 			for enem in self.room.enemies:
 				refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
 	 
@@ -754,6 +759,9 @@ class engine:
 				if arrowOn[i] == True:
 					self.screen.blit( arrow[i], (arrow_rects[i]) )
 				i += 1
+			
+			self.screen.blit(healthBar, (healthBar_Rect) )
+			pygame.draw.rect(self.screen, (255, 0, 0), health_Rect, 0)
 			  
 
 			pygame.display.update( refresh )
