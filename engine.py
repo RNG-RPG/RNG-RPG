@@ -149,6 +149,7 @@ class engine:
 		healthBar = pygame.image.load( "HP_Bar.png" ).convert_alpha()
 		healthBar_Rect = healthBar.get_rect().move(0, 539)
 		health_Rect = pygame.Rect((4, 574), (17, 91))
+		agent_hero = agent.Agent(10, 4, 0)
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 		npcSprites = pygame.image.load( "sprites/npc_main.png" ).convert_alpha()
@@ -610,7 +611,10 @@ class engine:
 					hoSpeed = 0
 					vertSpeed = 0
 					#health_Rect = pygame.Rect((4, (574 - (health_LOST))), (17, (91 - (health_LOST))))
-					dead = True
+					agent_hero.changeHP( - (enem.getAttack()) )
+					print( "health lost" )
+					if agent_hero.getHP() <= 0:
+						dead = True
 					"""
 					for event in pygame.event.get(): 
 					if event.type == pygame.KEYDOWN:

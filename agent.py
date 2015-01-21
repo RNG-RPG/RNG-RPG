@@ -92,7 +92,7 @@ class Enemy(object):
 	'''spritemap is this format (source x, source y, width, height)
 	directional: down idle, down idle2, down1,down2,righ1,righ2,up1,up2,left1,left2, dead
 	'''
-	def __init__ (self, hp, spriteMap, rect, animSpeed, directionSprites=False):
+	def __init__ (self, hp, spriteMap, rect, animSpeed, attack, directionSprites=False):
 		self.maxHP=hp
 		self.HP=hp
 		self.spriteMap=spriteMap
@@ -105,6 +105,7 @@ class Enemy(object):
 		self.vertSpeed = 0
 		self.speedBoost = 1
 		self.aggressive = True
+		self.attack = attack
 		
 		self.xDev = 0
 		self.yDev = 0
@@ -206,6 +207,8 @@ class Enemy(object):
 			self.vertSpeed = 0
 	def getHP(self):
 		return self.HP
+	def getAttack(self):
+		return self.attack
 	def isDead(self):
 		return self.dead
 	def ressurect(self):
