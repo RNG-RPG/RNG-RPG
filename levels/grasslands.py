@@ -28,8 +28,8 @@ class grassland0:
 		
 		rockBro = agent.HelpRock(150, 50)
 		rockBro1 = agent.HelpRock(500, 600)
-		rockBro.setMessage(["I'm a talking rock~ you should bump into my friends to see what they have to say!"])
-		rockBro1.setMessage(["Cleanse this land of your enemies... or perish... (P.S. Rockbros are not your enemy)"])
+		rockBro.setMessage(["[Rock]: I'm a talking rock~ - Press the mouse button to continue","[Rock]: You should bump into my friends to see what they have to say!]"])
+		rockBro1.setMessage(["[Rock Bro]: Cleanse this land of your enemies... or perish... (P.S. Rockbros are not your enemy)"])
 		self.NPCs = [rockBro, rockBro1]
 
 		
@@ -352,8 +352,8 @@ class grassland7:
 		self.rockx= []
 		self.rocky= []
 		girl = agent.LostGirl(581, 320)
-		girl.setMessage(["All of the squirrels are flying!", "I wonder if there is a reason."])
-		self.NPCs = []
+		girl.setMessage(["[???]: All of the squirrels are flying!", "[???]: I wonder if there is a reason."])
+		self.NPCs = [girl]
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
@@ -594,7 +594,7 @@ class grassland12:
 		self.rocky= []
 		
 		rockBro = agent.HelpRock(1100,570)
-		rockBro.setMessage(["YOU SHALL NOT PASS!", "Of course unless you do... but that requires more work from your end."])
+		rockBro.setMessage(["[Rocky The Rock]: YOU SHALL NOT PASS!", "Of course unless you do... but that requires more work from your end."])
 		self.NPCs = [rockBro]
 
 		#Add DA enemies HERE
