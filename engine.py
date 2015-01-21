@@ -112,6 +112,8 @@ class engine:
 		hoSpeed = 0
 		frame = 0
 		attacktimer = 30
+		hero_invincible = False
+		invincible_counter = 0
 		attackDelay = False
 		# defines speed of enemy
 		enemySpeed = 1
@@ -606,13 +608,14 @@ class engine:
 			  
 			# enemy collision with hero checker
 			for enem in self.room.enemies:
-				if enem.getRect().colliderect( hero_Rect ) and enem.isDead() == False :
+				if enem.getRect().colliderect( hero_Rect ) and enem.isDead() == False and hero_invincible == False:
 					dFrame = (464, 0, 58, 68)
 					hoSpeed = 0
 					vertSpeed = 0
 					#health_Rect = pygame.Rect((4, (574 - (health_LOST))), (17, (91 - (health_LOST))))
 					agent_hero.changeHP( - (enem.getAttack()) )
-					print( "health lost" )
+					print( "health lost", enem.getAttack(), agent_hero.getHP() )
+					hero_invincible = True
 					if agent_hero.getHP() <= 0:
 						dead = True
 					"""
@@ -636,6 +639,12 @@ class engine:
 							#arrowhit.play()
 							print "arrowhit", arrowhit.get_num_channels()
 							enem.changeHP(-1)
+							if enem.getHP() <= 0:
+								enem.setDead(True)
+								enem.setHSpeed(0)
+								enem.setVSpeed(0)
+								agent_hero.changeEXP(enem.getEXP())
+								print("did all the stuff when the thing died")
 							refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
 							enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
 							arrowOn[k] = False
@@ -804,6 +813,20 @@ class engine:
 			pygame.display.update( refresh )
 		   
 			refresh = []
+			
+			#hero invincible timer
+			if hero_invincible == True:
+				invincible_counter += 1
+				#print(invincible_counter)
+				#if invincible_counter % 2 == 0:
+					# current_hero_image.set_alpha(150)
+					# makes the hero flash
+				if invincible_counter == 60:
+					print("resetting invincibility")
+					hero_invincible = False
+					invincible_counter = 0
+					# current_hero_image.set_alpha(255)
+					# ensures that the hero is opaque when exiting invicibility
 			
 			
 			#Room transitions

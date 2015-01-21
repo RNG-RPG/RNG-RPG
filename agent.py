@@ -41,6 +41,7 @@ class Agent:
 		
 	def changeEXP(self,change):
 		self.exp+=change
+		# self.checkLevel()
 
 class NPC(object):
 	#Constructor
@@ -92,7 +93,7 @@ class Enemy(object):
 	'''spritemap is this format (source x, source y, width, height)
 	directional: down idle, down idle2, down1,down2,righ1,righ2,up1,up2,left1,left2, dead
 	'''
-	def __init__ (self, hp, spriteMap, rect, animSpeed, attack, directionSprites=False):
+	def __init__ (self, hp, spriteMap, rect, animSpeed, attack=1, EXP=1, directionSprites=False):
 		self.maxHP=hp
 		self.HP=hp
 		self.spriteMap=spriteMap
@@ -106,6 +107,7 @@ class Enemy(object):
 		self.speedBoost = 1
 		self.aggressive = True
 		self.attack = attack
+		self.EXP = EXP
 		
 		self.xDev = 0
 		self.yDev = 0
@@ -200,15 +202,24 @@ class Enemy(object):
 	def changeMaxHP(self,change):
 		self.maxHP+=change     
 	def changeHP(self,change):
-		self.HP+=change       
-		if self.HP <= 0:
-			self.dead = True
-			self.hoSpeed = 0
-			self.vertSpeed = 0
+		self.HP+=change
+		# if self.HP <= 0:
+			# self.dead = True
+			# self.hoSpeed = 0
+			# self.vertSpeed = 0
+	def getEXP(self):
+		return self.EXP
 	def getHP(self):
 		return self.HP
 	def getAttack(self):
 		return self.attack
+	def setAttack(self,new):
+		self.attack = new
+	def setDead(self, boo):
+		if boo == True:
+			self.dead = True
+		elif boo == False:
+			self.dead = False
 	def isDead(self):
 		return self.dead
 	def ressurect(self):
