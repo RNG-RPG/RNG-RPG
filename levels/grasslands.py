@@ -26,21 +26,18 @@ class grassland0:
 		self.rockx= []
 		self.rocky= []
 		
-		rockBro = agent.HelpRock(150, 85)
+		rockBro = agent.HelpRock(150, 50)
 		rockBro1 = agent.HelpRock(500, 600)
-		rockBro2 = agent.HelpRock(1100, 100)
 		rockBro.setMessage(["I'm a talking rock~ you should bump into my friends to see what they have to say!"])
 		rockBro1.setMessage(["Cleanse this land of your enemies... or perish... (P.S. Rockbros are not your enemy)"])
-		rockBro2.setMessage(["I hear strange monsters roam these parts of the woods...", "Best to not get too friendly..."])
-		self.NPCs = [rockBro, rockBro1, rockBro2]
+		self.NPCs = [rockBro, rockBro1]
 
+		
 		#Add DA enemies HERE
 		self.frameCounter = -1
 		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
 
-		self.enemies = [enemyVoodoo]
+		self.enemies = [agent.Squirrel((900,200)),agent.Squirrel((850,200))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -74,15 +71,15 @@ class grassland1:
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
-		self.NPCs = []
+		rockBro = agent.HelpRock(580,270)
+		rockBro.setMessage(["I hear strange monsters roam these parts of the woods...", "Best to not get too friendly..."])
+		
+		self.NPCs = [rockBro]
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
 		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
-
-		self.enemies = [enemyVoodoo]
+		self.enemies = [agent.Squirrel((600,300))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -134,10 +131,8 @@ class grassland2:
 		#Add DA enemies HERE
 		self.frameCounter = -1
 		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
 
-		self.enemies = [enemyVoodoo]
+		self.enemies = [agent.Squirrel((600,500)),agent.Squirrel((600,300))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -180,11 +175,8 @@ class grassland3:
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
 
-		self.enemies = [enemyVoodoo]
+		self.enemies = [agent.Squirrel((50,500)),agent.Squirrel((800,400))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -232,11 +224,8 @@ class grassland4:
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
-
-		self.enemies = [enemyVoodoo]
+		
+		self.enemies = [agent.Squirrel((600,325)),agent.Squirrel((400,650))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -280,11 +269,9 @@ class grassland5:
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
-
-		self.enemies = [enemyVoodoo]
+		
+		self.enemies = [agent.Squirrel((300,600)),agent.Squirrel((400,610)),agent.Squirrel((500,620)),agent.Voodoo(((600,640))),agent.Squirrel((700,620)),
+						agent.Squirrel((800,610)),agent.Squirrel((900,600))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -322,12 +309,9 @@ class grassland6:
 		self.NPCs = []
 		
 		#Add DA enemies HERE
-		self.frameCounter = -1
-		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
+		self.frameCounter = -1    
 
-		self.enemies = [enemyVoodoo]
+		self.enemies = [agent.Squirrel((800,400))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -367,15 +351,14 @@ class grassland7:
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
+		girl = agent.LostGirl(581, 320)
+		girl.setMessage(["All of the squirrels are flying!", "I wonder if there is a reason."])
 		self.NPCs = []
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
 
-		self.enemies = [enemyVoodoo]
+		self.enemies = []
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -425,11 +408,8 @@ class grassland8:
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
 
-		self.enemies = [enemyVoodoo]
+		self.enemies = [agent.Voodoo((580,50)), agent.Squirrel((650, 75)), agent.Squirrel((540,75))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -480,11 +460,9 @@ class grassland9:
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
 
-		self.enemies = [enemyVoodoo]
+		self.enemies = [agent.Squirrel((555,222)),agent.Squirrel((333,200)),agent.Squirrel((111,111)),agent.Squirrel((666,232)),agent.Squirrel((432,80)),agent.Squirrel((999,76)),agent.Squirrel((1000,400)),
+						agent.Voodoo((580,55))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -525,11 +503,8 @@ class grassland10:
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
 
-		self.enemies = [enemyVoodoo]
+		self.enemies = [agent.Squirrel((555,333)),agent.Squirrel((999,222)),agent.Squirrel((300,300))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -576,11 +551,8 @@ class grassland11:
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
-
-		self.enemies = [enemyVoodoo]
+		
+		self.enemies = [agent.Squirrel((666,666))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -595,7 +567,7 @@ class grassland11:
 		if hero_Rect.x > self.width:
 			return pygame.Rect(2, hero_Rect.y, 58, 68)
 		else:
-			return pygame.Rect(hero_Rect.x, 2, 58, 68)
+			return pygame.Rect(hero_Rect.x, 2, 58, 68)s
 			
 	def judge(self, hero_Rect):
 		if hero_Rect.x < 0:
@@ -620,15 +592,15 @@ class grassland12:
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
-		self.NPCs = []
+		
+		rockBro = agent.HelpRock(1100,570)
+		rockBro.setMessage(["YOU SHALL NOT PASS!", "Of course unless you do... but that requires more work from your end."])
+		self.NPCs = [rockBro]
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		enemyVoodoo = agent.Voodoo(pygame.Rect(550, 320, 36, 46))
-		enemyVoodoo.setDev(-10,-10)     
 
-		self.enemies = [enemyVoodoo]
+		self.enemies = []
 		
 	def reset(self):
 		self.screen.fill((90,0,0))

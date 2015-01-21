@@ -788,7 +788,7 @@ class engine:
 				i += 1
 			if self.talking:
 				if displayText is not None:
-					txt = bestFont.render(displayText, True, (0,0,0))
+					txt = bestFont.render(displayText, True, (255,255,255))
 					self.screen.blit(txt, (50, 600))
 				else:
 					self.setTalk(False)
