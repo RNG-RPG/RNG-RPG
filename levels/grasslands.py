@@ -567,7 +567,7 @@ class grassland11:
 		if hero_Rect.x > self.width:
 			return pygame.Rect(2, hero_Rect.y, 58, 68)
 		else:
-			return pygame.Rect(hero_Rect.x, 2, 58, 68)s
+			return pygame.Rect(hero_Rect.x, 2, 58, 68)
 			
 	def judge(self, hero_Rect):
 		if hero_Rect.x < 0:
