@@ -719,6 +719,22 @@ class engine:
 					if event.type == pygame.KEYDOWN:
 					key = pygame.key.get_pressed()
 					"""
+			
+			# dragon fireball collision with hero checker
+			i = 0
+			while i < 20:
+				if enemy_projectiles[i] == True:
+					if projectile_rects[i].colliderect( hero_Rect ) and hero_invincible == False:
+						agent_hero.changeHP( - 1 )
+						health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
+						print( "health lost", enem.getAttack(), agent_hero.getHP() )
+						hero_invincible = True
+						hero_Rect = hero_Rect.move( enem.getHSpeed() * 5, enem.getVSpeed() * 5 )
+						if agent_hero.getHP() <= 0:
+							dead = True
+							health_Rect = pygame.Rect( (0, 0), (0, 0) )
+						enemy_projectiles[i] = False
+				i += 1
 					
 			# arrow collision with enemy checker
 			for enem in self.room.enemies:
