@@ -818,14 +818,15 @@ class engine:
 			if hero_invincible == True:
 				invincible_counter += 1
 				#print(invincible_counter)
-				#if invincible_counter % 2 == 0:
-					# current_hero_image.set_alpha(150)
+				if invincible_counter % 5 != 0:
+					heroSprites.set_alpha(100)
+					print("flashing")
 					# makes the hero flash
 				if invincible_counter == 60:
 					print("resetting invincibility")
 					hero_invincible = False
 					invincible_counter = 0
-					# current_hero_image.set_alpha(255)
+					heroSprites.set_alpha(255)
 					# ensures that the hero is opaque when exiting invicibility
 			
 			
