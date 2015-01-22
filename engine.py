@@ -609,9 +609,6 @@ class engine:
 			# enemy collision with hero checker
 			for enem in self.room.enemies:
 				if enem.getRect().colliderect( hero_Rect ) and enem.isDead() == False and hero_invincible == False:
-					dFrame = (464, 0, 58, 68)
-					hoSpeed = 0
-					vertSpeed = 0
 					#health_Rect = pygame.Rect((4, (574 - (health_LOST))), (17, (91 - (health_LOST))))
 					agent_hero.changeHP( - (enem.getAttack()) )
 					print( "health lost", enem.getAttack(), agent_hero.getHP() )
@@ -761,6 +758,9 @@ class engine:
 							dFrame = herod[4]
 					attackDelay=False
 			else:
+				dFrame = (464, 0, 58, 68)
+				hero_invincible = False
+				invincible_counter = 0
 				if loopdeath == 0:
 					chan= pygame.mixer.find_channel(True)
 					chan.play(deathsound)
@@ -791,7 +791,11 @@ class engine:
 			if self.talking:
 				self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), talkFrame )
 			else:
-				self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
+				if hero_invincible == True:
+					if invincible_counter % 3 ==0:
+						self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
+				else:
+					self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), dFrame )
 			for NPC in self.room.NPCs:
 				self.screen.blit( npcSprites, (NPC.getRect().x -2,NPC.getRect().y), NPC.getCurrentSprite(hero_Rect.x,hero_Rect.y))
 			i = 0
@@ -817,10 +821,6 @@ class engine:
 			#hero invincible timer
 			if hero_invincible == True:
 				invincible_counter += 1
-				#print(invincible_counter)
-				#if invincible_counter % 2 == 0:
-					# current_hero_image.set_alpha(150)
-					# makes the hero flash
 				if invincible_counter == 60:
 					print("resetting invincibility")
 					hero_invincible = False

@@ -233,7 +233,7 @@ class Enemy(object):
 
 class Slime(Enemy):
 	def __init__ (self, rect, aggress = True, animSpeed = 5):
-		super(Slime,self).__init__(3, [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], rect, animSpeed, 1)
+		super(Slime,self).__init__(3, [(0, 154, 50, 50), (50, 154, 50, 50), (0, 154, 50, 50), (100, 154, 50, 50), (150, 154, 50, 50)], rect, animSpeed, 2, 7, False)
 		self.setDev(-20,-20)
 		self.setAggress(aggress)
 		self.deathsound = pygame.mixer.Sound("sounds/slimedeath.wav")
@@ -245,7 +245,7 @@ class Slime(Enemy):
 
 class Dragon(Enemy):
 	def __init__ (self, rect, aggress = True, animSpeed = 10):
-		super(Dragon,self).__init__(20, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(rect[0], rect[1],34, 74), animSpeed,5, False)
+		super(Dragon,self).__init__(20, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(rect[0], rect[1],34, 74), animSpeed,5,100, False)
 		self.setDev(-40,-40)
 		self.setAggress(aggress)
 		self.deathsound = pygame.mixer.Sound("sounds/dragondeath.wav")
@@ -258,7 +258,7 @@ class Dragon(Enemy):
 class Voodoo(Enemy):
 	def __init__ (self, rect, aggress = True, animSpeed = 6):
 		super(Voodoo,self).__init__(5, [(0, 229, 55, 66), (0, 229, 55, 66), (56, 229, 55, 66), (112, 229, 55, 66), (168, 229, 55, 66), (224, 229, 55, 66), (280, 229, 55, 66),
-							(336, 229, 55, 66), (392, 229, 55, 66), (448, 229, 55, 66)], pygame.Rect(rect[0],rect[1],36,46), animSpeed,3, True)
+							(336, 229, 55, 66), (392, 229, 55, 66), (448, 229, 55, 66)], pygame.Rect(rect[0],rect[1],36,46), animSpeed,3, 20, True)
 		self.setDev(-10,-10)
 		self.setAggress(aggress)
 		self.deathsound = pygame.mixer.Sound("sounds/voodoodeath.wav")
@@ -269,9 +269,9 @@ class Voodoo(Enemy):
 		self.setSpeed(2)
 	
 class Squirrel(Enemy):
-	def __init__ (self, rect, aggress = True, animSpeed = 20):
-		super(Squirrel,self).__init__(2, [(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(66, 295, 33, 36), (66, 295, 33, 36),
-								(99, 295, 34, 36), (99, 295, 34, 36), (99, 295, 34, 36)], pygame.Rect(rect[0],rect[1],10,12), animSpeed,1, True)
+	def __init__ (self, rect, aggress = True, animSpeed = 5):
+		super(Squirrel,self).__init__(2, [(0, 295, 33, 36), (33, 295, 33, 36), (66, 295, 33, 36), (99, 295, 33, 36), (66, 295, 33, 36),(0, 295, 33, 36), (66, 295, 33, 36),
+								(99, 295, 34, 36), (99, 295, 34, 36), (33, 295, 33, 36)], pygame.Rect(rect[0],rect[1],10,12), animSpeed,1, 5, True)
 		self.setDev(-12,-12)
 		self.setAggress(aggress)
 		self.deathsound = pygame.mixer.Sound("sounds/squirreldeath.wav")
