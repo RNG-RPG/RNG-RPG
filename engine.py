@@ -709,11 +709,14 @@ class engine:
 			enem_health_rects = []
 			for enem in self.room.enemies:
 				#print( "Appending!" )
-				enem_health_rects.append(pygame.Rect((enem.getRect().left, enem.getRect().top - 20), (((float(enem.getHP())/float(enem.getMaxHP()))*enem.getRect().width*3), 10)))
-				pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
-				refresh_rect = pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width + 40, enem_health_rects[i].height + 40))
-				refresh.append(refresh_rect)
-				i += 1
+				if enem.getHP() == 0:
+					i = 10
+				else:
+					enem_health_rects.append(pygame.Rect((enem.getRect().left, enem.getRect().top - 20), (((float(enem.getHP())/float(enem.getMaxHP()))*enem.getRect().width*3), 10)))
+					pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
+					refresh_rect = pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width + 40, enem_health_rects[i].height + 40))
+					refresh.append(refresh_rect)
+					i += 1
 		   
 		   
 			#sprite control
