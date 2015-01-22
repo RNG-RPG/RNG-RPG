@@ -100,7 +100,3 @@ def main():
 if __name__ == "__main__":
 	while 1 == 1:
 		start()
-	
-	
-
-print "terminating"

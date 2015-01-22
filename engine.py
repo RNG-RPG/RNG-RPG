@@ -20,6 +20,7 @@ class engine:
 		self.pause = False
 		self.talking = False
 		self.winVar = False
+		self.checkAvoid = False
 		
 		#Character stats
 		self.attspeed = 10 
@@ -88,7 +89,7 @@ class engine:
 			self.level = 1
 			self.room = self.rooms[self.roomNum]
 		if self.state == "main1":
-			self.level == 2
+			self.level = 2
 			self.room = self.rooms[self.roomNum]
 	
 	def reset(self):
@@ -646,6 +647,12 @@ class engine:
 								enem.setAggress(True)
 							if enem.isAggro() != True:
 								enem.setAggro(True)
+							for enem2 in self.room.enemies:
+								if math.sqrt((enem.getRect().centerx - enem2.getRect().centerx)**2 + (enem.getRect().centery - enem2.getRect().centery)**2) < 300:
+									if enem2.aggressive != True:
+										enem2.setAggress(True)
+									if enem2.isAggro() != True:
+										enem2.setAggro(True)	
 							chan= pygame.mixer.find_channel(True)
 							chan.play(arrowhit)
 							#arrowhit.play()
@@ -874,29 +881,38 @@ class engine:
 				#next rooms
 				if self.state == "main" and self.roomNum == 99:
 					self.state = "main1"
+					hero_Rect.x = 60
 					self.roomNum = 0
-					self.setUpRooms()
-				else:
-					print "ROOM: ", self.roomNum
 					self.setState()
+					self.setUpRooms()
+					self.room = self.rooms[0]
 					self.reset()
-					if roomCache != self.roomNum:
-						pygame.display.update()
+					pygame.display.update()
+					self.winVar = False
+					self.checkAvoid = True
 					
-					wall_Rects = []
-					rock_Rects = []
-					if self.room.rock != None:
-						for i in range(len(self.room.rockx)):
-							rock_Rect = self.room.rock.get_rect().move(self.room.rockx[i], self.room.rocky[i])
-							rock_Rects.append(rock_Rect)
-					for wall in self.room.walls:
-						wall_Rects.append(wall)
-						
+				print "ROOM: ", self.roomNum
+				self.setState()
+				self.reset()
+				if roomCache != self.roomNum:
+					pygame.display.update()
+				
+				wall_Rects = []
+				rock_Rects = []
+				if self.room.rock != None:
+					for i in range(len(self.room.rockx)):
+						rock_Rect = self.room.rock.get_rect().move(self.room.rockx[i], self.room.rocky[i])
+						rock_Rects.append(rock_Rect)
+				for wall in self.room.walls:
+					wall_Rects.append(wall)
+				if self.checkAvoid:
+					self.checkAvoid = False
+				else:
 					hero_Rect = self.room.checkroom(hero_Rect)
-					
-					if thismusic != self.room.music:
-						pygame.mixer.music.load(self.room.music)
-						pygame.mixer.music.play(-1,0)
-				  
-		   
+				
+				if thismusic != self.room.music:
+					pygame.mixer.music.load(self.room.music)
+					pygame.mixer.music.play(-1,0)
+			  
+	   
 			self.clock.tick(30)
