@@ -153,31 +153,11 @@ class engine:
 		pygame.event.pump()
 		mpos = pygame.mouse.get_pos()
 		
-		
-		# arrow initializing
 		arrowLoadImage = pygame.image.load( "sprites/particle_main.png" ).convert_alpha()
 		arrow = [arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage]
 		arrow_rects = [arrow[0].get_rect(),arrow[1].get_rect(),arrow[2].get_rect(),arrow[3].get_rect(),arrow[4].get_rect(),arrow[5].get_rect(),arrow[6].get_rect(),arrow[7].get_rect(),arrow[8].get_rect(),arrow[9].get_rect()]
 		arrow_posX = [None,None,None,None,None,None,None,None,None,None]
 		arrow_posY = [None,None,None,None,None,None,None,None,None,None]
-		
-		# enemy projectile initializing
-		projectileLoadImage = pygame.image.load( "dsprite/FireBall.png" ).convert_alpha()
-		projectile = []
-		projectile_rects = []
-		projectile_posX = []
-		projectile_posY = []
-		enemy_projectiles = []
-		i = 0
-		while i < 20:
-			projectile.append(projectileLoadImage)
-			projectile_rects.append(projectile[i].get_rect())
-			projectile_posX.append(None)
-			projectile_posY.append(None)
-			enemy_projectiles.append(False)
-			i += 1
-		
-		# hero health stuff
 		healthBar = pygame.image.load( "HP_Bar.png" ).convert_alpha()
 		healthBar_Rect = healthBar.get_rect().move(0, 539)
 		health_Rect = pygame.Rect((4, 574), (17, 91))
@@ -266,7 +246,6 @@ class engine:
 			elif self.state == "main1":
 				if self.rooms[2].bossDead:
 					pygame.display.update()
-
 			
 			def tutpaused():
 				while self.pause:			  
@@ -434,50 +413,7 @@ class engine:
 					tutpaused()
 				elif self.tutorialcount > 10:
 					pygame.display.update()
-			
-			# dragon shooting code
-			for enem in self.room.enemies:
-				if isinstance(enem, agent.Dragon):
-					if self.frameCounter == 30:
-						if projectilenum < 19:
-							arrownum += 1
-						else:
-							projectilenum = 0
-						if hero_Rect.centerx - enem.getRect().centerx == 0:
-							projectileSpeedX[projectilenum] = 0
-							projectileSpeedY[projectilenum] = 10
-						elif hero_Rect.centery - enem.getRect().centery == 0:
-							projectileSpeedX[projectilenum] = 10
-							projectileSpeedY[projectilenum] = 0
-						else:
-							temp_tan_var = ((float(hero_Rect.centery) - float(enem.getRect().centery))/(float(hero_Rect.centerx) - float(enem.getRect().centerx)))
-							#print( "temp_tan_var" )
-							#print( temp_tan_var )
-							#print( "############" )
-							angle = (math.atan( temp_tan_var ))
-						projectile_rects[projectilenum] = projectile[projectilenum].get_rect().move( enem.getRect().centerx - (projectile[projectilenum].get_rect().width/2), enem.getRect().centery - (projectile[projectilenum].get_rect().height/2) )
-						projectile_posX[projectilenum] = projectile_rects[projectilenum].left
-						projectile_posY[projectilenum] = projectile_rects[projectilenum].top
-						print( "projectile_posX : " )
-						print( projectile_posX[projectilenum] )
-						print( "projectile_posY : " )
-						print( projectile_posY[projectilenum] )
-						enemy_projectiles[projectilenum] = True
-						print 'hibish4'
-						projectileSpeedY[projectilenum] = ( math.sin(angle) * 10.0 )
-						#print( "arrowSpeedY" )
-						#print( arrowSpeedY )
-						#print( "############" )
-						projectileSpeedX[projectilenum] = ( math.cos(angle) * 10.0 )
-						if (hero_Rect.centerx > target_Rect.centerx):
-							projectileSpeedX[projectilenum] = -projectileSpeedX[projectilenum]
-							projectileSpeedY[projectilenum] = -projectileSpeedY[projectilenum]
-						#print( "arrowSpeedX" )
-						#print( arrowSpeedX )
-						#print( "############" )
-						self.screen.blit( projectile[projectilenum], (projectile_rects[projectilenum]) )
-
-			
+										   
 			#counts frames for animations
 			self.room.frameCounter += 1
 			if self.room.frameCounter == 29:
@@ -697,14 +633,13 @@ class engine:
 			# enemy collision with hero checker
 			for enem in self.room.enemies:
 				if enem.getRect().colliderect( hero_Rect ) and enem.isDead() == False and hero_invincible == False:
-					agent_hero.changeHP( - (enem.getAttack()) )
 					health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
+					agent_hero.changeHP( - (enem.getAttack()) )
 					print( "health lost", enem.getAttack(), agent_hero.getHP() )
 					hero_invincible = True
 					hero_Rect = hero_Rect.move( enem.getHSpeed() * 5, enem.getVSpeed() * 5 )
 					if agent_hero.getHP() <= 0:
 						dead = True
-						health_Rect = pygame.Rect( (0, 0), (0, 0) )
 					"""
 					for event in pygame.event.get(): 
 					if event.type == pygame.KEYDOWN:
@@ -774,19 +709,6 @@ class engine:
 			if self.talking:
 				refresh.append((50, 600, 1100, 200))
 
-			# enemy projectile movement
-			i = 0
-			while i < 20:
-				if enemy_projectiles[i] == True:
-					refresh.append( projectile_rects[i] )
-					projectile_posX[i] = projectile_posX[i] + projectileSpeedX[i]
-					projectile_posY[i] = projectile_posY[i] + projectileSpeedY[i]
-					projectile_rects[i].left = projectile_posX[i]
-					projectile_rects[i].top = projectile_posY[i]
-					#arrow_rects[i] = arrow_rects[i].move( arrowSpeedX[i], arrowSpeedY[i] )
-				if enemy_projectiles[i] == True:
-					refresh.append((projectile_rects[i].x-20, projectile_rects[i].y-20,projectile_rects[i].width+40,projectile_rects[i].height+40))
-				i += 1
 		   
 			# redrawing everything
 			self.reset()
