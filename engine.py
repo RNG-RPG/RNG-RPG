@@ -825,9 +825,6 @@ class engine:
 					print("resetting invincibility")
 					hero_invincible = False
 					invincible_counter = 0
-					# current_hero_image.set_alpha(255)
-					# ensures that the hero is opaque when exiting invicibility
-			
 			
 			#Room transitions
 			if hero_Rect.x > self.width or hero_Rect.x < 0 or hero_Rect.y > self.height or hero_Rect.y < 0:
