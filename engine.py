@@ -163,10 +163,13 @@ class engine:
 		
 		# enemy projectile initializing
 		projectileLoadImage = pygame.image.load( "dsprite/FireBall.png" ).convert_alpha()
+		projectilenum = 0
 		projectile = []
 		projectile_rects = []
 		projectile_posX = []
 		projectile_posY = []
+		projectileSpeedX = []
+		projectileSpeedY = []
 		enemy_projectiles = []
 		i = 0
 		while i < 20:
@@ -175,6 +178,8 @@ class engine:
 			projectile_posX.append(None)
 			projectile_posY.append(None)
 			enemy_projectiles.append(False)
+			projectileSpeedX.append(None)
+			projectileSpeedY.append(None)
 			i += 1
 		
 		# hero health stuff
@@ -438,9 +443,9 @@ class engine:
 			# dragon shooting code
 			for enem in self.room.enemies:
 				if isinstance(enem, agent.Dragon):
-					if self.frameCounter == 30:
+					if self.room.frameCounter == 15:
 						if projectilenum < 19:
-							arrownum += 1
+							projectilenum += 1
 						else:
 							projectilenum = 0
 						if hero_Rect.centerx - enem.getRect().centerx == 0:
@@ -458,23 +463,24 @@ class engine:
 						projectile_rects[projectilenum] = projectile[projectilenum].get_rect().move( enem.getRect().centerx - (projectile[projectilenum].get_rect().width/2), enem.getRect().centery - (projectile[projectilenum].get_rect().height/2) )
 						projectile_posX[projectilenum] = projectile_rects[projectilenum].left
 						projectile_posY[projectilenum] = projectile_rects[projectilenum].top
-						print( "projectile_posX : " )
-						print( projectile_posX[projectilenum] )
-						print( "projectile_posY : " )
-						print( projectile_posY[projectilenum] )
-						enemy_projectiles[projectilenum] = True
-						print 'hibish4'
+						# print( "projectile_posX : " )
+						# print( projectile_posX[projectilenum] )
+						# print( "projectile_posY : " )
+						# print( projectile_posY[projectilenum] )
+						# enemy_projectiles[projectilenum] = True
+						# print 'hibish4'
 						projectileSpeedY[projectilenum] = ( math.sin(angle) * 10.0 )
 						#print( "arrowSpeedY" )
 						#print( arrowSpeedY )
 						#print( "############" )
 						projectileSpeedX[projectilenum] = ( math.cos(angle) * 10.0 )
-						if (hero_Rect.centerx > target_Rect.centerx):
+						if (hero_Rect.centerx < target_Rect.centerx):
 							projectileSpeedX[projectilenum] = -projectileSpeedX[projectilenum]
 							projectileSpeedY[projectilenum] = -projectileSpeedY[projectilenum]
 						#print( "arrowSpeedX" )
 						#print( arrowSpeedX )
 						#print( "############" )
+						enemy_projectiles[projectilenum] = True
 						self.screen.blit( projectile[projectilenum], (projectile_rects[projectilenum]) )
 
 			
@@ -928,6 +934,12 @@ class engine:
 			while i < 10:
 				if arrowOn[i] == True:
 					self.screen.blit( arrow[i], (arrow_rects[i]) )
+				i += 1
+			i = 0
+			while i < 20:
+				if enemy_projectiles[i] == True:
+					print("drawing!", i)
+					self.screen.blit( projectile[i], (projectile_rects[i]) )
 				i += 1
 			if self.talking:
 				if displayText is not None:
