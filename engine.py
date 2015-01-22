@@ -21,6 +21,7 @@ class engine:
 		self.talking = False
 		self.winVar = False
 		self.checkAvoid = False
+		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		
 		#Character stats
 		self.attspeed = 10 
@@ -63,20 +64,24 @@ class engine:
              
 		self.rooms = []
 		if self.level == 0:
-			self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight()))
-			self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight()))
-			self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight()))
-			self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight()))
+			temp = pygame.image.load( "RockGround2.png" ).convert_alpha()
+			spritos = [pygame.transform.scale(temp, (self.width, self.height)), pygame.image.load('sprites/rockwall_main.png').convert_alpha(), pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()]
+			self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
+			self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
+			self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
+			self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
 		if self.level == 1:
 			temp = pygame.image.load( "GrassGround.png" ).convert_alpha()
 			spritos = [pygame.transform.scale(temp, (self.width, self.height)), pygame.image.load('sprites/treewall_main.png').convert_alpha(), pygame.image.load( "sprites/enemy_main.png" ).convert_alpha(),
 						pygame.image.load('sprites/rockwall_main.png').convert_alpha()]
 			self.rooms = grasslands.gatherRooms(self.getScreen(), self.getWidth(), self.getHeight(), spritos)
 		if self.level == 2:
-			self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight()))
-			self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight()))
-			self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight()))
-			self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight()))
+			temp = pygame.image.load( "RockGround2.png" ).convert_alpha()
+			spritos = [pygame.transform.scale(temp, (self.width, self.height)), pygame.image.load('sprites/rockwall_main.png').convert_alpha(), pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()]
+			self.rooms.append(room.cavefirstroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
+			self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
+			self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
+			self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
             
 	
 	def setState(self):
@@ -204,7 +209,7 @@ class engine:
 		self.screen.blit( heroSprites, (50, 50), dFrame	 )
 			
 		for enem in self.room.enemies:
-			self.screen.blit( self.room.enemySprites, (enem.getRect().x, enem.getRect().y), enem.getCurrentSprite())
+			self.screen.blit( self.enemySprites, (enem.getRect().x, enem.getRect().y), enem.getCurrentSprite())
 		
 		self.reset()
 
@@ -232,11 +237,15 @@ class engine:
 		while 1 == 1:	 
 			# Stage Changing/win variables - LEVEL DESIGN:
 			if self.state == "main":
+				self.rooms[12].setPass(True)
 				if self.rooms[5].bossDead() and self.rooms[9].bossDead() and self.winVar == False:
 					self.rooms[7].setNPC(["The forest seems to be at peace..."])
 					self.rooms[12].setNPC(["You have conquered the woods...", "Now face your foe within the caves!"])
 					self.rooms[12].setPass(True)
 					self.winVar = True
+			elif self.state == "main1":
+				if self.rooms[2].bossDead:
+					pygame.display.update()
 			
 			def tutpaused():
 				while self.pause:			  
@@ -709,10 +718,11 @@ class engine:
 			enem_health_rects = []
 			for enem in self.room.enemies:
 				#print( "Appending!" )
-				if enem.getHP() == 0:
-					i = 10
-				else:
+				if enem.getHP() != 0:
+					
 					enem_health_rects.append(pygame.Rect((enem.getRect().left, enem.getRect().top - 20), (((float(enem.getHP())/float(enem.getMaxHP()))*enem.getRect().width*3), 10)))
+					print i
+					print len(enem_health_rects)
 					pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
 					refresh_rect = pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width + 40, enem_health_rects[i].height + 40))
 					refresh.append(refresh_rect)
@@ -824,7 +834,7 @@ class engine:
 						#print "deadcount after death", enem.deadcount
 					
 			for enem in self.room.enemies:
-				self.screen.blit( self.room.enemySprites, (enem.getRect().x+enem.getxDev(),enem.getRect().y+enem.getyDev()), enem.getCurrentSprite()) 
+				self.screen.blit( self.enemySprites, (enem.getRect().x+enem.getxDev(),enem.getRect().y+enem.getyDev()), enem.getCurrentSprite()) 
 			self.screen.blit( target, (target_Rect) )
 			if self.talking:
 				self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), talkFrame )

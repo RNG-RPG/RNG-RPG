@@ -95,7 +95,7 @@ class sandbox:
 		
 '''level 1'''
 class cavefirstroom:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 1
 		self.screen= screen
 		self.entered = False
@@ -103,12 +103,11 @@ class cavefirstroom:
 
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "RockGround2.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/rockwall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
 		self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(0, 50, 50, 600), pygame.Rect(0, 650, 400, 50), pygame.Rect(800, 650, 400, 50)]
 		self.rock = pygame.image.load( "rock.png" ).convert_alpha()
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
+		self.enemySprites = sprites[2]
 		self.rockx= []
 		self.rocky= []
 		self.NPCs = []
@@ -183,7 +182,7 @@ class cavefirstroom:
 		return pygame.Rect(self.width, hero_Rect.y, 58, 68)
 		
 class cavesecondroom:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 2
 		self.screen= screen
 		self.entered = False
@@ -191,12 +190,11 @@ class cavesecondroom:
 
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "RockGround2.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/rockwall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
 		self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(0, 650, 1200, 50)]
 		self.rock = pygame.image.load( "rock.png" ).convert_alpha()
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
+		self.enemySprites = sprites[2]
 		self.rockx= []
 		self.rocky= []
 		self.NPCs = []
@@ -273,7 +271,7 @@ class cavesecondroom:
 		return pygame.Rect(0, hero_Rect.y, 58, 68)
 
 class cavebossroom:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 3
 		self.screen= screen
 		self.entered = False
@@ -281,15 +279,15 @@ class cavebossroom:
 
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "RockGround2.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/rockwall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
 		self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(1150, 50, 50, 600), pygame.Rect(0, 650, 1200, 50)]
 		self.rock = pygame.image.load( "rock.png" ).convert_alpha()
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
+		self.enemySprites = [2]
 		self.rockx= []
 		self.rocky= []
 		self.NPCs = []
+		self.repeatVar = False
 
 		self.rockx.append(500)
 		self.rocky.append(180)
@@ -333,14 +331,24 @@ class cavebossroom:
 		for i in range(len(self.rockx)):
 			self.screen.blit( self.rock, (self.rockx[i], self.rocky[i]) )
 
+	def bossDead(self):
+		return self.repeatVar
 	def reset(self):
 		self.screen.fill((90,0,0))
 		self.screen.blit( self.background, (0,0) )
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
+		if all(enem.isDead() for enem in self.enemies):
+			if not self.repeatVar:
+				self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(1150, 300, 50, 250), pygame.Rect(0, 650, 1200, 50), pygame.Rect(1150, 400, 50, 250)]
+				self.repeatVar = True
+			self.screen.blit( self.wallSprites, (1150, 50), (0, 0, 50, 250))
+			self.screen.blit( self.wallSprites, (1150, 400), (0, 400, 50, 250))
+		else:
+			self.screen.blit( self.wallSprites, (1150, 50), (0, 0, 50, 600)  )
+			
 		self.screen.blit( self.rock, (self.rockx[0], self.rocky[0]) )
 		self.screen.blit( self.wallSprites, (0,0), (0, 0, 1200, 50) )
-		self.screen.blit( self.wallSprites, (1150, 50), (0, 0, 50, 600)  )
 		self.screen.blit( self.wallSprites, (0, 650), (0, 0, 1200, 50)  )
 
 	def checkroom(self,hero_Rect):
@@ -374,7 +382,7 @@ class cavebossroom:
 			return pygame.Rect(25, hero_Rect.y, 58, 68)
 
 class voodooroom:		   
-	def __init__ (self, screen, width, height):
+	def __init__ (self, screen, width, height, sprites):
 		self.identity = 3
 		self.screen= screen
 		
@@ -382,12 +390,11 @@ class voodooroom:
 		
 		self.width = width
 		self.height = height
-		self.background = pygame.image.load( "RockGround2.png" ).convert_alpha()
-		self.background = pygame.transform.scale(self.background, (self.width, self.height))
-		self.wallSprites = pygame.image.load('sprites/rockwall_main.png').convert_alpha()
+		self.background = sprites[0]
+		self.wallSprites = sprites[1]
 		self.walls = [pygame.Rect(0, 0, 400, 50), pygame.Rect(800, 0, 400, 50), pygame.Rect(0, 50, 50, 600), pygame.Rect(1150, 50, 50, 600), pygame.Rect(0, 650, 1200, 50),
 						pygame.Rect(550, 250, 50, 50)]
-		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
+		self.enemySprites = sprites[2]
 		self.rock = None
 		self.rockx= []
 		self.rocky= []

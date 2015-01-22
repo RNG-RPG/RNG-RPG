@@ -625,14 +625,15 @@ class grassland12:
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
 		self.screen.blit( self.wallSprites, (0,0), (0, 0, 1200, 85) )
-		self.screen.blit( self.wallSprites, (0, 650), (0, 892, 1200, 50)  )
 		
 		if self.passable:
-			self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(0, 650, 1200, 50), pygame.Rect(1150, 50, 50, 250), pygame.Rect(1150, 400, 50, 250)]
-			self.screen.blit( self.cave, (1150,50), (0, 0,50,250))
-			self.screen.blit( self.cave, (1150,400), (0, 0,50,250))
+			self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(0, 650, 1200, 50), pygame.Rect(1150, 50, 50, 285), pygame.Rect(1150, 425, 50, 250)]
+			self.screen.blit( self.cave, (1150,85), (0, 0,50,250))
+			self.screen.blit( self.cave, (1150,425), (0, 0,50,250))
 		else:
-			self.screen.blit( self.cave, (1150,50), (0, 0,50, 600) )
+			self.screen.blit( self.cave, (1150,85), (0, 0,50, 600) )
+		
+		self.screen.blit( self.wallSprites, (0, 650), (0, 892, 1200, 50)  )
 			
 			
 		
