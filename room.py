@@ -339,8 +339,8 @@ class cavebossroom:
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
 		if all(enem.isDead() for enem in self.enemies):
-			if not self.repeatVar:
-				self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(1150, 300, 50, 250), pygame.Rect(0, 650, 1200, 50), pygame.Rect(1150, 400, 50, 250)]
+			if self.repeatVar == False:
+				self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(1150, 50, 50, 250), pygame.Rect(0, 650, 1200, 50), pygame.Rect(1150, 400, 50, 250)]
 				self.repeatVar = True
 			self.screen.blit( self.wallSprites, (1150, 50), (0, 0, 50, 250))
 			self.screen.blit( self.wallSprites, (1150, 400), (0, 400, 50, 250))
