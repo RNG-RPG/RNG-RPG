@@ -620,10 +620,11 @@ class engine:
 			# enemy collision with hero checker
 			for enem in self.room.enemies:
 				if enem.getRect().colliderect( hero_Rect ) and enem.isDead() == False and hero_invincible == False:
-					#health_Rect = pygame.Rect((4, (574 - (health_LOST))), (17, (91 - (health_LOST))))
+					health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
 					agent_hero.changeHP( - (enem.getAttack()) )
 					print( "health lost", enem.getAttack(), agent_hero.getHP() )
 					hero_invincible = True
+					hero_Rect = hero_Rect.move( enem.getHSpeed() * 5, enem.getVSpeed() * 5 )
 					if agent_hero.getHP() <= 0:
 						dead = True
 					"""
