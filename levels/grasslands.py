@@ -28,7 +28,7 @@ class grassland0:
 		
 		rockBro = agent.HelpRock(150, 50)
 		rockBro1 = agent.HelpRock(500, 600)
-		rockBro.setMessage(["[Rock]: I'm a talking rock~ - Press the mouse button to continue","[Rock]: You should bump into my friends to see what they have to say!]"])
+		rockBro.setMessage(["[Rock]: I'm a talking rock~ - Press the mouse button to continue","[Rock]: You should bump into my friends to see what they have to say!"])
 		rockBro1.setMessage(["[Rock Bro]: Cleanse this land of your enemies... or perish... (P.S. Rockbros are not your enemy)"])
 		self.NPCs = [rockBro, rockBro1]
 
@@ -270,8 +270,11 @@ class grassland5:
 		#Add DA enemies HERE
 		self.frameCounter = -1
 		
-		self.enemies = [agent.Squirrel((300,600)),agent.Squirrel((400,610)),agent.Squirrel((500,620)),agent.Voodoo(((600,640))),agent.Squirrel((700,620)),
-						agent.Squirrel((800,610)),agent.Squirrel((900,600))]
+		self.enemies = [agent.Squirrel((300,600)),agent.Squirrel((400,610)),agent.Squirrel((500,620)),agent.Squirrel((700,620)),
+						agent.Squirrel((800,610)),agent.Squirrel((900,600)),agent.Voodoo(((600,640)))]
+	#special method
+	def bossDead(self):
+		return self.enemies[-1].isDead()
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -360,6 +363,9 @@ class grassland7:
 
 		self.enemies = []
 		
+	# special event method
+	def setNPC(self, message):
+		self.NPCs[0].setMessage(message)
 	def reset(self):
 		self.screen.fill((90,0,0))
 		self.screen.blit( self.background, (0,0) )
@@ -463,7 +469,11 @@ class grassland9:
 
 		self.enemies = [agent.Squirrel((555,222)),agent.Squirrel((333,200)),agent.Squirrel((111,111)),agent.Squirrel((666,232)),agent.Squirrel((432,80)),agent.Squirrel((999,76)),agent.Squirrel((1000,400)),
 						agent.Voodoo((580,55))]
-		
+	
+	#special method
+	def bossDead(self):
+		return self.enemies[-1].isDead()
+	
 	def reset(self):
 		self.screen.fill((90,0,0))
 		self.screen.blit( self.background, (0,0) )
@@ -602,6 +612,13 @@ class grassland12:
 
 		self.enemies = []
 		
+	# special event methods and field
+		self.passable = False
+	def setNPC(self, message):
+		self.NPCs[0].setMessage(message)
+	def setPass(self, bool):
+		self.passable = bool
+		
 	def reset(self):
 		self.screen.fill((90,0,0))
 		self.screen.blit( self.background, (0,0) )
@@ -610,6 +627,15 @@ class grassland12:
 		self.screen.blit( self.wallSprites, (0,0), (0, 0, 1200, 85) )
 		self.screen.blit( self.wallSprites, (0, 650), (0, 892, 1200, 50)  )
 		
+		if self.passable:
+			self.walls = [pygame.Rect(0, 0, 1200, 50), pygame.Rect(0, 650, 1200, 50), pygame.Rect(1150, 50, 50, 250), pygame.Rect(1150, 400, 50, 250)]
+			self.screen.blit( self.cave, (1150,50), (0, 0,50,250))
+			self.screen.blit( self.cave, (1150,400), (0, 0,50,250))
+		else:
+			self.screen.blit( self.cave, (1150,50), (0, 0,50, 600) )
+			
+			
+		
 	def checkroom(self,hero_Rect):
 		print "room12"
 		return pygame.Rect(2, hero_Rect.y, 58, 68)
@@ -617,4 +643,6 @@ class grassland12:
 	def judge(self, hero_Rect):
 		if hero_Rect.x < 0:
 			return 10
+		if hero_Rect.x > self.width:
+			return 99
 			
