@@ -156,6 +156,7 @@ class engine:
 		healthBar_Rect = healthBar.get_rect().move(0, 539)
 		health_Rect = pygame.Rect((4, 574), (17, 91))
 		agent_hero = agent.Agent(10, 4, 0)
+
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 		npcSprites = pygame.image.load( "sprites/npc_main.png" ).convert_alpha()
@@ -616,7 +617,9 @@ class engine:
 							enem.setHSpeed(-1)
 						else:
 							enem.setHSpeed(0)
-			  
+							
+			
+
 			# enemy collision with hero checker
 			for enem in self.room.enemies:
 				if enem.getRect().colliderect( hero_Rect ) and enem.isDead() == False and hero_invincible == False:
@@ -689,9 +692,21 @@ class engine:
 				i += 1
 			if self.talking:
 				refresh.append((50, 600, 1100, 200))
+
 		   
 			# redrawing everything
 			self.reset()
+		   
+			# enemy hp stuff
+			i = 0
+			enem_health_rects = []
+			for enem in self.room.enemies:
+				#print( "Appending!" )
+				enem_health_rects.append(pygame.Rect((enem.getRect().left, enem.getRect().top - 20), (((float(enem.getHP())/float(enem.getMaxHP()))*enem.getRect().width*3), 10)))
+				refresh.append(enem_health_rects[i])
+				pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
+				i += 1
+		   
 		   
 			#sprite control
 		   
@@ -824,8 +839,8 @@ class engine:
 			
 			self.screen.blit(healthBar, (healthBar_Rect) )
 			pygame.draw.rect(self.screen, (255, 0, 0), health_Rect, 0)
-			  
-
+			
+			
 			pygame.display.update( refresh )
 		   
 			refresh = []
