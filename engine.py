@@ -154,6 +154,8 @@ class engine:
 		bestFont = pygame.font.SysFont("Helvetica", 25)
 		#load inventory image
 		inventory = pygame.image.load( "upgrades.png" ).convert_alpha()
+		texture_missing_upgrades = pygame.image.load( "texture_missing_upgrades.png" ).convert_alpha()
+		description = ""
 		
 		#make sounds	
 		arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
@@ -745,13 +747,13 @@ class engine:
 					elif pygame.Rect((608+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "2, 2" )
 						#self.upgradeFunc(2, 2, agent_hero)
-					elif pygame.Rect((434+200,212+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((434+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "3, 1" )
 						#self.upgradeFunc(3, 1, agent_hero)
-					elif pygame.Rect((550+200,212+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((550+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "3, 2" )
 						#self.upgradeFunc(3, 2, agent_hero)
-					elif pygame.Rect((666+200,212+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #devil's button!!! *oooooooooooooooh*
+					elif pygame.Rect((666+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #devil's button!!! *oooooooooooooooh*
 						print( "3, 3" )
 						#self.upgradeFunc(3, 3, agent_hero)
 					elif pygame.Rect((376+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
@@ -766,7 +768,7 @@ class engine:
 					elif pygame.Rect((724+200, 283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "4, 4" )
 						#self.upgradeFunc(4, 4, agent_hero)
-					elif pygame.Rect((376+200,270+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((376+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "5, 1" )
 						#self.upgradeFunc(5, 1, agent_hero)
 					elif pygame.Rect((492+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
@@ -1091,8 +1093,80 @@ class engine:
 			if inventoryOn == True:
 				#print ( "inventoryOn", inventoryOn )
 				self.screen.blit( inventory, (200, 130) )		#801, 441 (size of inventory image)
+				self.screen.blit( texture_missing_upgrades, (550+200,22+130) )
+				self.screen.blit( texture_missing_upgrades, (492+200,109+130) )
+				self.screen.blit( texture_missing_upgrades, (608+200,109+130) )
+				self.screen.blit( texture_missing_upgrades, (434+200,196+130) )
+				self.screen.blit( texture_missing_upgrades, (550+200,196+130) )
+				self.screen.blit( texture_missing_upgrades, (666+200,196+130) )
+				self.screen.blit( texture_missing_upgrades, (376+200,283+130) )
+				self.screen.blit( texture_missing_upgrades, (492+200,283+130) )
+				self.screen.blit( texture_missing_upgrades, (608+200,283+130) )
+				self.screen.blit( texture_missing_upgrades, (724+200,283+130) )
+				self.screen.blit( texture_missing_upgrades, (376+200,370+130) )
+				self.screen.blit( texture_missing_upgrades, (492+200,370+130) )
+				self.screen.blit( texture_missing_upgrades, (608+200,370+130) )
+				self.screen.blit( texture_missing_upgrades, (724+200,370+130) )
 				refresh.append(inventory.get_rect())
-			
+				if pygame.Rect((550+200,22+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(1,1)
+					if description != "train in archery":
+						description = "train in archery"
+						print( description )
+				elif pygame.Rect((492+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(2,1)
+					if description != "train for AOE attack":
+						description = "train for AOE attack"
+						print( description )
+				elif pygame.Rect((608+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(2,2)
+					if description != "train for big damage attack":
+						description = "train for big damage attack"
+						print( description )
+				elif pygame.Rect((434+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,1)
+					if description != "increase radius":
+						description = "increase radius"
+						print( description )
+				elif pygame.Rect((550+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,2)
+					if description != "increase speed":
+						description = "increase speed"
+						print( description )
+				elif pygame.Rect((666+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,3)
+					if description != "increase attack":
+						description = "increase attack"
+						print( description )
+				elif pygame.Rect((376+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,1)
+					if description != "increase attack":
+						description = "increase attack"
+						print( description )
+				elif pygame.Rect((492+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,2)
+					if description != "increase radius":
+						description = "increase attack"
+						print( description )
+				elif pygame.Rect((608+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,3)
+					if description != "increase attack":
+						description = "increase attack"
+						print( description )
+				elif pygame.Rect((724+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,4)
+					if description != "increase speed":
+						description = "increase speed"
+						print( description )
+				elif pygame.Rect((376+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,1)
+					if description != "increase attack":
+						description = "increase attack"
+						print( description )
+				elif pygame.Rect((492+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,2)
+					if description != "full screen":
+						description = "full screen"
+						print( description )
+				elif pygame.Rect((608+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,3)
+					if description != "increase attack":
+						description = "increase attack"
+						print( description )
+				elif pygame.Rect((724+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,4)
+					if description != "increase default attack speed":
+						description = "increase default attack speed"
+						print( description )
+				 
+				
+				
 			
 			pygame.display.update( refresh )
 		   
