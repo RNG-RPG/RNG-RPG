@@ -697,87 +697,87 @@ class engine:
 							inventoryOn = False
 				elif event.type == pygame.MOUSEBUTTONDOWN and inventoryOn == True:
 					# inventory slots:
-					if pygame.Rect((18+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					if pygame.Rect((18+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(1, 1, agent_hero, self.inventoryItems)
-					elif pygame.Rect((18+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((18+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(1, 2, agent_hero, self.inventoryItems)
-					elif pygame.Rect((18+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((18+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(1, 3, agent_hero, self.inventoryItems)
-					elif pygame.Rect((18+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((18+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(1, 4, agent_hero, self.inventoryItems)
-					elif pygame.Rect((18+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((18+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(1, 5, agent_hero, self.inventoryItems)
-					elif pygame.Rect((106+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((106+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(2, 1, agent_hero, self.inventoryItems)
-					elif pygame.Rect((106+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((106+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(2, 2, agent_hero, self.inventoryItems)
-					elif pygame.Rect((106+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((106+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(2, 3, agent_hero, self.inventoryItems)
-					elif pygame.Rect((106+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((106+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(2, 4, agent_hero, self.inventoryItems)
-					elif pygame.Rect((106+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((106+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(2, 5, agent_hero, self.inventoryItems)
-					elif pygame.Rect((194+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((194+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(3, 1, agent_hero, self.inventoryItems)
-					elif pygame.Rect((194+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((194+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(3, 2, agent_hero, self.inventoryItems)
-					elif pygame.Rect((194+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((194+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(3, 3, agent_hero, self.inventoryItems)
-					elif pygame.Rect((194+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((194+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(3, 4, agent_hero, self.inventoryItems)
-					elif pygame.Rect((194+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((194+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(3, 5, agent_hero, self.inventoryItems)
-					elif pygame.Rect((282+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((282+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(4, 1, agent_hero, self.inventoryItems)
-					elif pygame.Rect((282+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((282+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(4, 2, agent_hero, self.inventoryItems)
-					elif pygame.Rect((282+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((282+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(4, 3, agent_hero, self.inventoryItems)
-					elif pygame.Rect((282+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((282+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(4, 4, agent_hero, self.inventoryItems)
-					elif pygame.Rect((282+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((282+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(4, 5, agent_hero, self.inventoryItems)
 						# upgrade slots:
-					elif pygame.Rect((550+200,22+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((550+200,22+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "1, 1" )
 						#self.upgradeFunc(1, 1, agent_hero)
-					elif pygame.Rect((492+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((492+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "2, 1" )
 						#self.upgradeFunc(2, 1, agent_hero)
-					elif pygame.Rect((608+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((608+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "2, 2" )
 						#self.upgradeFunc(2, 2, agent_hero)
-					elif pygame.Rect((434+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((434+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "3, 1" )
 						#self.upgradeFunc(3, 1, agent_hero)
-					elif pygame.Rect((550+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((550+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "3, 2" )
 						#self.upgradeFunc(3, 2, agent_hero)
-					elif pygame.Rect((666+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #devil's button!!! *oooooooooooooooh*
+					elif pygame.Rect((666+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #devil's button!!! *oooooooooooooooh*
 						print( "3, 3" )
 						#self.upgradeFunc(3, 3, agent_hero)
-					elif pygame.Rect((376+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((376+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "4, 1" )
 						#self.upgradeFunc(4, 1, agent_hero)
-					elif pygame.Rect((492+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((492+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "4, 2" )
 						#self.upgradeFunc(4, 2, agent_hero)
-					elif pygame.Rect((608+200, 283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((608+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "4, 3" )
 						#self.upgradeFunc(4, 3, agent_hero)
-					elif pygame.Rect((724+200, 283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((724+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "4, 4" )
 						#self.upgradeFunc(4, 4, agent_hero)
-					elif pygame.Rect((376+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((376+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "5, 1" )
 						#self.upgradeFunc(5, 1, agent_hero)
-					elif pygame.Rect((492+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((492+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "5, 2" )
 						#self.upgradeFunc(5, 2, agent_hero)
-					elif pygame.Rect((608+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((608+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "5, 3" )
 						#self.upgradeFunc(5, 3, agent_hero)
-					elif pygame.Rect((724+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((724+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "5 ,4" )
 						#self.upgradeFunc(5, 4, agent_hero)
 
@@ -1092,75 +1092,77 @@ class engine:
 			# inventory stuff
 			if inventoryOn == True:
 				#print ( "inventoryOn", inventoryOn )
-				self.screen.blit( inventory, (200, 130) )		#801, 441 (size of inventory image)
-				self.screen.blit( texture_missing_upgrades, (550+200,22+130) )
-				self.screen.blit( texture_missing_upgrades, (492+200,109+130) )
-				self.screen.blit( texture_missing_upgrades, (608+200,109+130) )
-				self.screen.blit( texture_missing_upgrades, (434+200,196+130) )
-				self.screen.blit( texture_missing_upgrades, (550+200,196+130) )
-				self.screen.blit( texture_missing_upgrades, (666+200,196+130) )
-				self.screen.blit( texture_missing_upgrades, (376+200,283+130) )
-				self.screen.blit( texture_missing_upgrades, (492+200,283+130) )
-				self.screen.blit( texture_missing_upgrades, (608+200,283+130) )
-				self.screen.blit( texture_missing_upgrades, (724+200,283+130) )
-				self.screen.blit( texture_missing_upgrades, (376+200,370+130) )
-				self.screen.blit( texture_missing_upgrades, (492+200,370+130) )
-				self.screen.blit( texture_missing_upgrades, (608+200,370+130) )
-				self.screen.blit( texture_missing_upgrades, (724+200,370+130) )
+				self.screen.blit( inventory, (200, 30) )		#801, 441 (size of inventory image)
+				self.screen.blit( texture_missing_upgrades, (550+200,22+30) )
+				self.screen.blit( texture_missing_upgrades, (492+200,109+30) )
+				self.screen.blit( texture_missing_upgrades, (608+200,109+30) )
+				self.screen.blit( texture_missing_upgrades, (434+200,196+30) )
+				self.screen.blit( texture_missing_upgrades, (550+200,196+30) )
+				self.screen.blit( texture_missing_upgrades, (666+200,196+30) )
+				self.screen.blit( texture_missing_upgrades, (376+200,283+30) )
+				self.screen.blit( texture_missing_upgrades, (492+200,283+30) )
+				self.screen.blit( texture_missing_upgrades, (608+200,283+30) )
+				self.screen.blit( texture_missing_upgrades, (724+200,283+30) )
+				self.screen.blit( texture_missing_upgrades, (376+200,370+30) )
+				self.screen.blit( texture_missing_upgrades, (492+200,370+30) )
+				self.screen.blit( texture_missing_upgrades, (608+200,370+30) )
+				self.screen.blit( texture_missing_upgrades, (724+200,370+30) )
+				upgrade_description = bestFont.render(description, True, (255,255,255))
+				self.screen.blit(upgrade_description, (41+200,482+30))
 				refresh.append(inventory.get_rect())
-				if pygame.Rect((550+200,22+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(1,1)
+				if pygame.Rect((550+200,22+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(1,1)
 					if description != "train in archery":
 						description = "train in archery"
 						print( description )
-				elif pygame.Rect((492+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(2,1)
+				elif pygame.Rect((492+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(2,1)
 					if description != "train for AOE attack":
 						description = "train for AOE attack"
 						print( description )
-				elif pygame.Rect((608+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(2,2)
+				elif pygame.Rect((608+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(2,2)
 					if description != "train for big damage attack":
 						description = "train for big damage attack"
 						print( description )
-				elif pygame.Rect((434+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,1)
+				elif pygame.Rect((434+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,1)
 					if description != "increase radius":
 						description = "increase radius"
 						print( description )
-				elif pygame.Rect((550+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,2)
+				elif pygame.Rect((550+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,2)
 					if description != "increase speed":
 						description = "increase speed"
 						print( description )
-				elif pygame.Rect((666+200,196+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,3)
+				elif pygame.Rect((666+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,3)
 					if description != "increase attack":
 						description = "increase attack"
 						print( description )
-				elif pygame.Rect((376+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,1)
+				elif pygame.Rect((376+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,1)
 					if description != "increase attack":
 						description = "increase attack"
 						print( description )
-				elif pygame.Rect((492+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,2)
+				elif pygame.Rect((492+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,2)
 					if description != "increase radius":
-						description = "increase attack"
+						description = "increase radius"
 						print( description )
-				elif pygame.Rect((608+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,3)
+				elif pygame.Rect((608+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,3)
 					if description != "increase attack":
 						description = "increase attack"
 						print( description )
-				elif pygame.Rect((724+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,4)
+				elif pygame.Rect((724+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,4)
 					if description != "increase speed":
 						description = "increase speed"
 						print( description )
-				elif pygame.Rect((376+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,1)
+				elif pygame.Rect((376+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,1)
 					if description != "increase attack":
 						description = "increase attack"
 						print( description )
-				elif pygame.Rect((492+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,2)
+				elif pygame.Rect((492+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,2)
 					if description != "full screen":
 						description = "full screen"
 						print( description )
-				elif pygame.Rect((608+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,3)
+				elif pygame.Rect((608+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,3)
 					if description != "increase attack":
 						description = "increase attack"
 						print( description )
-				elif pygame.Rect((724+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,4)
+				elif pygame.Rect((724+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,4)
 					if description != "increase default attack speed":
 						description = "increase default attack speed"
 						print( description )
