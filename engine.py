@@ -156,6 +156,11 @@ class engine:
 		inventory = pygame.image.load( "upgrades.png" ).convert_alpha()
 		texture_missing_upgrades = pygame.image.load( "texture_missing_upgrades.png" ).convert_alpha()
 		description = ""
+		LEFT = 1
+		MIDDLE = 2
+		RIGHT = 3
+		SCROLL_UP = 4
+		SCROLL_DOWN = 5
 		
 		#make sounds	
 		arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
@@ -398,7 +403,7 @@ class engine:
 							mpos = pygame.mouse.get_pos()
 							target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
 							pygame.display.update()
-						if event.type == pygame.MOUSEBUTTONDOWN and inventoryOn != True:
+						if event.type == pygame.MOUSEBUTTONDOWN and inventoryOn != True and event.button == LEFT:
 							
 							chan= pygame.mixer.find_channel(True)
 							chan.play(arrowready)
@@ -552,7 +557,8 @@ class engine:
 					  
 				if event.type == pygame.MOUSEBUTTONDOWN and self.talking:
 					displayText=activeNPC.getMessage()
-				if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False and inventoryOn != True and not self.talking:
+				# event = pygame.event.poll()
+				if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False and inventoryOn != True and event.button == LEFT and not self.talking:
 					chan= pygame.mixer.find_channel(True)
 					chan.play(arrowready)
 					#arrowready.play()
@@ -609,6 +615,9 @@ class engine:
 					#print( arrowSpeedX )
 					#print( "############" )
 					self.screen.blit( arrow[arrownum], (arrow_rects[arrownum]) )
+				elif event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False and inventoryOn != True and event.button == RIGHT and not self.talking:
+					print( "right button clicked" )
+
 						   
 				if event.type == pygame.KEYDOWN and dead != True:
 					key = pygame.key.get_pressed()
