@@ -2,7 +2,7 @@
 #1/19/2015
 #
 
-import agent, room, pygame
+import agent, room, pygame, random as ra
 def gatherRooms(screen, width, height, sprites):
 	return [grassland0(screen, width, height, sprites), grassland1(screen, width, height, sprites), grassland2(screen, width, height, sprites), grassland3(screen, width, height, sprites),
 			grassland4(screen, width, height, sprites), grassland5(screen, width, height, sprites), grassland6(screen, width, height, sprites), grassland7(screen, width, height, sprites), 
@@ -271,7 +271,8 @@ class grassland5:
 		self.frameCounter = -1
 		
 		self.enemies = [agent.Squirrel((300,600)),agent.Squirrel((400,610)),agent.Squirrel((500,620)),agent.Squirrel((700,620)),
-						agent.Squirrel((800,610)),agent.Squirrel((900,600)),agent.Voodoo(((600,640)))]
+						agent.Squirrel((800,610)),agent.Squirrel((900,600)),agent.Slime((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8)), True, 5, "green"),
+						agent.Voodoo(((600,640)))]
 	#special method
 	def bossDead(self):
 		return self.enemies[-1].isDead()
@@ -609,8 +610,9 @@ class grassland12:
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-
-		self.enemies = []
+		enem = agent.TreeBeard(((700,250)))
+		enem.setAggro(False)
+		self.enemies = [enem]
 		
 	# special event methods and field
 		self.passable = False

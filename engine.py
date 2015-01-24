@@ -844,6 +844,8 @@ class engine:
 					if agent_hero.getHP() <= 0:
 						dead = True
 						health_Rect = pygame.Rect( (0, 0), (0, 0) )
+				if enem.getRect().colliderect(hero_Rect) and enem.isDead() and isinstance(enem, agent.TreeBeard):
+					self.pathCollide(enem.getRect(), hero_Rect, refresh)
 					"""
 					for event in pygame.event.get(): 
 					if event.type == pygame.KEYDOWN:
@@ -893,7 +895,8 @@ class engine:
 								agent_hero.changeEXP(enem.getEXP())
 								print("did all the stuff when the thing died")
 							refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
-							enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
+							if not isinstance(enem, agent.TreeBeard):
+								enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
 							arrowOn[k] = False
 					k += 1
 					 
