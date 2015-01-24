@@ -2,7 +2,7 @@
 # file	engine.py
 
 # imports
-import sys, pygame, math, agent, os
+import sys, pygame, math, agent, item, os
 import titlescreen, room
 import levels.grasslands as grasslands
 
@@ -60,12 +60,21 @@ class engine:
 				agent_rect.top = object_rect.bottom
 	
 	# deals with inventory stuff
-	def inventoryFunc(self, level, num):
+	inventoryItems = {(1,1):None,(1,2):None,(1,3):None,(1,4):None,(2,1):None,(2,2):None,(2,3):None,(2,4):None,(3,1):None,(3,2):None,(3,3):None,(3,4):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None}
+	# test of stuff
+	inventoryItems[(1,1)] = item.healthPotion()
+	def inventoryFunc(self, level, num, agent, inventoryList):
+		if isinstance(inventoryList[(level,num)], item.healthPotion):
+			if agent.getHP() <= (agent.getMaxHP() - 3):
+				agent.changeHP(3)
+			else:
+				agent.changeHP((agent.getMaxHP() - agent.getHP()))
 		print( "level:", level, " num:", num )
 	
-	# deals with upgrade stuff
-	def upgradeFunc(self, level, num):
-		print( "level:", level, " num:", num )
+	# deals with upgrade stuff (for now, I have decided that this should just happen in the function itself.
+	# upgradeItems = {(1,1):None,(2,1):None,(2,2):None,(3,1):None,(3,2):None,(3,3):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None}
+	# def upgradeFunc(self, level, num):
+	#	print( "level:", level, " num:", num )
 	
 	#caches to remember room states
 	def setUpRooms(self):
@@ -270,7 +279,11 @@ class engine:
 		
 		self.tutorialcount = 0
 		
-		while 1 == 1:	 
+		while 1 == 1:
+		
+			# health_bar calculator
+			health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
+		
 			# Stage Changing/win variables - LEVEL DESIGN:
 			if self.state == "main":
 				if self.rooms[5].bossDead() and self.rooms[9].bossDead() and self.winVar == False:
@@ -517,6 +530,7 @@ class engine:
 			refresh.append( pygame.Rect(hero_Rect.x-20, hero_Rect.y-20, 98, 108 ))
 			#refresh.append( background.get_rect() )
 			refresh.append( target_Rect )
+			#refresh.append( health
 			j = 0
 			while j < 10:
 				if arrowOn[j] == True:
@@ -682,74 +696,88 @@ class engine:
 				elif event.type == pygame.MOUSEBUTTONDOWN and inventoryOn == True:
 					# inventory slots:
 					if pygame.Rect((18+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 1)
+						self.inventoryFunc(1, 1, agent_hero, self.inventoryItems)
 					elif pygame.Rect((18+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 2)
+						self.inventoryFunc(1, 2, agent_hero, self.inventoryItems)
 					elif pygame.Rect((18+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 3)
+						self.inventoryFunc(1, 3, agent_hero, self.inventoryItems)
 					elif pygame.Rect((18+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 4)
+						self.inventoryFunc(1, 4, agent_hero, self.inventoryItems)
 					elif pygame.Rect((18+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 5)
+						self.inventoryFunc(1, 5, agent_hero, self.inventoryItems)
 					elif pygame.Rect((106+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 1)
+						self.inventoryFunc(2, 1, agent_hero, self.inventoryItems)
 					elif pygame.Rect((106+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 2)
+						self.inventoryFunc(2, 2, agent_hero, self.inventoryItems)
 					elif pygame.Rect((106+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 3)
+						self.inventoryFunc(2, 3, agent_hero, self.inventoryItems)
 					elif pygame.Rect((106+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 4)
+						self.inventoryFunc(2, 4, agent_hero, self.inventoryItems)
 					elif pygame.Rect((106+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 5)
+						self.inventoryFunc(2, 5, agent_hero, self.inventoryItems)
 					elif pygame.Rect((194+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 1)
+						self.inventoryFunc(3, 1, agent_hero, self.inventoryItems)
 					elif pygame.Rect((194+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 2)
+						self.inventoryFunc(3, 2, agent_hero, self.inventoryItems)
 					elif pygame.Rect((194+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 3)
+						self.inventoryFunc(3, 3, agent_hero, self.inventoryItems)
 					elif pygame.Rect((194+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 4)
+						self.inventoryFunc(3, 4, agent_hero, self.inventoryItems)
 					elif pygame.Rect((194+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 5)
+						self.inventoryFunc(3, 5, agent_hero, self.inventoryItems)
 					elif pygame.Rect((282+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 1)
+						self.inventoryFunc(4, 1, agent_hero, self.inventoryItems)
 					elif pygame.Rect((282+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 2)
+						self.inventoryFunc(4, 2, agent_hero, self.inventoryItems)
 					elif pygame.Rect((282+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 3)
+						self.inventoryFunc(4, 3, agent_hero, self.inventoryItems)
 					elif pygame.Rect((282+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 4)
+						self.inventoryFunc(4, 4, agent_hero, self.inventoryItems)
 					elif pygame.Rect((282+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 5)
+						self.inventoryFunc(4, 5, agent_hero, self.inventoryItems)
 						# upgrade slots:
 					elif pygame.Rect((550+200,22+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(1, 1)
+						print( "1, 1" )
+						#self.upgradeFunc(1, 1, agent_hero)
 					elif pygame.Rect((492+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(2, 1)
+						print( "2, 1" )
+						#self.upgradeFunc(2, 1, agent_hero)
 					elif pygame.Rect((608+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(2, 2)
+						print( "2, 2" )
+						#self.upgradeFunc(2, 2, agent_hero)
 					elif pygame.Rect((434+200,212+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(3, 1)
+						print( "3, 1" )
+						#self.upgradeFunc(3, 1, agent_hero)
 					elif pygame.Rect((550+200,212+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(3, 2)
+						print( "3, 2" )
+						#self.upgradeFunc(3, 2, agent_hero)
 					elif pygame.Rect((666+200,212+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #devil's button!!! *oooooooooooooooh*
-						self.upgradeFunc(3, 3)
+						print( "3, 3" )
+						#self.upgradeFunc(3, 3, agent_hero)
 					elif pygame.Rect((376+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(4, 1)
+						print( "4, 1" )
+						#self.upgradeFunc(4, 1, agent_hero)
 					elif pygame.Rect((492+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(4, 2)
+						print( "4, 2" )
+						#self.upgradeFunc(4, 2, agent_hero)
 					elif pygame.Rect((608+200, 283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(4, 3)
+						print( "4, 3" )
+						#self.upgradeFunc(4, 3, agent_hero)
 					elif pygame.Rect((724+200, 283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(4, 4)
+						print( "4, 4" )
+						#self.upgradeFunc(4, 4, agent_hero)
 					elif pygame.Rect((376+200,270+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(5, 1)
+						print( "5, 1" )
+						#self.upgradeFunc(5, 1, agent_hero)
 					elif pygame.Rect((492+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(5, 2)
+						print( "5, 2" )
+						#self.upgradeFunc(5, 2, agent_hero)
 					elif pygame.Rect((608+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(5, 3)
+						print( "5, 3" )
+						#self.upgradeFunc(5, 3, agent_hero)
 					elif pygame.Rect((724+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
-						self.upgradeFunc(5, 4)
+						print( "5 ,4" )
+						#self.upgradeFunc(5, 4, agent_hero)
 
 
 
@@ -817,7 +845,6 @@ class engine:
 				if enemy_projectiles[i] == True:
 					if projectile_rects[i].colliderect( hero_Rect ) and hero_invincible == False:
 						agent_hero.changeHP( - 1 )
-						health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
 						print( "health lost", enem.getAttack(), agent_hero.getHP() )
 						hero_invincible = True
 						hero_Rect = hero_Rect.move( enem.getHSpeed() * 5, enem.getVSpeed() * 5 )
@@ -868,9 +895,10 @@ class engine:
 			
 			
 			# adding all the rectangles to the refresh list
-
+			#refresh.append( 
 			refresh.append( target_Rect )
 			refresh.append( healthBar_Rect )
+			refresh.append( health_Rect )
 			for enem in self.room.enemies:
 				refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
 			for NPC in self.room.NPCs:
