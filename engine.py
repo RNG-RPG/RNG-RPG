@@ -59,6 +59,14 @@ class engine:
 				#print( "colliding with top" )
 				agent_rect.top = object_rect.bottom
 	
+	# deals with inventory stuff
+	def inventoryFunc(self, level, num):
+		print( "level:", level, " num:", num )
+	
+	# deals with upgrade stuff
+	def upgradeFunc(self, level, num):
+		print( "level:", level, " num:", num )
+	
 	#caches to remember room states
 	def setUpRooms(self):
              
@@ -122,6 +130,7 @@ class engine:
 		hoSpeed = 0
 		frame = 0
 		attacktimer = 30
+		inventoryOn = False
 		hero_invincible = False
 		invincible_counter = 0
 		attackDelay = False
@@ -134,6 +143,8 @@ class engine:
 		refresh = [] 
 		displayText = None
 		bestFont = pygame.font.SysFont("Helvetica", 25)
+		#load inventory image
+		inventory = pygame.image.load( "upgrades.png" ).convert_alpha()
 		
 		#make sounds	
 		arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
@@ -186,7 +197,7 @@ class engine:
 		healthBar = pygame.image.load( "HP_Bar.png" ).convert_alpha()
 		healthBar_Rect = healthBar.get_rect().move(0, 539)
 		health_Rect = pygame.Rect((4, 574), (17, 91))
-		agent_hero = agent.Agent(10, 4, 0)
+		agent_hero = agent.Agent(10, 4, 0, 1)
 
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
@@ -372,7 +383,7 @@ class engine:
 							mpos = pygame.mouse.get_pos()
 							target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
 							pygame.display.update()
-						if event.type == pygame.MOUSEBUTTONDOWN:
+						if event.type == pygame.MOUSEBUTTONDOWN and inventoryOn != True:
 							
 							chan= pygame.mixer.find_channel(True)
 							chan.play(arrowready)
@@ -445,7 +456,7 @@ class engine:
 			
 			# dragon shooting code
 			for enem in self.room.enemies:
-				if isinstance(enem, agent.Dragon):
+				if isinstance(enem, agent.Dragon) and enem.isDead() != True:
 					if self.room.frameCounter == 15:
 						if projectilenum < 19:
 							projectilenum += 1
@@ -525,7 +536,7 @@ class engine:
 					  
 				if event.type == pygame.MOUSEBUTTONDOWN and self.talking:
 					displayText=activeNPC.getMessage()
-				if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False and not self.talking:
+				if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False and inventoryOn != True and not self.talking:
 					chan= pygame.mixer.find_channel(True)
 					chan.play(arrowready)
 					#arrowready.play()
@@ -657,9 +668,89 @@ class engine:
 						direction=herod
 						refresh.append( self.room.background.get_rect() )
 						refresh.append( self.room.background.get_rect().move(648, 0) )
+						agent_hero = agent.Agent(10, 4, 0, 1)
 					elif key[pygame.K_ESCAPE]:
 						titlescreen.main(self.width,self.height)
-		   
+					elif key[pygame.K_i]:
+						refresh.append( self.room.background.get_rect() )
+						print ( "i is hit" )
+						#self.reset()
+						if inventoryOn != True:
+							inventoryOn = True
+						else:
+							inventoryOn = False
+				elif event.type == pygame.MOUSEBUTTONDOWN and inventoryOn == True:
+					# inventory slots:
+					if pygame.Rect((18+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(1, 1)
+					elif pygame.Rect((18+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(1, 2)
+					elif pygame.Rect((18+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(1, 3)
+					elif pygame.Rect((18+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(1, 4)
+					elif pygame.Rect((18+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(1, 5)
+					elif pygame.Rect((106+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(2, 1)
+					elif pygame.Rect((106+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(2, 2)
+					elif pygame.Rect((106+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(2, 3)
+					elif pygame.Rect((106+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(2, 4)
+					elif pygame.Rect((106+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(2, 5)
+					elif pygame.Rect((194+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(3, 1)
+					elif pygame.Rect((194+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(3, 2)
+					elif pygame.Rect((194+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(3, 3)
+					elif pygame.Rect((194+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(3, 4)
+					elif pygame.Rect((194+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(3, 5)
+					elif pygame.Rect((282+200,17+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(4, 1)
+					elif pygame.Rect((282+200,105+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(4, 2)
+					elif pygame.Rect((282+200,193+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(4, 3)
+					elif pygame.Rect((282+200,281+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(4, 4)
+					elif pygame.Rect((282+200,369+130), (55,55)).collidepoint( pygame.mouse.get_pos() ):
+						self.inventoryFunc(4, 5)
+						# upgrade slots:
+					elif pygame.Rect((550+200,22+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(1, 1)
+					elif pygame.Rect((492+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(2, 1)
+					elif pygame.Rect((608+200,109+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(2, 2)
+					elif pygame.Rect((434+200,212+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(3, 1)
+					elif pygame.Rect((550+200,212+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(3, 2)
+					elif pygame.Rect((666+200,212+130), (57,57)).collidepoint( pygame.mouse.get_pos() ): #devil's button!!! *oooooooooooooooh*
+						self.upgradeFunc(3, 3)
+					elif pygame.Rect((376+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(4, 1)
+					elif pygame.Rect((492+200,283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(4, 2)
+					elif pygame.Rect((608+200, 283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(4, 3)
+					elif pygame.Rect((724+200, 283+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(4, 4)
+					elif pygame.Rect((376+200,270+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(5, 1)
+					elif pygame.Rect((492+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(5, 2)
+					elif pygame.Rect((608+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(5, 3)
+					elif pygame.Rect((724+200,370+130), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+						self.upgradeFunc(5, 4)
+
 
 
 			# collision checker
@@ -955,7 +1046,7 @@ class engine:
 			i = 0
 			while i < 20:
 				if enemy_projectiles[i] == True:
-					print("drawing!", i)
+					#print("drawing!", i)
 					self.screen.blit( projectile[i], (projectile_rects[i]) )
 				i += 1
 			if self.talking:
@@ -967,6 +1058,12 @@ class engine:
 			
 			self.screen.blit(healthBar, (healthBar_Rect) )
 			pygame.draw.rect(self.screen, (255, 0, 0), health_Rect, 0)
+			
+			# inventory stuff
+			if inventoryOn == True:
+				#print ( "inventoryOn", inventoryOn )
+				self.screen.blit( inventory, (200, 130) )		#801, 441 (size of inventory image)
+				refresh.append(inventory.get_rect())
 			
 			
 			pygame.display.update( refresh )
@@ -980,6 +1077,7 @@ class engine:
 					print("resetting invincibility")
 					hero_invincible = False
 					invincible_counter = 0
+
 			
 			#Room transitions
 			if hero_Rect.x > self.width or hero_Rect.x < 0 or hero_Rect.y > self.height or hero_Rect.y < 0:

@@ -7,12 +7,14 @@ pygame.init()
 class Agent:
 
 	#Constructor
-	def __init__ (self,hp,mp,exp):
+	def __init__ (self,hp,mp,exp, level):
 		self.maxHP=hp
 		self.HP=hp
 		self.maxMP=mp
 		self.MP=mp
 		self.exp=exp
+		self.level = level
+		self.upgrade_Points = 3
 		
 	#accessors   
 	def getMaxHP(self):
@@ -41,7 +43,15 @@ class Agent:
 		
 	def changeEXP(self,change):
 		self.exp+=change
-		# self.checkLevel()
+		if self.exp >= (self.level * 15):
+			self.level += 1
+	
+	def getUP(self):
+		return self.upgrade_Points
+	
+	def changeUP(self, change):
+		self.upgrade_Points += change
+			
 
 class NPC(object):
 	#Constructor
