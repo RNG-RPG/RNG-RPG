@@ -217,10 +217,10 @@ class Enemy(object):
         self.maxHP+=change     
     def changeHP(self,change):
         self.HP+=change
-        # if self.HP <= 0:
-            # self.dead = True
-            # self.hoSpeed = 0
-            # self.vertSpeed = 0
+        if self.HP <= 0:
+            self.dead = True
+            self.hoSpeed = 0
+            self.vertSpeed = 0
     def getEXP(self):
         return self.EXP
     def getHP(self):
