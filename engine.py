@@ -220,6 +220,10 @@ class engine:
 		health_Rect = pygame.Rect((4, 574), (17, 91))
 		agent_hero = agent.Agent(10, 4, 0, 1)
 
+		# hero mana stuff
+		manaBar = pygame.image.load( "HP_Bar.png" ).convert_alpha()
+		manaBar_Rect = healthBar.get_rect().move(26, 539)
+		mana_Rect = pygame.Rect((30, 574), (17, 91))
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 		npcSprites = pygame.image.load( "sprites/npc_main.png" ).convert_alpha()
@@ -295,7 +299,7 @@ class engine:
 		
 			# health_bar calculator
 			health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
-		
+			mana_Rect = pygame.Rect((30, (574 + ((float(agent_hero.getMaxMP() - agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))), (17, (float(agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))
 			# Stage Changing/win variables - LEVEL DESIGN:
 			if self.state == "main":
 				if self.rooms[5].bossDead() and self.rooms[9].bossDead() and self.winVar == False:
@@ -622,18 +626,20 @@ class engine:
 					self.screen.blit( arrow[arrownum], (arrow_rects[arrownum]) )
 				elif event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False and inventoryOn != True and event.button == RIGHT and not self.talking:
 					print( "right button clicked" )
-					for enem in self.room.enemies:
-						if AOE == True and enem.isDead() == False:
-							if ((((enem.getRect().centery-hero_Rect.centery)**2) + ((enem.getRect().centerx-hero_Rect.centerx)**2)) ** .5) <= attackRadius:
-								enem.changeHP( ( attackSecondary * -1) )
-								if enem.aggressive != True:
-									enem.setAggress(True)
-								if enem.isAggro() != True:
-									enem.setAggro(True)
-						elif DPS == True:
-							print( "big damage arrow fired" )
-						# else:
-							# print( "we don't have the technology!" )
+					if agent_hero.getMP() > 0:
+						agent_hero.changeMP( -1 )
+						for enem in self.room.enemies:
+							if AOE == True and enem.isDead() == False:
+								if ((((enem.getRect().centery-hero_Rect.centery)**2) + ((enem.getRect().centerx-hero_Rect.centerx)**2)) ** .5) <= attackRadius:
+									enem.changeHP( ( attackSecondary * -1) )
+									if enem.aggressive != True:
+										enem.setAggress(True)
+									if enem.isAggro() != True:
+										enem.setAggro(True)
+							elif DPS == True:
+								print( "big damage arrow fired" )
+							# else:
+								# print( "we don't have the technology!" )
 
 						   
 				if event.type == pygame.KEYDOWN and dead != True:
@@ -933,6 +939,8 @@ class engine:
 			#refresh.append( 
 			refresh.append( target_Rect )
 			refresh.append( healthBar_Rect )
+			refresh.append( manaBar_Rect )
+			refresh.append( mana_Rect )
 			refresh.append( health_Rect )
 			for enem in self.room.enemies:
 				refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
@@ -1120,7 +1128,9 @@ class engine:
 					self.setTalk(False)
 			
 			self.screen.blit(healthBar, (healthBar_Rect) )
+			self.screen.blit(manaBar, (manaBar_Rect) )
 			pygame.draw.rect(self.screen, (255, 0, 0), health_Rect, 0)
+			pygame.draw.rect(self.screen, (0, 0, 255), mana_Rect, 0)
 			
 			# inventory stuff
 			if inventoryOn == True:
