@@ -267,8 +267,8 @@ class Slime(Enemy):
 		self.setSpeed(3)
 
 class Dragon(Enemy):
-    def __init__ (self, rect, aggress = True, animSpeed = 10):
-        super(Dragon,self).__init__(20, [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)], pygame.Rect(rect[0], rect[1],34, 74), animSpeed,5,100, False)
+    def __init__ (self, rect, aggress = True, animSpeed = 10, mapS = [(0, 0, 114, 154), (114, 0, 114, 154), (228, 0, 114, 154)]):
+        super(Dragon,self).__init__(20, mapS, pygame.Rect(rect[0], rect[1],34, 74), animSpeed,5,100, False)
         self.setAggro(True)    
         self.setDev(-40,-40)
         self.setAggress(aggress)
@@ -281,13 +281,12 @@ class Dragon(Enemy):
         
 class TreeBeard(Dragon):
     def __init__ (self, rect):
-        super(TreeBeard, self).__init__(rect)
+        super(TreeBeard, self).__init__(rect, True, 10, [(0, 331, 201 ,227), (0, 331, 201 ,227), (201, 331, 201 ,227), (201, 331, 201 ,227), (402, 331, 201 ,227), (402, 331, 201 ,227), (0, 331, 201 ,227), (0, 331, 201 ,227),
+                            (606, 331, 201 ,227), (606, 331, 201 ,227), (0, 331, 201, 227)])
         self.changeRect(pygame.Rect(rect[0], rect[1], 121, 147))
         self.deathsound.set_volume(0)
         self.setSpeed(0)
         self.setDirectional(True)
-        self.setSpriteMap([(0, 331, 201 ,227), (0, 331, 201 ,227), (201, 331, 201 ,227), (201, 331, 201 ,227), (402, 331, 201 ,227), (402, 331, 201 ,227), (0, 331, 201 ,227), (0, 331, 201 ,227),
-                            (606, 331, 201 ,227), (606, 331, 201 ,227), (0, 331, 201, 227)])
         
 		
 class Voodoo(Enemy):
