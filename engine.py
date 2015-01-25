@@ -840,7 +840,8 @@ class engine:
 					health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
 					print( "health lost", enem.getAttack(), agent_hero.getHP() )
 					hero_invincible = True
-					hero_Rect = hero_Rect.move( enem.getHSpeed() * 5, enem.getVSpeed() * 5 )
+					if hero_Rect.top > 70 and hero_Rect.bottom < self.height - 70 and hero_Rect.left > 70 and hero_Rect.right <self.width - 70:
+						hero_Rect = hero_Rect.move( enem.getHSpeed() * 5, enem.getVSpeed() * 5 )
 					if agent_hero.getHP() <= 0:
 						dead = True
 						health_Rect = pygame.Rect( (0, 0), (0, 0) )
@@ -896,7 +897,8 @@ class engine:
 								print("did all the stuff when the thing died")
 							refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
 							if not isinstance(enem, agent.TreeBeard):
-								enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
+								if enem.getRect().top > 70 and enem.getRect().bottom < self.height - 70 and enem.getRect().left > 70 and enem.getRect().right <self.width - 70:
+									enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
 							arrowOn[k] = False
 					k += 1
 					 
