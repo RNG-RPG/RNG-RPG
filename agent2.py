@@ -243,49 +243,7 @@ class Enemy(object):
 		self.vertSpeed = 0
 		self.setAggro(False)
 		self.deadcount= 0
-		
-    def getRect(self):
-        return self.Rect
-    def getOriginalRect(self):
-        return self.originalRect
-    def changeRect(self, newRect):
-        self.Rect=newRect
-    
-    def getFrameSpeed(self):
-        return self.animSpeed
-    def getMaxHP(self):
-        return self.maxHP
-    def changeMaxHP(self,change):
-        self.maxHP+=change     
-    def changeHP(self,change):
-        self.HP+=change
-        if self.HP <= 0:
-            self.dead = True
-            self.hoSpeed = 0
-            self.vertSpeed = 0
-    def getEXP(self):
-        return self.EXP
-    def getHP(self):
-        return self.HP
-    def getAttack(self):
-        return self.attack
-    def setAttack(self,new):
-        self.attack = new
-    def setDead(self, boo):
-        if boo == True:
-            self.dead = True
-        elif boo == False:
-            self.dead = False
-    def isDead(self):
-        return self.dead
-    def ressurect(self):
-        self.dead = False
-        self.HP = self.maxHP
-        self.hoSpeed = 0
-        self.vertSpeed = 0
-        self.setAggro(False)
-        self.deadcount= 0
-        
+	 
 
 class Slime(Enemy):
 	def __init__ (self, rect, aggress = True, animSpeed = 5, color = "blue"):

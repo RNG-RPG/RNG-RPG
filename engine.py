@@ -156,6 +156,11 @@ class engine:
 		inventory = pygame.image.load( "upgrades.png" ).convert_alpha()
 		texture_missing_upgrades = pygame.image.load( "texture_missing_upgrades.png" ).convert_alpha()
 		description = ""
+		attackSecondary = 1
+		attackRadius = 200
+		AOE = False
+		DPS = False
+		
 		LEFT = 1
 		MIDDLE = 2
 		RIGHT = 3
@@ -617,6 +622,18 @@ class engine:
 					self.screen.blit( arrow[arrownum], (arrow_rects[arrownum]) )
 				elif event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False and inventoryOn != True and event.button == RIGHT and not self.talking:
 					print( "right button clicked" )
+					for enem in self.room.enemies:
+						if AOE == True and enem.isDead() == False:
+							if ((((enem.getRect().centery-hero_Rect.centery)**2) + ((enem.getRect().centerx-hero_Rect.centerx)**2)) ** .5) <= attackRadius:
+								enem.changeHP( ( attackSecondary * -1) )
+								if enem.aggressive != True:
+									enem.setAggress(True)
+								if enem.isAggro() != True:
+									enem.setAggro(True)
+						elif DPS == True:
+							print( "big damage arrow fired" )
+						# else:
+							# print( "we don't have the technology!" )
 
 						   
 				if event.type == pygame.KEYDOWN and dead != True:
@@ -752,9 +769,11 @@ class engine:
 						#self.upgradeFunc(1, 1, agent_hero)
 					elif pygame.Rect((492+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "2, 1" )
+						AOE = True
 						#self.upgradeFunc(2, 1, agent_hero)
 					elif pygame.Rect((608+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "2, 2" )
+						DPS = True
 						#self.upgradeFunc(2, 2, agent_hero)
 					elif pygame.Rect((434+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "3, 1" )
