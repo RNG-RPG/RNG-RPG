@@ -372,6 +372,8 @@ class cavebossroom:
 				self.ALIVE.append(enem)
 		if hero_Rect.x < 0 and len(self.ALIVE) == 0:
 			return 1
+		elif hero_Rect.x > self.width and len(self.ALIVE) == 0:
+			return 99
 		else:
 			return 2
 

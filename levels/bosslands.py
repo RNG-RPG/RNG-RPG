@@ -4,6 +4,10 @@
 
 import agent, room, pygame, random as ra
 
+def gatherRooms(screen, width, height, sprites):
+	return [bossland0(screen, width, height, sprites), bossland1(screen, width, height, sprites), bossland2(screen, width, height, sprites), bossland3(screen, width, height, sprites),
+			bossland4(screen, width, height, sprites), bossland5(screen, width, height, sprites), bossland6(screen, width, height, sprites), bossland7(screen, width, height, sprites), 
+			bossland8(screen, width, height, sprites)]
 class bossland0:		   
 	def __init__ (self, screen, width, height, sprites):
 		self.identity = 0
@@ -54,7 +58,7 @@ class bossland0:
 	def judge(self, hero_Rect):
 		if hero_Rect.x > 0:
 			return 1
-            
+			
 class bossland1:		   
 	def __init__ (self, screen, width, height, sprites):
 		self.identity = 1
@@ -95,10 +99,10 @@ class bossland1:
 		
 	def checkroom(self,hero_Rect):
 		print "room1"
-        if hero_Rect.x < 0:
-            return pygame.Rect(self.width - 60, hero_Rect.y, 58, 68)
-        else:
-            return pygame.Rect(2, hero_Rect.y,58,68)
+		if hero_Rect.x < 0:
+			return pygame.Rect(self.width - 60, hero_Rect.y, 58, 68)
+		else:
+			return pygame.Rect(2, hero_Rect.y,58,68)
 
 	def judge(self, hero_Rect):
 		if hero_Rect.x > 0:
@@ -148,18 +152,18 @@ class bossland2:
 		
 	def checkroom(self,hero_Rect):
 		print "room2"
-        if hero_Rect.x > self.width:
-            return pygame.Rect(2, hero_Rect.y, 58, 68)
-        else:
-            return pygame.Rect(hero_Rect.x, self.height-70, 58, 68)
+		if hero_Rect.x > self.width:
+			return pygame.Rect(2, hero_Rect.y, 58, 68)
+		else:
+			return pygame.Rect(hero_Rect.x, self.height-70, 58, 68)
 
 
 			
 	def judge(self, hero_Rect):
 		if hero_Rect.x < 0:
-            return 1
-        else:
-            return 3
+			return 1
+		else:
+			return 3
 		
 class bossland3:		   
 	def __init__ (self, screen, width, height, sprites):
@@ -183,8 +187,8 @@ class bossland3:
 		self.frameCounter = -1
 
 		self.enemies = [agent.Voodoo((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
-                        agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
-                        agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8)))]
+						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8)))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -193,9 +197,9 @@ class bossland3:
 		#draw on top of the background
 		self.screen.blit(self.wallSprites, (0,0), (0, 90, 445, 85))
 		self.screen.blit(self.wallSprites, (675,0), (675, 90, 525, 85))
-        self.screen.blit( self.wallSprites, (0,0), (55, 170, 50, 700))
+		self.screen.blit( self.wallSprites, (0,0), (55, 170, 50, 700))
 		self.screen.blit( self.wallSprites, (1150, 0), (1100, 170, 50, 700))
-        self.screen.blit( self.wallSprites, (0,650), (55, 895, 445, 50))
+		self.screen.blit( self.wallSprites, (0,650), (55, 895, 445, 50))
 		self.screen.blit( self.wallSprites, (675,650), (635, 895, 525, 50))
 		
 	def checkroom(self,hero_Rect):
@@ -210,7 +214,7 @@ class bossland3:
 			return 2
 		else:
 			return 4
-            
+			
 class bossland4:		   
 	def __init__ (self, screen, width, height, sprites):
 		self.identity = 4
@@ -233,8 +237,8 @@ class bossland4:
 		self.frameCounter = -1
 
 		self.enemies = [agent.Voodoo((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
-                        agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
-                        agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8)))]
+						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8)))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -243,9 +247,9 @@ class bossland4:
 		#draw on top of the background
 		self.screen.blit(self.wallSprites, (0,0), (0, 90, 445, 85))
 		self.screen.blit(self.wallSprites, (675,0), (675, 90, 525, 85))
-        self.screen.blit( self.wallSprites, (0,0), (55, 170, 50, 700))
+		self.screen.blit( self.wallSprites, (0,0), (55, 170, 50, 700))
 		self.screen.blit( self.wallSprites, (1150, 0), (1100, 170, 50, 700))
-        self.screen.blit( self.wallSprites, (0,650), (55, 895, 445, 50))
+		self.screen.blit( self.wallSprites, (0,650), (55, 895, 445, 50))
 		self.screen.blit( self.wallSprites, (675,650), (635, 895, 525, 50))
 		
 	def checkroom(self,hero_Rect):
@@ -260,7 +264,7 @@ class bossland4:
 			return 3
 		else:
 			return 5
-            
+			
 class bossland5:		   
 	def __init__ (self, screen, width, height, sprites):
 		self.identity = 5
@@ -294,8 +298,8 @@ class bossland5:
 		#draw on top of the background
 		self.screen.blit( self.wallSprites, (0,0), (215, 285, 100, 85) )
 		self.screen.blit( self.wallSprites, (0, 650), (200, 170, 50, 50)  )
-        self.screen.blit( self.wallSprites, (1100,650), (110, 285, 100, 85))
-        self.screen.blit( self.wallSprites, (1150,0), (215, 285, 100, 85) )
+		self.screen.blit( self.wallSprites, (1150,650), (160, 170, 50, 50))
+		self.screen.blit( self.wallSprites, (1100,0), (115, 285, 100, 85) )
 		
 	def checkroom(self,hero_Rect):
 		print "room5"
@@ -317,7 +321,7 @@ class bossland5:
 			return 4
 		else:
 			return 8
-            
+			
 class bossland6:		   
 	def __init__ (self, screen, width, height, sprites):
 		self.identity = 6
@@ -346,7 +350,11 @@ class bossland6:
 		self.enemies = [agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
 						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
 						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
-						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8)))]
+						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.TreeBeard((50, 250))]
+						
+	def bossDead(self):
+		return self.enemies[-1].isDead()
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -354,7 +362,7 @@ class bossland6:
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
 		self.screen.blit( self.wallSprites, (0,0), (0, 0, 1200, 85) )
-        self.screen.blit( self.wallSprites, (0,0), (55, 170, 50, 700))
+		self.screen.blit( self.wallSprites, (0,0), (55, 170, 50, 700))
 		self.screen.blit( self.wallSprites, (0, 650), (0, 892, 1200, 50)  )
 		
 	def checkroom(self,hero_Rect):
@@ -364,7 +372,7 @@ class bossland6:
 	def judge(self, hero_Rect):
 		if hero_Rect.x > 0:
 			return 5
-            
+			
 class bossland7:		   
 	def __init__ (self, screen, width, height, sprites):
 		self.identity = 7
@@ -387,7 +395,9 @@ class bossland7:
 		#Add DA enemies HERE
 		self.frameCounter = -1
 
-		self.enemies = []
+		self.enemies = [agent.TreeBeard((950, 250))]
+	def bossDead(self):
+		return self.enemies[-1].isDead()
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -395,7 +405,7 @@ class bossland7:
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
 		self.screen.blit( self.wallSprites, (0,0), (0, 0, 1200, 85) )
-        self.screen.blit( self.wallSprites, (1150, 0), (1100, 170, 50, 700))
+		self.screen.blit( self.wallSprites, (1150, 0), (1100, 170, 50, 700))
 		self.screen.blit( self.wallSprites, (0, 650), (0, 892, 1200, 50)  )
 			
 			
@@ -429,12 +439,13 @@ class bossland8:
 		self.frameCounter = -1
 		
 		self.enemies = [agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
-                        agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
-                        agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
-                        agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
 						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
-                        agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
-                        agent.Voodoo((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8)))]
+						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.Voodoo((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.TreeBeard((450, 250))]
 	#special method
 	def bossDead(self):
 		return self.enemies[-1].isDead()

@@ -5,6 +5,7 @@
 import sys, pygame, math, agent, item, os
 import titlescreen, room
 import levels.grasslands as grasslands
+import levels.bosslands as bosslands
 
 class engine:
 	
@@ -99,6 +100,11 @@ class engine:
 			self.rooms.append(room.cavesecondroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
 			self.rooms.append(room.cavebossroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
 			self.rooms.append(room.voodooroom(self.getScreen(), self.getWidth(), self.getHeight(), spritos))
+		if self.level == 3:
+			temp = pygame.image.load( "GrassGround.png" ).convert_alpha()
+			spritos = [pygame.transform.scale(temp, (self.width, self.height)), pygame.image.load('sprites/treewall_main.png').convert_alpha(), pygame.image.load( "sprites/enemy_main.png" ).convert_alpha(),
+						pygame.image.load('sprites/rockwall_main.png').convert_alpha()]
+			self.rooms = bosslands.gatherRooms(self.getScreen(), self.getWidth(), self.getHeight(), spritos)
             
 	
 	def setState(self):
@@ -112,6 +118,9 @@ class engine:
 			self.room = self.rooms[self.roomNum]
 		if self.state == "main1":
 			self.level = 2
+			self.room = self.rooms[self.roomNum]
+		if self.state == "main2":
+			self.level = 3
 			self.room = self.rooms[self.roomNum]
 	
 	def reset(self):
@@ -322,7 +331,10 @@ class engine:
 						wall_Rects.append(wall)
 					pygame.display.update()
 					self.winVar = True
-			
+			elif self.state == "main2":
+				if self.rooms[6].bossDead() and self.rooms[7].bossDead() and self.rooms[8].bossDead():
+					#do shit
+					print "THE BOSS EVEN STRIKES IN ROOM 5"
 			def tutpaused():
 				while self.pause:			  
 					if self.tutorialcount < 4:
@@ -1256,8 +1268,11 @@ class engine:
 				self.roomNum = self.room.judge(hero_Rect)
 				
 				#next rooms
-				if self.state == "main" and self.roomNum == 99:
-					self.state = "main1"
+				if self.roomNum == 99:
+					if self.state == "main":
+						self.state = "main1"
+					elif self.state == "main1":
+						self.state = "main2"
 					hero_Rect.x = 60
 					self.roomNum = 0
 					self.setState()
