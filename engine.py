@@ -66,7 +66,7 @@ class engine:
 	inventoryItems[(1,1)] = item.healthPotion()
 	def inventoryFunc(self, level, num, agent, inventoryList):
 		if isinstance(inventoryList[(level,num)], item.healthPotion):
-			inventoryList([(level,num)] = None
+			inventoryList[(level,num)] = None
 			if agent.getHP() <= (agent.getMaxHP() - 3):
 				agent.changeHP(3)
 			else:
@@ -800,47 +800,94 @@ class engine:
 						# upgrade slots:
 					elif pygame.Rect((550+200,22+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "1, 1" )
+						if upgradeOn[(1,1)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(2,1)] = True
+							upgradeOn[(2,2)] = True
+							upgradeOn[(1,1)] = False
+							main_attack = True
 						#self.upgradeFunc(1, 1, agent_hero)
 					elif pygame.Rect((492+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "2, 1" )
-						AOE = True
+						if upgradeOn[(2,1)] == True and agent_hero.getUP() >= 1:
+							AOE = True
+							upgradeOn[(2,2)] = False
+							upgradeOn[(2,1)] = False
+							upgradeOn[(3,1)] = True
+							upgradeOn[(3,2)] = True
 						#self.upgradeFunc(2, 1, agent_hero)
 					elif pygame.Rect((608+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "2, 2" )
-						DPS = True
+						if upgradeOn[(2,2)] == True and agent_hero.getUP() >= 1:	
+							upgradeOn[(2,2)] = False
+							upgradeOn[(2,1)] = False
+							upgradeOn[(3,3)] = True
+							upgradeOn[(3,2)] = True
+							DPS = True
 						#self.upgradeFunc(2, 2, agent_hero)
 					elif pygame.Rect((434+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "3, 1" )
+						if upgradeOn[(3,1)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(3,1)] = False
+							upgradeOn[(4,1)] = True
+							upgradeOn[(4,2)] = True					
 						#self.upgradeFunc(3, 1, agent_hero)
 					elif pygame.Rect((550+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "3, 2" )
+						if upgradeOn[(3,2)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(3,2)] = False
+							upgradeOn[(4,2)] = True
+							upgradeOn[(4,3)] = True
 						#self.upgradeFunc(3, 2, agent_hero)
 					elif pygame.Rect((666+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #devil's button!!! *oooooooooooooooh*
 						print( "3, 3" )
+						if upgradeOn[(3,3)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(3,3)] = False
+							upgradeOn[(4,3)] = True
+							upgradeOn[(4,4)] = True
 						#self.upgradeFunc(3, 3, agent_hero)
 					elif pygame.Rect((376+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "4, 1" )
+						if upgradeOn[(4,1)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(4,1)] = False
+							upgradeOn[(5,1)] = True
 						#self.upgradeFunc(4, 1, agent_hero)
 					elif pygame.Rect((492+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "4, 2" )
+						if upgradeOn[(4,2)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(4,2)] = False
+							upgradeOn[(5,2)] = True
 						#self.upgradeFunc(4, 2, agent_hero)
 					elif pygame.Rect((608+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "4, 3" )
+						if upgradeOn[(4,3)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(4,3)] = False
+							upgradeOn[(5,3)] = True
 						#self.upgradeFunc(4, 3, agent_hero)
 					elif pygame.Rect((724+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "4, 4" )
+						if upgradeOn[(4,4)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(4,4)] = False
+							upgradeOn[(5,4)] = True
 						#self.upgradeFunc(4, 4, agent_hero)
 					elif pygame.Rect((376+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "5, 1" )
+						if upgradeOn[(5,1)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(5,1)] = False
 						#self.upgradeFunc(5, 1, agent_hero)
 					elif pygame.Rect((492+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "5, 2" )
+						if upgradeOn[(5,2)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(5,2)] = False
 						#self.upgradeFunc(5, 2, agent_hero)
 					elif pygame.Rect((608+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "5, 3" )
+						if upgradeOn[(5,3)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(5,3)] = False
 						#self.upgradeFunc(5, 3, agent_hero)
 					elif pygame.Rect((724+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
 						print( "5 ,4" )
+						if upgradeOn[(5,4)] == True and agent_hero.getUP() >= 1:
+							upgradeOn[(5,4)] = False
 						#self.upgradeFunc(5, 4, agent_hero)
 
 

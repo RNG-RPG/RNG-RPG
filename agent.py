@@ -14,7 +14,7 @@ class Agent:
 		self.MP=mp
 		self.exp=exp
 		self.level = level
-		self.upgrade_Points = 3
+		self.upgrade_Points = 1
 		self.maxEXP = 10
 		
 	#accessors   
@@ -48,6 +48,8 @@ class Agent:
 			self.exp = self.exp - (self.level*10)
 			self.level += 1
 			self.maxEXP = self.level * 10
+			self.upgrade_Points += 1
+			print( "upgrade points", self.upgrade_Points )
 	
 	def getEXP(self):
 		return self.exp
