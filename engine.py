@@ -163,6 +163,7 @@ class engine:
 		#load inventory image
 		inventory = pygame.image.load( "upgrades.png" ).convert_alpha()
 		texture_missing_upgrades = pygame.image.load( "texture_missing_upgrades.png" ).convert_alpha()
+		upgradeSprites = pygame.image.load( "sprites/upgrades_main.png").convert_alpha()
 		description = ""
 		attackSecondary = 1
 		attackRadius = 200
@@ -1315,20 +1316,62 @@ class engine:
 			if inventoryOn == True:
 				#print ( "inventoryOn", inventoryOn )
 				self.screen.blit( inventory, (200, 30) )		#801, 441 (size of inventory image)
-				self.screen.blit( texture_missing_upgrades, (550+200,22+30) )
-				self.screen.blit( texture_missing_upgrades, (492+200,109+30) )
-				self.screen.blit( texture_missing_upgrades, (608+200,109+30) )
-				self.screen.blit( texture_missing_upgrades, (434+200,196+30) )
-				self.screen.blit( texture_missing_upgrades, (550+200,196+30) )
-				self.screen.blit( texture_missing_upgrades, (666+200,196+30) )
-				self.screen.blit( texture_missing_upgrades, (376+200,283+30) )
-				self.screen.blit( texture_missing_upgrades, (492+200,283+30) )
-				self.screen.blit( texture_missing_upgrades, (608+200,283+30) )
-				self.screen.blit( texture_missing_upgrades, (724+200,283+30) )
-				self.screen.blit( texture_missing_upgrades, (376+200,370+30) )
-				self.screen.blit( texture_missing_upgrades, (492+200,370+30) )
-				self.screen.blit( texture_missing_upgrades, (608+200,370+30) )
-				self.screen.blit( texture_missing_upgrades, (724+200,370+30) )
+				if upgradeOn[(1,1)]:
+					self.screen.blit( upgradeSprites, (550+200,22+30), (0,0,57,57) )
+				else:
+					self.screen.blit( upgradeSprites, (550+200,22+30), (0,114,57,57) )
+				if upgradeOn[(2,1)]:
+					self.screen.blit( upgradeSprites, (492+200,109+30), (57,0, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (492+200,109+30), (57,114, 57, 57))
+				if upgradeOn[(2,2)]:
+					self.screen.blit( upgradeSprites, (608+200,109+30), (114,0, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (608+200,109+30), (114,114, 57, 57))
+				if upgradeOn[(3,1)]:
+					self.screen.blit( upgradeSprites, (434+200,196+30), (57,57, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (434+200,196+30), (57,171, 57, 57))
+				if upgradeOn[(3,2)]:
+					self.screen.blit( upgradeSprites, (550+200,196+30), (171,0, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (550+200,196+30), (171,114, 57, 57))
+				if upgradeOn[(3,3)]:
+					self.screen.blit( upgradeSprites, (666+200,196+30), (228,0, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (666+200,196+30), (228,114, 57, 57))
+				if upgradeOn[(4,1)]:
+					self.screen.blit( upgradeSprites, (376+200,283+30), (228,0, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (376+200,283+30), (228,114, 57, 57))
+				if upgradeOn[(4,2)]:
+					self.screen.blit( upgradeSprites, (492+200,283+30), (57,57, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (492+200,283+30), (57,171, 57, 57))
+				if upgradeOn[(4,3)]:
+					self.screen.blit( upgradeSprites, (608+200,283+30), (228,0, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (608+200,283+30), (228,114, 57, 57))
+				if upgradeOn[(4,4)]:
+					self.screen.blit( upgradeSprites, (724+200,283+30), (171,0, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (724+200,283+30), (171,114, 57, 57))
+				if upgradeOn[(5,1)]:
+					self.screen.blit( upgradeSprites, (376+200,370+30), (228,0, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (376+200,370+30), (228,114, 57, 57))
+				if upgradeOn[(5,2)]:
+					self.screen.blit( upgradeSprites, (492+200,370+30), (0,57, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (492+200,370+30), (0,171, 57, 57))
+				if upgradeOn[(5,3)]:
+					self.screen.blit( upgradeSprites, (608+200,370+30), (228,0, 57, 57) )
+				else:
+					self.screen.blit( upgradeSprites, (608+200,370+30), (228,114, 57, 57) )
+				if upgradeOn[(5,4)]:
+					self.screen.blit( upgradeSprites, (724+200,370+30), (171,0, 57, 57))
+				else:
+					self.screen.blit( upgradeSprites, (724+200,370+30), (171,114, 57, 57))
 				upgrade_description = bestFont.render(description, True, (255,255,255))
 				up_points = "upgrade points: " + str(agent_hero.getUP())
 				upgrade_points = bestFont.render( up_points , True, (255,255,255) )
