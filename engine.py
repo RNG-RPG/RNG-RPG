@@ -147,6 +147,7 @@ class engine:
 		frame = 0
 		attacktimer = 30
 		inventoryOn = False
+		angle = 0
 		hero_invincible = False
 		invincible_counter = 0
 		attackDelay = False
@@ -1370,7 +1371,7 @@ class engine:
 				i += 1
 			i = 0
 			if BigArrowOn == True:
-				print( "drawing BigArrow" )
+				# print( "drawing BigArrow" )
 				self.screen.blit ( BigArrow, (BigArrow_Rect) )
 			while i < 20:
 				if enemy_projectiles[i] == True:
