@@ -314,7 +314,8 @@ class engine:
 			# health_bar, mana_bar, and exp_bar calculator
 			health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
 			mana_Rect = pygame.Rect((30, (574 + ((float(agent_hero.getMaxMP() - agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))), (17, (float(agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))
-			exp_Rect = pygame.Rect( (222 + 400, 18 + 100), (float(agent_hero.getEXP()/agent_hero.getMaxEXP()) * 553, 63) )
+			exp_Rect = pygame.Rect( (222 + 100, 18 + 400), ((float(agent_hero.getEXP())/float(agent_hero.getMaxEXP()) * 553), 63) )
+			print( exp_Rect.width )
 			
 			# Stage Changing/win variables - LEVEL DESIGN:
 			if self.state == "main":
@@ -655,6 +656,10 @@ class engine:
 										enem.setAggress(True)
 									if enem.isAggro() != True:
 										enem.setAggro(True)
+									if enem.isDead() == True:
+										agent_hero.changeEXP(enem.getEXP())
+										print ( agent_hero.getEXP() )
+								print( agent_hero.getEXP() )
 							elif DPS == True:
 								print( "big damage arrow fired" )
 							# else:
@@ -938,6 +943,7 @@ class engine:
 								enem.setHSpeed(0)
 								enem.setVSpeed(0)
 								agent_hero.changeEXP(enem.getEXP())
+								print( agent_hero.getEXP() )
 								print("did all the stuff when the thing died")
 							refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
 							if not isinstance(enem, agent.TreeBeard):
@@ -961,6 +967,8 @@ class engine:
 			refresh.append( manaBar_Rect )
 			refresh.append( mana_Rect )
 			refresh.append( health_Rect )
+			refresh.append( exp_Rect )
+			refresh.append( quickBar_Rect )
 			for enem in self.room.enemies:
 				refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
 			for NPC in self.room.NPCs:
