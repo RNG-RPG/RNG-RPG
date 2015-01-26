@@ -58,6 +58,8 @@ class engine:
 				#print( "colliding with top" )
 				agent_rect.top = object_rect.bottom
 	
+	
+	
 	# deals with inventory stuff
 	inventoryItems = {(1,1):None,(1,2):None,(1,3):None,(1,4):None,(2,1):None,(2,2):None,(2,3):None,(2,4):None,(3,1):None,(3,2):None,(3,3):None,(3,4):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None}
 	# test of stuff
@@ -175,6 +177,10 @@ class engine:
 		RIGHT = 3
 		SCROLL_UP = 4
 		SCROLL_DOWN = 5
+		
+		# list of items:
+		healthPotion = pygame.image.load( "sprites/Red_Potion.png" ).convert_alpha()
+		manaPotion = pygame.image.load( "sprites/Blue_Potion.png" ).convert_alpha()
 		
 		#make sounds	
 		arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
@@ -1451,7 +1457,7 @@ class engine:
 				upgrade_points = bestFont.render( up_points , True, (255,255,255) )
 				self.screen.blit(upgrade_description, (41+200,482+30))
 				self.screen.blit(upgrade_points, (41+200, 520 + 30))
-				refresh.append(inventory.get_rect())
+				refresh.append(pygame.Rect((0,0),(1200,700)))
 				if pygame.Rect((550+200,22+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(1,1)
 					if description != "train in archery":
 						description = "train in archery"
