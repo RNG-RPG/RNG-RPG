@@ -342,3 +342,16 @@ class Squirrel(Enemy):
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.setSpeed(5)
 	
+class Deer(Enemy):
+	def __init__ (self, rect, aggress = True, animSpeed = 5):
+		super(Deer,self).__init__(2, [(0, 559, 149, 122), (149, 559, 149, 122), (298, 559, 149, 122), (447, 559, 149, 122), (596, 559, 149, 122),(745, 559, 149, 122), (745, 559, 149, 122),
+								(447, 559, 149, 122), (447, 559, 149, 122), (298, 559, 149, 122), (899,559,149, 122)], pygame.Rect(rect[0],rect[1],89,62), animSpeed,1, 5, True)
+		self.setDev(-30,-30)
+		self.setAggress(aggress)
+		self.deathsound = pygame.mixer.Sound("sounds/squirreldeath.wav")
+		self.deathsound.set_volume(1)
+		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
+		self.movesound.set_volume(.2)
+		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
+		self.setSpeed(5)
+	

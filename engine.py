@@ -60,10 +60,7 @@ class engine:
 	
 	
 	
-	# deals with inventory stuff
-	inventoryItems = {(1,1):None,(1,2):None,(1,3):None,(1,4):None,(2,1):None,(2,2):None,(2,3):None,(2,4):None,(3,1):None,(3,2):None,(3,3):None,(3,4):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None}
-	# test of stuff
-	inventoryItems[(1,1)] = item.healthPotion()
+	
 	def inventoryFunc(self, level, num, agent, inventoryList):
 		if isinstance(inventoryList[(level,num)], item.healthPotion):
 			inventoryList[(level,num)] = None
@@ -182,6 +179,12 @@ class engine:
 		healthPotion = pygame.image.load( "sprites/Red_Potion.png" ).convert_alpha()
 		manaPotion = pygame.image.load( "sprites/Blue_Potion.png" ).convert_alpha()
 		
+		# deals with inventory stuff
+		inventoryItems = {(1,1):None,(1,2):None,(1,3):None,(1,4):None,(2,1):None,(2,2):None,(2,3):None,(2,4):None,(3,1):None,(3,2):None,(3,3):None,(3,4):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None}
+		inventoryPositions = {(1,1):(218,47),(1,2):(306,47),(1,3):(394,47),(1,4):(482,47),(2,1):(218,135),(2,2):(306,135),(2,3):(394,135),(2,4):(482,135),(3,1):(218,223),(3,2):(306,223),(3,3):(394,223),(3,4):(482,223),(4,1):(218,311),(4,2):(306,311),(4,3):(394,311),(4,4):(482,311),(5,1):(218,399),(5,2):(306,311),(5,3):(394,311),(5,4):(482,311)}
+		# test of stuff
+		inventoryItems[(1,1)] = item.healthPotion()
+			
 		#make sounds	
 		arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
 		arrowshot = pygame.mixer.Sound("sounds/arrowshot.wav")
@@ -210,7 +213,7 @@ class engine:
 		arrow_posY = [None,None,None,None,None,None,None,None,None,None]
 		
 		# big arrow initializing
-		BigArrow = pygame.image.load( "sprites/particle_main.png" ).convert_alpha()
+		BigArrow = pygame.image.load( "sprites/magic_missile.png" ).convert_alpha()
 		BigArrow_Rect = BigArrow.get_rect()
 		BigArrow_posX = None
 		BigArrow_posY = None
@@ -676,9 +679,9 @@ class engine:
 				elif event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= agent_hero.getSpeed() and dead == False and inventoryOn != True and event.button == RIGHT and not self.talking:
 					print( "right button clicked" )
 					if agent_hero.getMP() > 0:
-						agent_hero.changeMP( -1 )
 						for enem in self.room.enemies:
 							if AOE == True and enem.isDead() == False and AOETimer >= AOEAttackSpeed:
+								agent_hero.changeMP( -1 )
 								AOETimer = 0
 								if ((((enem.getRect().centery-hero_Rect.centery)**2) + ((enem.getRect().centerx-hero_Rect.centerx)**2)) ** .5) <= attackRadius:
 									enem.changeHP( ( AOE_attack * -1) )
@@ -691,6 +694,7 @@ class engine:
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
 							elif DPS == True and BigArrowTimer >= BigArrowAttackSpeed:
+								agent_hero.changeMP( -1 )
 								print( "big damage arrow fired" )
 								# chan= pygame.mixer.find_channel(True)
 								# chan.play(arrowready)
@@ -699,7 +703,7 @@ class engine:
 								# attackDelay = True
 								BigArrowTimer = 0
 								
-								BigArrow = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
+								BigArrow = pygame.image.load( "sprites/magic_missile.png" ).convert_alpha() 
 
 								# chan= pygame.mixer.find_channel(True)
 								# chan.play(arrowshot)
@@ -826,7 +830,7 @@ class engine:
 					elif key[pygame.K_ESCAPE]:
 						titlescreen.main(self.width,self.height)
 					elif key[pygame.K_i]:
-						refresh.append( self.room.background.get_rect() )
+						refresh.append( pygame.Rect( (0,0), (1200, 700)) )
 						print ( "i is hit" )
 						#self.reset()
 						if inventoryOn != True:
@@ -836,45 +840,45 @@ class engine:
 				elif event.type == pygame.MOUSEBUTTONDOWN and inventoryOn == True:
 					# inventory slots:
 					if pygame.Rect((18+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 1, agent_hero, self.inventoryItems)
+						self.inventoryFunc(1, 1, agent_hero, inventoryItems)
 					elif pygame.Rect((18+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 2, agent_hero, self.inventoryItems)
+						self.inventoryFunc(2, 1, agent_hero, inventoryItems)
 					elif pygame.Rect((18+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 3, agent_hero, self.inventoryItems)
+						self.inventoryFunc(3, 1, agent_hero, inventoryItems)
 					elif pygame.Rect((18+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 4, agent_hero, self.inventoryItems)
+						self.inventoryFunc(4, 1, agent_hero, inventoryItems)
 					elif pygame.Rect((18+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 5, agent_hero, self.inventoryItems)
+						self.inventoryFunc(5, 1, agent_hero, inventoryItems)
 					elif pygame.Rect((106+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 1, agent_hero, self.inventoryItems)
+						self.inventoryFunc(1, 2, agent_hero, inventoryItems)
 					elif pygame.Rect((106+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 2, agent_hero, self.inventoryItems)
+						self.inventoryFunc(2, 2, agent_hero, inventoryItems)
 					elif pygame.Rect((106+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 3, agent_hero, self.inventoryItems)
+						self.inventoryFunc(3, 2, agent_hero, inventoryItems)
 					elif pygame.Rect((106+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 4, agent_hero, self.inventoryItems)
+						self.inventoryFunc(4, 2, agent_hero, inventoryItems)
 					elif pygame.Rect((106+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 5, agent_hero, self.inventoryItems)
+						self.inventoryFunc(5, 2, agent_hero, inventoryItems)
 					elif pygame.Rect((194+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 1, agent_hero, self.inventoryItems)
+						self.inventoryFunc(1, 3, agent_hero, inventoryItems)
 					elif pygame.Rect((194+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 2, agent_hero, self.inventoryItems)
+						self.inventoryFunc(2, 3, agent_hero, inventoryItems)
 					elif pygame.Rect((194+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 3, agent_hero, self.inventoryItems)
+						self.inventoryFunc(3, 3, agent_hero, inventoryItems)
 					elif pygame.Rect((194+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 4, agent_hero, self.inventoryItems)
+						self.inventoryFunc(4, 3, agent_hero, inventoryItems)
 					elif pygame.Rect((194+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 5, agent_hero, self.inventoryItems)
+						self.inventoryFunc(5, 3, agent_hero, inventoryItems)
 					elif pygame.Rect((282+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 1, agent_hero, self.inventoryItems)
+						self.inventoryFunc(1, 4, agent_hero, inventoryItems)
 					elif pygame.Rect((282+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 2, agent_hero, self.inventoryItems)
+						self.inventoryFunc(2, 4, agent_hero, inventoryItems)
 					elif pygame.Rect((282+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 3, agent_hero, self.inventoryItems)
+						self.inventoryFunc(3, 4, agent_hero, inventoryItems)
 					elif pygame.Rect((282+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 4, agent_hero, self.inventoryItems)
+						self.inventoryFunc(4, 4, agent_hero, inventoryItems)
 					elif pygame.Rect((282+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 5, agent_hero, self.inventoryItems)
+						self.inventoryFunc(5, 4, agent_hero, inventoryItems)
 						# upgrade slots:
 					elif pygame.Rect((550+200,22+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # allows main attack
 						print( "1, 1" )
@@ -1201,7 +1205,7 @@ class engine:
 			# big arrow movement
 			if BigArrowOn == True:
 				BigArrowTimer += 1
-				refresh.append( BigArrow_Rect )
+				refresh.append( pygame.Rect(BigArrow_Rect.x-20, BigArrow_Rect.y-20,BigArrow_Rect.width+40,BigArrow_Rect.height+40) )
 				BigArrow_posX = BigArrow_posX + BigArrowSpeedX
 				BigArrow_posY = BigArrow_posY + BigArrowSpeedY
 				BigArrow_Rect.left = BigArrow_posX
@@ -1238,8 +1242,7 @@ class engine:
 					
 					enem_health_rects.append(pygame.Rect((enem.getRect().left, enem.getRect().top - 20), (((float(enem.getHP())/float(enem.getMaxHP()))*enem.getRect().width*3), 10)))
 					pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
-					refresh_rect = pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width + 40, enem_health_rects[i].height + 40))
-					refresh.append(refresh_rect)
+					refresh.append(pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width *2 + 40, enem_health_rects[i].height *2 + 40)))
 					i += 1
 				
 		   
@@ -1350,7 +1353,6 @@ class engine:
 					
 			for enem in self.room.enemies:
 				self.screen.blit( self.enemySprites, (enem.getRect().x+enem.getxDev(),enem.getRect().y+enem.getyDev()), enem.getCurrentSprite()) 
-			self.screen.blit( target, (target_Rect) )
 			if self.talking:
 				self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), talkFrame )
 			else:
@@ -1514,9 +1516,23 @@ class engine:
 					if description != "increase super attack speed":
 						description = "increase super attack speed"
 						print( description )
-				 
-				
-				
+
+			self.screen.blit( target, (target_Rect) )			
+			# inventory drawing stuff
+			if inventoryOn == True:
+				i = 0
+				level = 1
+				num = 0
+				while i < 20:
+					if num == 4:
+						num = 0
+						level += 1
+					num += 1
+					if isinstance(inventoryItems[(level,num)], item.healthPotion):
+						self.screen.blit( healthPotion, (inventoryPositions[(level, num)]) )
+					i += 1
+					
+			self.screen.blit( target, (target_Rect) )	
 			
 			pygame.display.update( refresh )
 		   
