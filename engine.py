@@ -164,6 +164,7 @@ class engine:
 		inventory = pygame.image.load( "upgrades.png" ).convert_alpha()
 		texture_missing_upgrades = pygame.image.load( "texture_missing_upgrades.png" ).convert_alpha()
 		upgradeSprites = pygame.image.load( "sprites/upgrades_main.png").convert_alpha()
+		wtf = pygame.image.load( "sprites/wtfboom.png" ).convert_alpha()
 		description = ""
 		attackSecondary = 1
 		attackRadius = 200
@@ -227,6 +228,8 @@ class engine:
 		AOETimer = 120
 		AOEAttackSpeed = 120
 		AOE_attack = 1
+		AOEx=0
+		AOEy=0
 		
 		# enemy projectile initializing
 		projectileLoadImage = pygame.image.load( "dsprite/FireBall.png" ).convert_alpha()
@@ -684,6 +687,9 @@ class engine:
 							if AOE == True and enem.isDead() == False and AOETimer >= AOEAttackSpeed:
 								agent_hero.changeMP( -1 )
 								AOETimer = 0
+								print attackRadius
+								AOEx = hero_Rect.centerx - attackRadius
+								AOEy = hero_Rect.centery - attackRadius
 								if ((((enem.getRect().centery-hero_Rect.centery)**2) + ((enem.getRect().centerx-hero_Rect.centerx)**2)) ** .5) <= attackRadius:
 									enem.changeHP( ( AOE_attack * -1) )
 									if enem.aggressive != True:
@@ -922,7 +928,7 @@ class engine:
 								upgradeOn[(4,1)] = True
 							if not upgradeActive[(4,2)]:
 								upgradeOn[(4,2)] = True
-							self.attackRadius = self.attackRadius + 200
+							attackRadius = attackRadius + 200
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(3, 1, agent_hero)
 					elif pygame.Rect((550+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase default speed
@@ -966,7 +972,7 @@ class engine:
 							upgradeActive[(4,2)] = True
 							if not upgradeActive[(5,2)]:
 								upgradeOn[(5,2)] = True
-							self.attackRadius = self.attackRadius + 200
+							attackRadius = attackRadius + 200
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(4, 2, agent_hero)
 					elif pygame.Rect((608+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase attack
@@ -1002,7 +1008,7 @@ class engine:
 						if upgradeOn[(5,2)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(5,2)] = False
 							upgradeActive[(5,2)] = True
-							self.attackRadius = 1500
+							attackRadius = 1500
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(5, 2, agent_hero)
 					elif pygame.Rect((608+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase default attack
@@ -1373,6 +1379,10 @@ class engine:
 			if BigArrowOn == True:
 				# print( "drawing BigArrow" )
 				self.screen.blit ( BigArrow, (BigArrow_Rect) )
+			if AOETimer < 30 and AOETimer %2 == 0:
+				wtf = pygame.transform.scale(wtf, (attackRadius*2, attackRadius*2))
+				self.screen.blit(wtf, pygame.Rect(AOEx, AOEy, attackRadius*2,attackRadius*2))
+			refresh.append(pygame.Rect(AOEx, AOEy, attackRadius*2,attackRadius*2))
 			while i < 20:
 				if enemy_projectiles[i] == True:
 					#print("drawing!", i)
