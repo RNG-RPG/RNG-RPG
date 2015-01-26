@@ -1195,7 +1195,7 @@ class engine:
 			# big arrow movement
 			if BigArrowOn == True:
 				BigArrowTimer += 1
-				refresh.append( BigArrow_Rect )
+				refresh.append( pygame.Rect(BigArrow_Rect.x-20, BigArrow_Rect.y-20,BigArrow_Rect.width+40,BigArrow_Rect.height+40) )
 				BigArrow_posX = BigArrow_posX + BigArrowSpeedX
 				BigArrow_posY = BigArrow_posY + BigArrowSpeedY
 				BigArrow_Rect.left = BigArrow_posX
@@ -1232,8 +1232,7 @@ class engine:
 					
 					enem_health_rects.append(pygame.Rect((enem.getRect().left, enem.getRect().top - 20), (((float(enem.getHP())/float(enem.getMaxHP()))*enem.getRect().width*3), 10)))
 					pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
-					refresh_rect = pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width + 40, enem_health_rects[i].height + 40))
-					refresh.append(refresh_rect)
+					refresh.append(pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width *2 + 40, enem_health_rects[i].height *2 + 40)))
 					i += 1
 				
 		   
@@ -1344,7 +1343,6 @@ class engine:
 					
 			for enem in self.room.enemies:
 				self.screen.blit( self.enemySprites, (enem.getRect().x+enem.getxDev(),enem.getRect().y+enem.getyDev()), enem.getCurrentSprite()) 
-			self.screen.blit( target, (target_Rect) )
 			if self.talking:
 				self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), talkFrame )
 			else:
@@ -1510,7 +1508,7 @@ class engine:
 						print( description )
 				 
 				
-				
+			self.screen.blit( target, (target_Rect) )
 			
 			pygame.display.update( refresh )
 		   
