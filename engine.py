@@ -209,6 +209,14 @@ class engine:
 		BigArrow_posX = None
 		BigArrow_posY = None
 		BigArrowOn = False
+		BigArrowAttackSpeed = 120
+		BigArrowAttack = 4
+		BigArrowTimer = 120
+		
+		# AOE initializing
+		AOETimer = 120
+		AOEAttackSpeed = 120
+		AOE_attack = 1
 		
 		# enemy projectile initializing
 		projectileLoadImage = pygame.image.load( "dsprite/FireBall.png" ).convert_alpha()
@@ -249,6 +257,7 @@ class engine:
 		
 		# upgrade stuff
 		upgradeOn = {(1,1):True,(2,1):False,(2,2):False,(3,1):False,(3,2):False,(3,3):False,(4,1):False,(4,2):False,(4,3):False,(4,4):False,(5,1):False,(5,2):False,(5,3):False,(5,4):False}
+		upgradeActive = {(1,1):False,(2,1):False,(2,2):False,(3,1):False,(3,2):False,(3,3):False,(4,1):False,(4,2):False,(4,3):False,(4,4):False,(5,1):False,(5,2):False,(5,3):False,(5,4):False}
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 		npcSprites = pygame.image.load( "sprites/npc_main.png" ).convert_alpha()
@@ -663,9 +672,10 @@ class engine:
 					if agent_hero.getMP() > 0:
 						agent_hero.changeMP( -1 )
 						for enem in self.room.enemies:
-							if AOE == True and enem.isDead() == False:
+							if AOE == True and enem.isDead() == False and AOETimer >= AOEAttackSpeed:
+								AOETimer = 0
 								if ((((enem.getRect().centery-hero_Rect.centery)**2) + ((enem.getRect().centerx-hero_Rect.centerx)**2)) ** .5) <= attackRadius:
-									enem.changeHP( ( attackSecondary * -1) )
+									enem.changeHP( ( AOE_attack * -1) )
 									if enem.aggressive != True:
 										enem.setAggress(True)
 									if enem.isAggro() != True:
@@ -674,14 +684,14 @@ class engine:
 										agent_hero.changeEXP(enem.getEXP())
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
-							elif DPS == True:
+							elif DPS == True and BigArrowTimer >= BigArrowAttackSpeed:
 								print( "big damage arrow fired" )
 								# chan= pygame.mixer.find_channel(True)
 								# chan.play(arrowready)
 								#arrowready.play()
 								# print "arrowready",arrowready.get_num_channels()
 								# attackDelay = True
-								BigArrowTimer = True
+								BigArrowTimer = 0
 								
 								BigArrow = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
 
@@ -866,6 +876,7 @@ class engine:
 							upgradeOn[(2,1)] = True
 							upgradeOn[(2,2)] = True
 							upgradeOn[(1,1)] = False
+							upgradeActive[(1,1)] = True
 							agent_hero.changeUP( -1 )
 							main_attack = True
 						#self.upgradeFunc(1, 1, agent_hero)
@@ -874,6 +885,7 @@ class engine:
 						if upgradeOn[(2,1)] == True and agent_hero.getUP() >= 1:
 							AOE = True
 							upgradeOn[(2,2)] = False
+							upgradeActive[(2,1)] = True
 							upgradeOn[(2,1)] = False
 							upgradeOn[(3,1)] = True
 							upgradeOn[(3,2)] = True
@@ -883,6 +895,7 @@ class engine:
 						print( "2, 2" )
 						if upgradeOn[(2,2)] == True and agent_hero.getUP() >= 1:	
 							upgradeOn[(2,2)] = False
+							upgradeActive[(2,2)] = True
 							upgradeOn[(2,1)] = False
 							upgradeOn[(3,3)] = True
 							upgradeOn[(3,2)] = True
@@ -893,17 +906,23 @@ class engine:
 						print( "3, 1" )
 						if upgradeOn[(3,1)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(3,1)] = False
-							upgradeOn[(4,1)] = True
-							upgradeOn[(4,2)] = True
-							self.attackRadius = 400
+							upgradeActive[(3,1)] = True
+							if not upgradeActive[(4,1)]:
+								upgradeOn[(4,1)] = True
+							if not upgradeActive[(4,2)]:
+								upgradeOn[(4,2)] = True
+							self.attackRadius = self.attackRadius + 200
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(3, 1, agent_hero)
 					elif pygame.Rect((550+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase default speed
 						print( "3, 2" )
 						if upgradeOn[(3,2)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(3,2)] = False
-							upgradeOn[(4,2)] = True
-							upgradeOn[(4,3)] = True
+							upgradeActive[(3,2)] = True
+							if not upgradeActive[(4,2)]:
+								upgradeOn[(4,2)] = True
+							if not upgradeActive[(4,3)]:
+								upgradeOn[(4,3)] = True
 							agent_hero.setSpeed(20)
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(3, 2, agent_hero)
@@ -911,37 +930,51 @@ class engine:
 						print( "3, 3" )
 						if upgradeOn[(3,3)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(3,3)] = False
-							upgradeOn[(4,3)] = True
-							upgradeOn[(4,4)] = True
+							upgradeActive[(3,3)] = True
+							if not upgradeActive[(4,3)]:
+								upgradeOn[(4,3)] = True
+							if not upgradeActive[(4,4)]:
+								upgradeOn[(4,4)] = True
+							BigArrowAttack += 2
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(3, 3, agent_hero)
 					elif pygame.Rect((376+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase attack
 						print( "4, 1" )
 						if upgradeOn[(4,1)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(4,1)] = False
-							upgradeOn[(5,1)] = True
+							upgradeActive[(4,1)] = True
+							if not upgradeActive[(5,1)]:
+								upgradeOn[(5,1)] = True
+							AOE_attack += 1
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(4, 1, agent_hero)
 					elif pygame.Rect((492+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase radius
 						print( "4, 2" )
 						if upgradeOn[(4,2)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(4,2)] = False
-							upgradeOn[(5,2)] = True
-							self.attackRadius = 600
+							upgradeActive[(4,2)] = True
+							if not upgradeActive[(5,2)]:
+								upgradeOn[(5,2)] = True
+							self.attackRadius = self.attackRadius + 200
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(4, 2, agent_hero)
 					elif pygame.Rect((608+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase attack
 						print( "4, 3" )
 						if upgradeOn[(4,3)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(4,3)] = False
-							upgradeOn[(5,3)] = True
+							upgradeActive[(4,3)] = True
+							if not upgradeActive[(5,3)]:
+								upgradeOn[(5,3)] = True
+							BigArrowAttack += 2
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(4, 3, agent_hero)
 					elif pygame.Rect((724+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase default speed
 						print( "4, 4" )
 						if upgradeOn[(4,4)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(4,4)] = False
-							upgradeOn[(5,4)] = True
+							upgradeActive[(4,4)] = True
+							if not upgradeActive[(5,4)]:
+								upgradeOn[(5,4)] = True
 							agent_hero.setSpeed(10)
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(4, 4, agent_hero)
@@ -949,12 +982,15 @@ class engine:
 						print( "5, 1" )
 						if upgradeOn[(5,1)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(5,1)] = False
+							upgradeActive[(5,1)] = True
+							AOE_attack += 1
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(5, 1, agent_hero)
 					elif pygame.Rect((492+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # full screen
 						print( "5, 2" )
 						if upgradeOn[(5,2)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(5,2)] = False
+							upgradeActive[(5,2)] = True
 							self.attackRadius = 1500
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(5, 2, agent_hero)
@@ -962,6 +998,7 @@ class engine:
 						print( "5, 3" )
 						if upgradeOn[(5,3)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(5,3)] = False
+							upgradeActive[(5,3)] = True
 							agent_hero.setAttack(2)
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(5, 3, agent_hero)
@@ -969,6 +1006,8 @@ class engine:
 						print( "5 ,4" )
 						if upgradeOn[(5,4)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(5,4)] = False
+							upgradeActive[(5,4)] = True
+							BigArrowAttackSpeed = 90
 							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(5, 4, agent_hero)
 
@@ -1084,7 +1123,39 @@ class engine:
 									enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
 							arrowOn[k] = False
 					k += 1
-					 
+			
+			# big arrow collision with enemy checker
+			for enem in self.room.enemies:
+				if BigArrowOn == True:
+					if BigArrow_Rect.colliderect( enem.getRect() ) and not enem.isDead():
+						if enem.aggressive != True:
+							enem.setAggress(True)
+						if enem.isAggro() != True:
+							enem.setAggro(True)
+						for enem2 in self.room.enemies:
+							if math.sqrt((enem.getRect().centerx - enem2.getRect().centerx)**2 + (enem.getRect().centery - enem2.getRect().centery)**2) < 300:
+								if enem2.aggressive != True:
+									enem2.setAggress(True)
+								if enem2.isAggro() != True:
+									enem2.setAggro(True)	
+						chan= pygame.mixer.find_channel(True)
+						chan.play(arrowhit)
+						#arrowhit.play()
+						print "arrowhit", arrowhit.get_num_channels()
+						enem.changeHP( - (BigArrowAttack) )
+						if enem.getHP() <= 0:
+							enem.setDead(True)
+							enem.setHSpeed(0)
+							enem.setVSpeed(0)
+							agent_hero.changeEXP(enem.getEXP())
+							print( agent_hero.getEXP() )
+							print("did all the stuff when the thing died")
+						refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
+						if not isinstance(enem, agent.TreeBeard):
+							if enem.getRect().top > 70 and enem.getRect().bottom < self.height - 70 and enem.getRect().left > 70 and enem.getRect().right <self.width - 70:
+								enem.changeRect(enem.getRect().move( 2 * (BigArrowSpeedX), 2 * (BigArrowSpeedY) ))
+						BigArrowOn = False
+			
 			# movement code
 			if not self.talking:
 				hero_Rect = hero_Rect.move( hoSpeed * 5, vertSpeed * 5)
@@ -1129,7 +1200,9 @@ class engine:
 				BigArrow_posY = BigArrow_posY + BigArrowSpeedY
 				BigArrow_Rect.left = BigArrow_posX
 				BigArrow_Rect.top = BigArrow_posY
-				
+			
+			AOETimer += 1
+			
 			if self.talking:
 				refresh.append((50, 600, 1100, 200))
 
@@ -1155,13 +1228,14 @@ class engine:
 			enem_health_rects = []
 			for enem in self.room.enemies:
 				#print( "Appending!" )
-				if enem.getHP() != 0:
+				if enem.getHP() > 0:
 					
 					enem_health_rects.append(pygame.Rect((enem.getRect().left, enem.getRect().top - 20), (((float(enem.getHP())/float(enem.getMaxHP()))*enem.getRect().width*3), 10)))
 					pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
 					refresh_rect = pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width + 40, enem_health_rects[i].height + 40))
 					refresh.append(refresh_rect)
 					i += 1
+				
 		   
 		   
 			#sprite control
