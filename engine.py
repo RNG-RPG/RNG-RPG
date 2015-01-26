@@ -839,45 +839,45 @@ class engine:
 				elif event.type == pygame.MOUSEBUTTONDOWN and inventoryOn == True:
 					# inventory slots:
 					if pygame.Rect((18+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 1, agent_hero, self.inventoryItems)
+						self.inventoryFunc(1, 1, agent_hero, inventoryItems)
 					elif pygame.Rect((18+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 1, agent_hero, self.inventoryItems)
+						self.inventoryFunc(2, 1, agent_hero, inventoryItems)
 					elif pygame.Rect((18+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 1, agent_hero, self.inventoryItems)
+						self.inventoryFunc(3, 1, agent_hero, inventoryItems)
 					elif pygame.Rect((18+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 1, agent_hero, self.inventoryItems)
+						self.inventoryFunc(4, 1, agent_hero, inventoryItems)
 					elif pygame.Rect((18+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(5, 1, agent_hero, self.inventoryItems)
+						self.inventoryFunc(5, 1, agent_hero, inventoryItems)
 					elif pygame.Rect((106+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 2, agent_hero, self.inventoryItems)
+						self.inventoryFunc(1, 2, agent_hero, inventoryItems)
 					elif pygame.Rect((106+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 2, agent_hero, self.inventoryItems)
+						self.inventoryFunc(2, 2, agent_hero, inventoryItems)
 					elif pygame.Rect((106+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 2, agent_hero, self.inventoryItems)
+						self.inventoryFunc(3, 2, agent_hero, inventoryItems)
 					elif pygame.Rect((106+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 2, agent_hero, self.inventoryItems)
+						self.inventoryFunc(4, 2, agent_hero, inventoryItems)
 					elif pygame.Rect((106+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(5, 2, agent_hero, self.inventoryItems)
+						self.inventoryFunc(5, 2, agent_hero, inventoryItems)
 					elif pygame.Rect((194+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 3, agent_hero, self.inventoryItems)
+						self.inventoryFunc(1, 3, agent_hero, inventoryItems)
 					elif pygame.Rect((194+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 3, agent_hero, self.inventoryItems)
+						self.inventoryFunc(2, 3, agent_hero, inventoryItems)
 					elif pygame.Rect((194+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 3, agent_hero, self.inventoryItems)
+						self.inventoryFunc(3, 3, agent_hero, inventoryItems)
 					elif pygame.Rect((194+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 3, agent_hero, self.inventoryItems)
+						self.inventoryFunc(4, 3, agent_hero, inventoryItems)
 					elif pygame.Rect((194+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(5, 3, agent_hero, self.inventoryItems)
+						self.inventoryFunc(5, 3, agent_hero, inventoryItems)
 					elif pygame.Rect((282+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 4, agent_hero, self.inventoryItems)
+						self.inventoryFunc(1, 4, agent_hero, inventoryItems)
 					elif pygame.Rect((282+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 4, agent_hero, self.inventoryItems)
+						self.inventoryFunc(2, 4, agent_hero, inventoryItems)
 					elif pygame.Rect((282+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 4, agent_hero, self.inventoryItems)
+						self.inventoryFunc(3, 4, agent_hero, inventoryItems)
 					elif pygame.Rect((282+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 4, agent_hero, self.inventoryItems)
+						self.inventoryFunc(4, 4, agent_hero, inventoryItems)
 					elif pygame.Rect((282+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(5, 4, agent_hero, self.inventoryItems)
+						self.inventoryFunc(5, 4, agent_hero, inventoryItems)
 						# upgrade slots:
 					elif pygame.Rect((550+200,22+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # allows main attack
 						print( "1, 1" )
