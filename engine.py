@@ -222,8 +222,13 @@ class engine:
 
 		# hero mana stuff
 		manaBar = pygame.image.load( "HP_Bar.png" ).convert_alpha()
-		manaBar_Rect = healthBar.get_rect().move(26, 539)
+		manaBar_Rect = manaBar.get_rect().move(26, 539)
 		mana_Rect = pygame.Rect((30, 574), (17, 91))
+		
+		# hero exp stuff
+		quickbar = pygame.image.load( "quick_bar.png" ).convert_alpha()
+		quickBar_Rect = quickbar.get_rect().move( 100, 400 )
+		exp_Rect = ( (0, 0) , (0, 0) )
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 		npcSprites = pygame.image.load( "sprites/npc_main.png" ).convert_alpha()
@@ -297,9 +302,11 @@ class engine:
 		
 		while 1 == 1:
 		
-			# health_bar calculator
+			# health_bar, mana_bar, and exp_bar calculator
 			health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
 			mana_Rect = pygame.Rect((30, (574 + ((float(agent_hero.getMaxMP() - agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))), (17, (float(agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))
+			exp_Rect = pygame.Rect( (222 + 400, 18 + 100), (float(agent_hero.getEXP()/agent_hero.getMaxEXP()) * 553, 63) )
+			
 			# Stage Changing/win variables - LEVEL DESIGN:
 			if self.state == "main":
 				if self.rooms[5].bossDead() and self.rooms[9].bossDead() and self.winVar == False:
@@ -1127,10 +1134,15 @@ class engine:
 				else:
 					self.setTalk(False)
 			
+			# mana and health drawing
 			self.screen.blit(healthBar, (healthBar_Rect) )
 			self.screen.blit(manaBar, (manaBar_Rect) )
 			pygame.draw.rect(self.screen, (255, 0, 0), health_Rect, 0)
 			pygame.draw.rect(self.screen, (0, 0, 255), mana_Rect, 0)
+
+			#exp and quickabr drawing
+			self.screen.blit(quickbar, (quickBar_Rect) )
+			pygame.draw.rect(self.screen, (0, 255, 0), exp_Rect, 0)
 			
 			# inventory stuff
 			if inventoryOn == True:

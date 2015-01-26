@@ -15,6 +15,7 @@ class Agent:
 		self.exp=exp
 		self.level = level
 		self.upgrade_Points = 3
+		self.maxEXP = 10
 		
 	#accessors   
 	def getMaxHP(self):
@@ -43,8 +44,19 @@ class Agent:
 		
 	def changeEXP(self,change):
 		self.exp+=change
-		if self.exp >= (self.level * 15):
+		if self.exp >= (self.level * 10):
+			self.exp = 0 
 			self.level += 1
+			self.maxEXP = self.level * 10
+	
+	def getEXP(self):
+		return self.exp
+	
+	def getMaxEXP(self):
+		return self.maxEXP
+	
+	def getLevel(self):
+		return self.level
 	
 	def getUP(self):
 		return self.upgrade_Points
