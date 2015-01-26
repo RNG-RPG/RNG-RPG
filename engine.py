@@ -24,9 +24,7 @@ class engine:
 		self.checkAvoid = False
 		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		
-		#Character stats
-		self.attspeed = 10 
-		
+				
 	def getScreen(self):
 		return self.screen
 	def getWidth(self):
@@ -228,7 +226,7 @@ class engine:
 		healthBar = pygame.image.load( "HP_Bar.png" ).convert_alpha()
 		healthBar_Rect = healthBar.get_rect().move(0, 539)
 		health_Rect = pygame.Rect((4, 574), (17, 91))
-		agent_hero = agent.Agent(10, 4, 0, 1)
+		agent_hero = agent.Agent(10, 4, 0, 1, 1)
 
 		# hero mana stuff
 		manaBar = pygame.image.load( "HP_Bar.png" ).convert_alpha()
@@ -591,7 +589,7 @@ class engine:
 				if event.type == pygame.MOUSEBUTTONDOWN and self.talking:
 					displayText=activeNPC.getMessage()
 				# event = pygame.event.poll()
-				if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False and inventoryOn != True and event.button == LEFT and not self.talking:
+				if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= agent_hero.getSpeed() and dead == False and inventoryOn != True and event.button == LEFT and not self.talking:
 					chan= pygame.mixer.find_channel(True)
 					chan.play(arrowready)
 					#arrowready.play()
@@ -648,7 +646,7 @@ class engine:
 					#print( arrowSpeedX )
 					#print( "############" )
 					self.screen.blit( arrow[arrownum], (arrow_rects[arrownum]) )
-				elif event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= self.attspeed and dead == False and inventoryOn != True and event.button == RIGHT and not self.talking:
+				elif event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= agent_hero.getSpeed() and dead == False and inventoryOn != True and event.button == RIGHT and not self.talking:
 					print( "right button clicked" )
 					if agent_hero.getMP() > 0:
 						agent_hero.changeMP( -1 )
@@ -744,7 +742,7 @@ class engine:
 						direction=herod
 						refresh.append( self.room.background.get_rect() )
 						refresh.append( self.room.background.get_rect().move(648, 0) )
-						agent_hero = agent.Agent(10, 4, 0, 1)
+						agent_hero = agent.Agent(10, 4, 0, 1, 1)
 					elif key[pygame.K_ESCAPE]:
 						titlescreen.main(self.width,self.height)
 					elif key[pygame.K_i]:
@@ -798,15 +796,16 @@ class engine:
 					elif pygame.Rect((282+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
 						self.inventoryFunc(4, 5, agent_hero, self.inventoryItems)
 						# upgrade slots:
-					elif pygame.Rect((550+200,22+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((550+200,22+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # allows main attack
 						print( "1, 1" )
 						if upgradeOn[(1,1)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(2,1)] = True
 							upgradeOn[(2,2)] = True
 							upgradeOn[(1,1)] = False
+							agent_hero.changeUP( -1 )
 							main_attack = True
 						#self.upgradeFunc(1, 1, agent_hero)
-					elif pygame.Rect((492+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((492+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # allows AOE attack
 						print( "2, 1" )
 						if upgradeOn[(2,1)] == True and agent_hero.getUP() >= 1:
 							AOE = True
@@ -814,80 +813,99 @@ class engine:
 							upgradeOn[(2,1)] = False
 							upgradeOn[(3,1)] = True
 							upgradeOn[(3,2)] = True
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(2, 1, agent_hero)
-					elif pygame.Rect((608+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((608+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # allows big arrow attack
 						print( "2, 2" )
 						if upgradeOn[(2,2)] == True and agent_hero.getUP() >= 1:	
 							upgradeOn[(2,2)] = False
 							upgradeOn[(2,1)] = False
 							upgradeOn[(3,3)] = True
 							upgradeOn[(3,2)] = True
+							agent_hero.changeUP( -1 )
 							DPS = True
 						#self.upgradeFunc(2, 2, agent_hero)
-					elif pygame.Rect((434+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((434+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase radius
 						print( "3, 1" )
 						if upgradeOn[(3,1)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(3,1)] = False
 							upgradeOn[(4,1)] = True
-							upgradeOn[(4,2)] = True					
+							upgradeOn[(4,2)] = True
+							self.attackRadius = 400
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(3, 1, agent_hero)
-					elif pygame.Rect((550+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((550+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase default speed
 						print( "3, 2" )
 						if upgradeOn[(3,2)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(3,2)] = False
 							upgradeOn[(4,2)] = True
 							upgradeOn[(4,3)] = True
+							agent_hero.setSpeed(20)
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(3, 2, agent_hero)
-					elif pygame.Rect((666+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #devil's button!!! *oooooooooooooooh*
+					elif pygame.Rect((666+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase attack #devil's button!!! *oooooooooooooooh*
 						print( "3, 3" )
 						if upgradeOn[(3,3)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(3,3)] = False
 							upgradeOn[(4,3)] = True
 							upgradeOn[(4,4)] = True
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(3, 3, agent_hero)
-					elif pygame.Rect((376+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((376+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase attack
 						print( "4, 1" )
 						if upgradeOn[(4,1)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(4,1)] = False
 							upgradeOn[(5,1)] = True
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(4, 1, agent_hero)
-					elif pygame.Rect((492+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((492+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase radius
 						print( "4, 2" )
 						if upgradeOn[(4,2)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(4,2)] = False
 							upgradeOn[(5,2)] = True
+							self.attackRadius = 600
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(4, 2, agent_hero)
-					elif pygame.Rect((608+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((608+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase attack
 						print( "4, 3" )
 						if upgradeOn[(4,3)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(4,3)] = False
 							upgradeOn[(5,3)] = True
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(4, 3, agent_hero)
-					elif pygame.Rect((724+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((724+200, 283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase default speed
 						print( "4, 4" )
 						if upgradeOn[(4,4)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(4,4)] = False
 							upgradeOn[(5,4)] = True
+							agent_hero.setSpeed(10)
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(4, 4, agent_hero)
-					elif pygame.Rect((376+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((376+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase attack
 						print( "5, 1" )
 						if upgradeOn[(5,1)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(5,1)] = False
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(5, 1, agent_hero)
-					elif pygame.Rect((492+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((492+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # full screen
 						print( "5, 2" )
 						if upgradeOn[(5,2)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(5,2)] = False
+							self.attackRadius = 1500
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(5, 2, agent_hero)
-					elif pygame.Rect((608+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((608+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase default attack
 						print( "5, 3" )
 						if upgradeOn[(5,3)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(5,3)] = False
+							agent_hero.setAttack(2)
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(5, 3, agent_hero)
-					elif pygame.Rect((724+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ):
+					elif pygame.Rect((724+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # increase super attack speed
 						print( "5 ,4" )
 						if upgradeOn[(5,4)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(5,4)] = False
+							agent_hero.changeUP( -1 )
 						#self.upgradeFunc(5, 4, agent_hero)
 
 
@@ -988,7 +1006,7 @@ class engine:
 							chan.play(arrowhit)
 							#arrowhit.play()
 							print "arrowhit", arrowhit.get_num_channels()
-							enem.changeHP(-1)
+							enem.changeHP( - (agent_hero.getAttack()) )
 							if enem.getHP() <= 0:
 								enem.setDead(True)
 								enem.setHSpeed(0)
@@ -1234,7 +1252,10 @@ class engine:
 				self.screen.blit( texture_missing_upgrades, (608+200,370+30) )
 				self.screen.blit( texture_missing_upgrades, (724+200,370+30) )
 				upgrade_description = bestFont.render(description, True, (255,255,255))
+				up_points = "upgrade points: " + str(agent_hero.getUP())
+				upgrade_points = bestFont.render( up_points , True, (255,255,255) )
 				self.screen.blit(upgrade_description, (41+200,482+30))
+				self.screen.blit(upgrade_points, (41+200, 520 + 30))
 				refresh.append(inventory.get_rect())
 				if pygame.Rect((550+200,22+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(1,1)
 					if description != "train in archery":
@@ -1253,8 +1274,8 @@ class engine:
 						description = "increase radius"
 						print( description )
 				elif pygame.Rect((550+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,2)
-					if description != "increase speed":
-						description = "increase speed"
+					if description != "increase default speed":
+						description = "increase default speed"
 						print( description )
 				elif pygame.Rect((666+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,3)
 					if description != "increase attack":
@@ -1273,8 +1294,8 @@ class engine:
 						description = "increase attack"
 						print( description )
 				elif pygame.Rect((724+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,4)
-					if description != "increase speed":
-						description = "increase speed"
+					if description != "increase default speed":
+						description = "increase default speed"
 						print( description )
 				elif pygame.Rect((376+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,1)
 					if description != "increase attack":
@@ -1285,12 +1306,12 @@ class engine:
 						description = "full screen"
 						print( description )
 				elif pygame.Rect((608+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,3)
-					if description != "increase attack":
-						description = "increase attack"
+					if description != "increase default attack":
+						description = "increase default attack"
 						print( description )
 				elif pygame.Rect((724+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,4)
-					if description != "increase default attack speed":
-						description = "increase default attack speed"
+					if description != "increase super attack speed":
+						description = "increase super attack speed"
 						print( description )
 				 
 				
