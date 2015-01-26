@@ -66,6 +66,7 @@ class engine:
 	inventoryItems[(1,1)] = item.healthPotion()
 	def inventoryFunc(self, level, num, agent, inventoryList):
 		if isinstance(inventoryList[(level,num)], item.healthPotion):
+			inventoryList([(level,num)] = None
 			if agent.getHP() <= (agent.getMaxHP() - 3):
 				agent.changeHP(3)
 			else:
@@ -238,6 +239,9 @@ class engine:
 		quickbar = pygame.image.load( "quick_bar.png" ).convert_alpha()
 		quickBar_Rect = quickbar.get_rect().move( 100, 400 )
 		exp_Rect = ( (0, 0) , (0, 0) )
+		
+		# upgrade stuff
+		upgradeOn = {(1,1):True,(2,1):False,(2,2):False,(3,1):False,(3,2):False,(3,3):False,(4,1):False,(4,2):False,(4,3):False,(4,4):False,(5,1):False,(5,2):False,(5,3):False,(5,4):False}
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 		npcSprites = pygame.image.load( "sprites/npc_main.png" ).convert_alpha()
