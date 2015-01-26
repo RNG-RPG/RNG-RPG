@@ -45,7 +45,7 @@ class Agent:
 	def changeEXP(self,change):
 		self.exp+=change
 		if self.exp >= (self.level * 10):
-			self.exp = 0 
+			self.exp = self.exp - (self.level*10)
 			self.level += 1
 			self.maxEXP = self.level * 10
 	

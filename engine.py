@@ -315,7 +315,7 @@ class engine:
 			health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
 			mana_Rect = pygame.Rect((30, (574 + ((float(agent_hero.getMaxMP() - agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))), (17, (float(agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))
 			exp_Rect = pygame.Rect( (222 + 100, 18 + 400), ((float(agent_hero.getEXP())/float(agent_hero.getMaxEXP()) * 553), 63) )
-			print( exp_Rect.width )
+			# print( exp_Rect.width )
 			
 			# Stage Changing/win variables - LEVEL DESIGN:
 			if self.state == "main":
