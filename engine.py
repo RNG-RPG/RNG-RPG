@@ -195,6 +195,7 @@ class engine:
 		
 		
 		# arrow initializing
+		main_attack = False
 		arrowLoadImage = pygame.image.load( "sprites/particle_main.png" ).convert_alpha()
 		arrow = [arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage, arrowLoadImage]
 		arrow_rects = [arrow[0].get_rect(),arrow[1].get_rect(),arrow[2].get_rect(),arrow[3].get_rect(),arrow[4].get_rect(),arrow[5].get_rect(),arrow[6].get_rect(),arrow[7].get_rect(),arrow[8].get_rect(),arrow[9].get_rect()]
@@ -599,7 +600,7 @@ class engine:
 				if event.type == pygame.MOUSEBUTTONDOWN and self.talking:
 					displayText=activeNPC.getMessage()
 				# event = pygame.event.poll()
-				if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= agent_hero.getSpeed() and dead == False and inventoryOn != True and event.button == LEFT and not self.talking:
+				if event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= agent_hero.getSpeed() and dead == False and inventoryOn != True and event.button == LEFT and main_attack == True and not self.talking:
 					chan= pygame.mixer.find_channel(True)
 					chan.play(arrowready)
 					#arrowready.play()
