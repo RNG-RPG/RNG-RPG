@@ -204,7 +204,7 @@ class engine:
 		arrow_posY = [None,None,None,None,None,None,None,None,None,None]
 		
 		# big arrow initializing
-		BigArrow = pygame.image.load( "sprites/particle_main.png" ).convert_alpha()
+		BigArrow = pygame.image.load( "sprites/magic_missile.png" ).convert_alpha()
 		BigArrow_Rect = BigArrow.get_rect()
 		BigArrow_posX = None
 		BigArrow_posY = None
@@ -670,9 +670,9 @@ class engine:
 				elif event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= agent_hero.getSpeed() and dead == False and inventoryOn != True and event.button == RIGHT and not self.talking:
 					print( "right button clicked" )
 					if agent_hero.getMP() > 0:
-						agent_hero.changeMP( -1 )
 						for enem in self.room.enemies:
 							if AOE == True and enem.isDead() == False and AOETimer >= AOEAttackSpeed:
+								agent_hero.changeMP( -1 )
 								AOETimer = 0
 								if ((((enem.getRect().centery-hero_Rect.centery)**2) + ((enem.getRect().centerx-hero_Rect.centerx)**2)) ** .5) <= attackRadius:
 									enem.changeHP( ( AOE_attack * -1) )
@@ -685,6 +685,7 @@ class engine:
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
 							elif DPS == True and BigArrowTimer >= BigArrowAttackSpeed:
+								agent_hero.changeMP( -1 )
 								print( "big damage arrow fired" )
 								# chan= pygame.mixer.find_channel(True)
 								# chan.play(arrowready)
@@ -693,7 +694,7 @@ class engine:
 								# attackDelay = True
 								BigArrowTimer = 0
 								
-								BigArrow = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
+								BigArrow = pygame.image.load( "sprites/magic_missile.png" ).convert_alpha() 
 
 								# chan= pygame.mixer.find_channel(True)
 								# chan.play(arrowshot)
