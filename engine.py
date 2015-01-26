@@ -213,7 +213,7 @@ class engine:
 		arrow_posY = [None,None,None,None,None,None,None,None,None,None]
 		
 		# big arrow initializing
-		BigArrow = pygame.image.load( "sprites/particle_main.png" ).convert_alpha()
+		BigArrow = pygame.image.load( "sprites/magic_missile.png" ).convert_alpha()
 		BigArrow_Rect = BigArrow.get_rect()
 		BigArrow_posX = None
 		BigArrow_posY = None
@@ -679,9 +679,9 @@ class engine:
 				elif event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= agent_hero.getSpeed() and dead == False and inventoryOn != True and event.button == RIGHT and not self.talking:
 					print( "right button clicked" )
 					if agent_hero.getMP() > 0:
-						agent_hero.changeMP( -1 )
 						for enem in self.room.enemies:
 							if AOE == True and enem.isDead() == False and AOETimer >= AOEAttackSpeed:
+								agent_hero.changeMP( -1 )
 								AOETimer = 0
 								if ((((enem.getRect().centery-hero_Rect.centery)**2) + ((enem.getRect().centerx-hero_Rect.centerx)**2)) ** .5) <= attackRadius:
 									enem.changeHP( ( AOE_attack * -1) )
@@ -694,6 +694,7 @@ class engine:
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
 							elif DPS == True and BigArrowTimer >= BigArrowAttackSpeed:
+								agent_hero.changeMP( -1 )
 								print( "big damage arrow fired" )
 								# chan= pygame.mixer.find_channel(True)
 								# chan.play(arrowready)
@@ -702,7 +703,7 @@ class engine:
 								# attackDelay = True
 								BigArrowTimer = 0
 								
-								BigArrow = pygame.image.load( "sprites/particle_main.png" ).convert_alpha() 
+								BigArrow = pygame.image.load( "sprites/magic_missile.png" ).convert_alpha() 
 
 								# chan= pygame.mixer.find_channel(True)
 								# chan.play(arrowshot)
@@ -1204,7 +1205,7 @@ class engine:
 			# big arrow movement
 			if BigArrowOn == True:
 				BigArrowTimer += 1
-				refresh.append( BigArrow_Rect )
+				refresh.append( pygame.Rect(BigArrow_Rect.x-20, BigArrow_Rect.y-20,BigArrow_Rect.width+40,BigArrow_Rect.height+40) )
 				BigArrow_posX = BigArrow_posX + BigArrowSpeedX
 				BigArrow_posY = BigArrow_posY + BigArrowSpeedY
 				BigArrow_Rect.left = BigArrow_posX
@@ -1241,8 +1242,7 @@ class engine:
 					
 					enem_health_rects.append(pygame.Rect((enem.getRect().left, enem.getRect().top - 20), (((float(enem.getHP())/float(enem.getMaxHP()))*enem.getRect().width*3), 10)))
 					pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
-					refresh_rect = pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width + 40, enem_health_rects[i].height + 40))
-					refresh.append(refresh_rect)
+					refresh.append(pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width *2 + 40, enem_health_rects[i].height *2 + 40)))
 					i += 1
 				
 		   
@@ -1353,7 +1353,6 @@ class engine:
 					
 			for enem in self.room.enemies:
 				self.screen.blit( self.enemySprites, (enem.getRect().x+enem.getxDev(),enem.getRect().y+enem.getyDev()), enem.getCurrentSprite()) 
-			self.screen.blit( target, (target_Rect) )
 			if self.talking:
 				self.screen.blit( heroSprites, (hero_Rect.x,hero_Rect.y), talkFrame )
 			else:
@@ -1517,7 +1516,8 @@ class engine:
 					if description != "increase super attack speed":
 						description = "increase super attack speed"
 						print( description )
-			
+
+			self.screen.blit( target, (target_Rect) )			
 			# inventory drawing stuff
 			if inventoryOn == True:
 				i = 0
@@ -1531,7 +1531,8 @@ class engine:
 					if isinstance(inventoryItems[(level,num)], item.healthPotion):
 						self.screen.blit( healthPotion, (inventoryPositions[(level, num)]) )
 					i += 1
-				
+					
+			self.screen.blit( target, (target_Rect) )	
 			
 			pygame.display.update( refresh )
 		   

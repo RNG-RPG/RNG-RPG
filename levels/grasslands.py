@@ -37,7 +37,7 @@ class grassland0:
 		self.frameCounter = -1
 		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
 
-		self.enemies = [agent.Squirrel((900,200)),agent.Squirrel((850,200))]
+		self.enemies = [agent.Squirrel((900,200)),agent.Squirrel((850,200)), agent.Deer((555,555))]
 
 	def reset(self):
 		self.screen.fill((90,0,0))
