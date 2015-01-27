@@ -68,7 +68,7 @@ class engine:
 				agent.changeHP(3)
 			else:
 				agent.changeHP((agent.getMaxHP() - agent.getHP()))
-		elif isinstance(ininventoryList[(level,num)], item.manaPotion):
+		elif isinstance(inventoryList[(level,num)], item.manaPotion):
 			inventoryList[(level,num)] = None
 			if agent.getMP() <= (agent.getMaxMP() - 3):
 				agent.changeMP(3)
@@ -1238,13 +1238,13 @@ class engine:
 				
 			# big arrow movement
 			if BigArrowOn == True:
-				BigArrowTimer += 1
 				refresh.append( pygame.Rect(BigArrow_Rect.x-20, BigArrow_Rect.y-20,BigArrow_Rect.width+40,BigArrow_Rect.height+40) )
 				BigArrow_posX = BigArrow_posX + BigArrowSpeedX
 				BigArrow_posY = BigArrow_posY + BigArrowSpeedY
 				BigArrow_Rect.left = BigArrow_posX
 				BigArrow_Rect.top = BigArrow_posY
 			
+			BigArrowTimer += 1
 			AOETimer += 1
 			
 			if self.talking:
