@@ -171,6 +171,7 @@ class engine:
 		texture_missing_upgrades = pygame.image.load( "texture_missing_upgrades.png" ).convert_alpha()
 		upgradeSprites = pygame.image.load( "sprites/upgrades_main.png").convert_alpha()
 		wtf = pygame.image.load( "sprites/wtfboom.png" ).convert_alpha()
+		wtf2 = pygame.image.load( "sprites/wtfboom2.png" ).convert_alpha()
 		description = ""
 		attackSecondary = 1
 		attackRadius = 200
@@ -694,13 +695,13 @@ class engine:
 				elif event.type == pygame.MOUSEBUTTONDOWN and attacktimer >= agent_hero.getSpeed() and dead == False and inventoryOn != True and event.button == RIGHT and not self.talking:
 					print( "right button clicked" )
 					if agent_hero.getMP() > 0:
-						for enem in self.room.enemies:
-							if AOE == True and enem.isDead() == False and AOETimer >= AOEAttackSpeed:
-								agent_hero.changeMP( -1 )
-								AOETimer = 0
-								print attackRadius
-								AOEx = hero_Rect.centerx - attackRadius
-								AOEy = hero_Rect.centery - attackRadius
+						if AOE == True and enem.isDead() == False and AOETimer >= AOEAttackSpeed:
+							agent_hero.changeMP( -1 )
+							AOETimer = 0
+							print attackRadius
+							AOEx = hero_Rect.centerx - attackRadius
+							AOEy = hero_Rect.centery - attackRadius
+							for enem in self.room.enemies:
 								if ((((enem.getRect().centery-hero_Rect.centery)**2) + ((enem.getRect().centerx-hero_Rect.centerx)**2)) ** .5) <= attackRadius:
 									enem.changeHP( ( AOE_attack * -1) )
 									if enem.aggressive != True:
@@ -716,63 +717,63 @@ class engine:
 											itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
-							elif DPS == True and BigArrowTimer >= BigArrowAttackSpeed:
-								agent_hero.changeMP( -1 )
-								print( "big damage arrow fired" )
-								# chan= pygame.mixer.find_channel(True)
-								# chan.play(arrowready)
-								#arrowready.play()
-								# print "arrowready",arrowready.get_num_channels()
-								# attackDelay = True
-								BigArrowTimer = 0
-								
-								BigArrow = pygame.image.load( "sprites/magic_missile.png" ).convert_alpha() 
+						elif DPS == True and BigArrowTimer >= BigArrowAttackSpeed:
+							agent_hero.changeMP( -1 )
+							print( "big damage arrow fired" )
+							# chan= pygame.mixer.find_channel(True)
+							# chan.play(arrowready)
+							#arrowready.play()
+							# print "arrowready",arrowready.get_num_channels()
+							# attackDelay = True
+							BigArrowTimer = 0
+							
+							BigArrow = pygame.image.load( "sprites/magic_missile.png" ).convert_alpha() 
 
-								# chan= pygame.mixer.find_channel(True)
-								# chan.play(arrowshot)
-								#arrowshot.play()
-								# print "arrowshot", arrowshot.get_num_channels()
-								if target_Rect.centerx - hero_Rect.centerx == 0:
-									BigArrowSpeedX = 0
-									BigArrowSpeedY = 10
-								elif target_Rect.centery - hero_Rect.centery == 0:
-									BigArrowSpeedX = 10
-									BigArrowSpeedY = 0
-								else:
-									temp_tan_var = ((float(target_Rect.centery) - float(hero_Rect.centery))/(float(target_Rect.centerx) - float(hero_Rect.centerx)))
-									#print( "temp_tan_var" )
-									#print( temp_tan_var )
-									#print( "############" )
-									angle = (math.atan( temp_tan_var ))
+							# chan= pygame.mixer.find_channel(True)
+							# chan.play(arrowshot)
+							#arrowshot.play()
+							# print "arrowshot", arrowshot.get_num_channels()
+							if target_Rect.centerx - hero_Rect.centerx == 0:
+								BigArrowSpeedX = 0
+								BigArrowSpeedY = 10
+							elif target_Rect.centery - hero_Rect.centery == 0:
+								BigArrowSpeedX = 10
+								BigArrowSpeedY = 0
+							else:
+								temp_tan_var = ((float(target_Rect.centery) - float(hero_Rect.centery))/(float(target_Rect.centerx) - float(hero_Rect.centerx)))
+								#print( "temp_tan_var" )
+								#print( temp_tan_var )
+								#print( "############" )
+								angle = (math.atan( temp_tan_var ))
 
-								if (hero_Rect.centerx > target_Rect.centerx):
-									BigArrow = pygame.transform.rotate(BigArrow, ( - (angle * 57.29) + 180 ))
-								else:
-									BigArrow = pygame.transform.rotate(BigArrow, ( - (angle * 57.29) ))
-								BigArrow_Rect = BigArrow.get_rect().move( hero_Rect.centerx - (BigArrow.get_rect().width/2), hero_Rect.centery - (BigArrow.get_rect().height/2) )
-								BigArrow_posX = BigArrow_Rect.left
-								BigArrow_posY = BigArrow_Rect.top
-								print( "arrow_posX : " )
-								print( BigArrow_posX )
-								print( "arrow_posY : " )
-								print( BigArrow_posY )
-								BigArrowOn = True
-								BigArrowSpeedY =	 ( math.sin(angle) * 10.0 )
-								#print( "arrowSpeedY" )
-								#print( arrowSpeedY )
-								#print( "############" )
-								BigArrowSpeedX =	 ( math.cos(angle) * 10.0 )
-								# if BigArrowSpeedX == 0 and BigArrowSpeedY == 0:
-									# BigArrowOn = False
-								if (hero_Rect.centerx > target_Rect.centerx):
-									BigArrowSpeedX = -BigArrowSpeedX
-									BigArrowSpeedY = -BigArrowSpeedY
-								#print( "arrowSpeedX" )
-								#print( arrowSpeedX )
-								#print( "############" )
-								self.screen.blit( BigArrow, (BigArrow_Rect) )
-							# else:
-								# print( "we don't have the technology!" )
+							if (hero_Rect.centerx > target_Rect.centerx):
+								BigArrow = pygame.transform.rotate(BigArrow, ( - (angle * 57.29) + 180 ))
+							else:
+								BigArrow = pygame.transform.rotate(BigArrow, ( - (angle * 57.29) ))
+							BigArrow_Rect = BigArrow.get_rect().move( hero_Rect.centerx - (BigArrow.get_rect().width/2), hero_Rect.centery - (BigArrow.get_rect().height/2) )
+							BigArrow_posX = BigArrow_Rect.left
+							BigArrow_posY = BigArrow_Rect.top
+							print( "arrow_posX : " )
+							print( BigArrow_posX )
+							print( "arrow_posY : " )
+							print( BigArrow_posY )
+							BigArrowOn = True
+							BigArrowSpeedY =	 ( math.sin(angle) * 10.0 )
+							#print( "arrowSpeedY" )
+							#print( arrowSpeedY )
+							#print( "############" )
+							BigArrowSpeedX =	 ( math.cos(angle) * 10.0 )
+							# if BigArrowSpeedX == 0 and BigArrowSpeedY == 0:
+								# BigArrowOn = False
+							if (hero_Rect.centerx > target_Rect.centerx):
+								BigArrowSpeedX = -BigArrowSpeedX
+								BigArrowSpeedY = -BigArrowSpeedY
+							#print( "arrowSpeedX" )
+							#print( arrowSpeedX )
+							#print( "############" )
+							self.screen.blit( BigArrow, (BigArrow_Rect) )
+						# else:
+							# print( "we don't have the technology!" )
 
 						   
 				if event.type == pygame.KEYDOWN and dead != True:
@@ -1425,8 +1426,11 @@ class engine:
 				# print( "drawing BigArrow" )
 				self.screen.blit ( BigArrow, (BigArrow_Rect) )
 			if AOETimer < 30 and AOETimer %2 == 0:
-				wtf = pygame.transform.scale(wtf, (attackRadius*2, attackRadius*2))
-				self.screen.blit(wtf, pygame.Rect(AOEx, AOEy, attackRadius*2,attackRadius*2))
+				if attackRadius == 1500:
+					self.screen.blit(wtf2, pygame.Rect(0,0,1200,700))
+				else:
+					wtf = pygame.transform.scale(wtf, (attackRadius*2, attackRadius*2))
+					self.screen.blit(wtf, pygame.Rect(AOEx, AOEy, attackRadius*2,attackRadius*2))
 			refresh.append(pygame.Rect(AOEx, AOEy, attackRadius*2,attackRadius*2))
 			while i < 20:
 				if enemy_projectiles[i] == True:
