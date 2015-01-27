@@ -68,6 +68,12 @@ class engine:
 				agent.changeHP(3)
 			else:
 				agent.changeHP((agent.getMaxHP() - agent.getHP()))
+		elif isinstance(ininventoryList[(level,num)], item.manaPotion):
+			inventoryList[(level,num)] = None
+			if agent.getMP() <= (agent.getMaxMP() - 3):
+				agent.changeMP(3)
+			else:
+				agent.changeMP((agent.getMaxMP() - agent.getMP()))
 		print( "level:", level, " num:", num )
 	
 	# deals with upgrade stuff (for now, I have decided that this should just happen in the function itself.
@@ -705,9 +711,9 @@ class engine:
 										agent_hero.changeEXP(enem.getEXP())
 										randomNumber = random.random()
 										if randomNumber <= .5:
-											itemsList.append( (item.healthPotion, healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
+											itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 										elif randomNumber > .5 and randomNumber <= 1:
-											itemsList.append( (item.manaPotion, manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
+											itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
 							elif DPS == True and BigArrowTimer >= BigArrowAttackSpeed:
@@ -1143,9 +1149,9 @@ class engine:
 								enem.setVSpeed(0)
 								randomNumber = random.random()
 								if randomNumber <= .5:
-									itemsList.append( (item.healthPotion, healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
+									itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 								elif randomNumber > .5 and randomNumber <= 1:
-									itemsList.append( (item.manaPotion, manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
+									itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 								agent_hero.changeEXP(enem.getEXP())
 								print( agent_hero.getEXP() )
 								print("did all the stuff when the thing died")
@@ -1181,9 +1187,9 @@ class engine:
 							enem.setVSpeed(0)
 							randomNumber = random.random()
 							if randomNumber <= .5:
-								itemsList.append( (item.healthPotion, healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
+								itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 							elif randomNumber > .5 and randomNumber <= 1:
-								itemsList.append( (item.manaPotion, manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
+								itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 							agent_hero.changeEXP(enem.getEXP())
 							print( agent_hero.getEXP() )
 							print("did all the stuff when the thing died")
@@ -1366,22 +1372,18 @@ class engine:
 				refresh.append( thing[2] )
 				self.screen.blit( thing[1], (thing[2]) )
 				if hero_Rect.colliderect( thing[2] ):
-					i = 1
-					k = 1
-					if inventoryItems[(1,1)] == None:
-						inventoryItems[(1,1)] = thing[0]
-					else:
-						while inventoryItems[(i,k)] != None:
-							
-							k += 1
-							if k == 4:
-								i += 1
-								k = 1
-							# print( i, k )
-							if i == 6:
-								inventoryItems[(6,1)] = None
-						if i != 7:
-							inventoryItems[(i,k)] = thing[0]
+					i = 0
+					level = 1
+					num = 0
+					while i < 20:
+						if num == 4:
+							num = 0
+							level += 1
+						num += 1
+						if inventoryItems[(level,num)] == None:
+							inventoryItems[(level,num)] = thing[0]
+							print ( "level: ", level, " num: ", num, "items" )
+							i = 20
 					itemsList.remove(thing)
 			
 			#enemy animations!
@@ -1584,6 +1586,8 @@ class engine:
 					num += 1
 					if isinstance(inventoryItems[(level,num)], item.healthPotion):
 						self.screen.blit( healthPotion, (inventoryPositions[(level, num)]) )
+					elif isinstance(inventoryItems[(level,num)], item.manaPotion):
+						self.screen.blit( manaPotion, (inventoryPositions[(level,num)] ) )
 					i += 1
 					
 					
