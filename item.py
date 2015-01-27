@@ -12,3 +12,11 @@ class healthPotion:
 		x = 10
 	# functions:
 	#( for now, nothing needs to be here, but we can figure stuff out )
+	
+class manaPotion:
+
+	#Constructor
+	def __init__ (self):
+		x = 10
+	# functions:
+	#( for now, nothing needs to be here, but we can figure stuff out )

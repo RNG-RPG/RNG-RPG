@@ -180,15 +180,18 @@ class engine:
 		# list of items:
 		healthPotion = pygame.image.load( "sprites/Red_Potion.png" ).convert_alpha()
 		manaPotion = pygame.image.load( "sprites/Blue_Potion.png" ).convert_alpha()
-		
-		itemsList = []
+		healthPotion_drop = pygame.image.load( "sprites/Red_Potion_drop.png" ).convert_alpha()
+		manaPotion_drop = pygame.image.load( "sprites/Blue_Potion_drop.png" ).convert_alpha()
 		
 		# deals with inventory stuff
-		inventoryItems = {(1,1):None,(1,2):None,(1,3):None,(1,4):None,(2,1):None,(2,2):None,(2,3):None,(2,4):None,(3,1):None,(3,2):None,(3,3):None,(3,4):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None}
+		inventoryItems = {(1,1):None,(1,2):None,(1,3):None,(1,4):None,(2,1):None,(2,2):None,(2,3):None,(2,4):None,(3,1):None,(3,2):None,(3,3):None,(3,4):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None,(6,1):None}
 		inventoryPositions = {(1,1):(218,47),(1,2):(306,47),(1,3):(394,47),(1,4):(482,47),(2,1):(218,135),(2,2):(306,135),(2,3):(394,135),(2,4):(482,135),(3,1):(218,223),(3,2):(306,223),(3,3):(394,223),(3,4):(482,223),(4,1):(218,311),(4,2):(306,311),(4,3):(394,311),(4,4):(482,311),(5,1):(218,399),(5,2):(306,311),(5,3):(394,311),(5,4):(482,311)}
 		# test of stuff
 		inventoryItems[(1,1)] = item.healthPotion()
-			
+		
+		# deals with dropped items
+		itemsList = []
+		
 		#make sounds	
 		arrowhit = pygame.mixer.Sound( "sounds/arrowhit.wav" )
 		arrowshot = pygame.mixer.Sound("sounds/arrowshot.wav")
@@ -700,8 +703,11 @@ class engine:
 										enem.setAggro(True)
 									if enem.isDead() == True:
 										agent_hero.changeEXP(enem.getEXP())
-										if random.random() <= .1:
-											
+										randomNumber = random.random()
+										if randomNumber <= .5:
+											itemsList.append( (item.healthPotion, healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
+										elif randomNumber > .5 and randomNumber <= 1:
+											itemsList.append( (item.manaPotion, manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
 							elif DPS == True and BigArrowTimer >= BigArrowAttackSpeed:
@@ -1135,6 +1141,11 @@ class engine:
 								enem.setDead(True)
 								enem.setHSpeed(0)
 								enem.setVSpeed(0)
+								randomNumber = random.random()
+								if randomNumber <= .5:
+									itemsList.append( (item.healthPotion, healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
+								elif randomNumber > .5 and randomNumber <= 1:
+									itemsList.append( (item.manaPotion, manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 								agent_hero.changeEXP(enem.getEXP())
 								print( agent_hero.getEXP() )
 								print("did all the stuff when the thing died")
@@ -1168,6 +1179,11 @@ class engine:
 							enem.setDead(True)
 							enem.setHSpeed(0)
 							enem.setVSpeed(0)
+							randomNumber = random.random()
+							if randomNumber <= .5:
+								itemsList.append( (item.healthPotion, healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
+							elif randomNumber > .5 and randomNumber <= 1:
+								itemsList.append( (item.manaPotion, manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 							agent_hero.changeEXP(enem.getEXP())
 							print( agent_hero.getEXP() )
 							print("did all the stuff when the thing died")
@@ -1344,7 +1360,30 @@ class engine:
 					#deathsound.play()
 					print "deathsound character", deathsound.get_num_channels()
 					loopdeath += 1
-			   
+			
+			# drawing dropped stuff:
+			for thing in itemsList:
+				refresh.append( thing[2] )
+				self.screen.blit( thing[1], (thing[2]) )
+				if hero_Rect.colliderect( thing[2] ):
+					i = 1
+					k = 1
+					if inventoryItems[(1,1)] == None:
+						inventoryItems[(1,1)] = thing[0]
+					else:
+						while inventoryItems[(i,k)] != None:
+							
+							k += 1
+							if k == 4:
+								i += 1
+								k = 1
+							# print( i, k )
+							if i == 6:
+								inventoryItems[(6,1)] = None
+						if i != 7:
+							inventoryItems[(i,k)] = thing[0]
+					itemsList.remove(thing)
+			
 			#enemy animations!
 			for enem in self.room.enemies:
 				if not enem.isDead():
@@ -1405,7 +1444,7 @@ class engine:
 			pygame.draw.rect(self.screen, (255, 0, 0), health_Rect, 0)
 			pygame.draw.rect(self.screen, (0, 0, 255), mana_Rect, 0)
 
-			#exp and quickabr drawing
+			#exp and quickbar drawing
 			self.screen.blit(quickbar, (quickBar_Rect) )
 			pygame.draw.rect(self.screen, (0, 255, 0), exp_Rect, 0)
 			
@@ -1547,6 +1586,7 @@ class engine:
 						self.screen.blit( healthPotion, (inventoryPositions[(level, num)]) )
 					i += 1
 					
+					
 			self.screen.blit( target, (target_Rect) )	
 			
 			pygame.display.update( refresh )
@@ -1574,6 +1614,7 @@ class engine:
 				arrownum = 0
 				while i < 10:
 					arrowOn[i] = False
+				itemsList= []
 				thismusic = self.room.music
 				print "ROOM before: ", self.roomNum
 				roomCache = self.roomNum
