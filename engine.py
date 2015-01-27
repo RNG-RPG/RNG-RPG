@@ -2,7 +2,7 @@
 # file	engine.py
 
 # imports
-import sys, pygame, math, agent, item, os
+import sys, pygame, math, agent, item, os, random
 import titlescreen, room
 import levels.grasslands as grasslands
 import levels.bosslands as bosslands
@@ -180,6 +180,8 @@ class engine:
 		# list of items:
 		healthPotion = pygame.image.load( "sprites/Red_Potion.png" ).convert_alpha()
 		manaPotion = pygame.image.load( "sprites/Blue_Potion.png" ).convert_alpha()
+		
+		itemsList = []
 		
 		# deals with inventory stuff
 		inventoryItems = {(1,1):None,(1,2):None,(1,3):None,(1,4):None,(2,1):None,(2,2):None,(2,3):None,(2,4):None,(3,1):None,(3,2):None,(3,3):None,(3,4):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None}
@@ -698,6 +700,8 @@ class engine:
 										enem.setAggro(True)
 									if enem.isDead() == True:
 										agent_hero.changeEXP(enem.getEXP())
+										if random.random() <= .1:
+											
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
 							elif DPS == True and BigArrowTimer >= BigArrowAttackSpeed:
