@@ -150,6 +150,8 @@ class Enemy(object):
         self.aggressive = True
         self.attack = attack
         self.EXP = EXP
+	self.treeClock = 0
+	self.treeIdle = 0
         
         self.xDev = 0
         self.yDev = 0
@@ -174,7 +176,14 @@ class Enemy(object):
     def getCurrentSprite(self):
         if self.directional:
             if self.dead:
-                return self.spriteMap[-1]
+				if isinstance(self,TreeBeard):
+					self.treeClock += 1
+					if self.treeClock > 5:
+						self.treeClock = 0
+						self.treeIdle = (self.treeIdle + 1)%2
+					return self.spriteMap[self.treeIdle - 2]
+				else:
+					return self.spriteMap[-1]
             self.internalDClock += 1
             if self.internalDClock > 60:
                 self.internalDClock = 0
@@ -314,7 +323,7 @@ class Dragon(Enemy):
 class TreeBeard(Dragon):
     def __init__ (self, rect):
         super(TreeBeard, self).__init__(rect, True, 10, [(0, 331, 201 ,227), (0, 331, 201 ,227), (201, 331, 201 ,227), (201, 331, 201 ,227), (402, 331, 201 ,227), (402, 331, 201 ,227), (0, 331, 201 ,227), (0, 331, 201 ,227),
-                            (606, 331, 201 ,227), (606, 331, 201 ,227), (0, 331, 201, 227)])
+                            (603, 331, 201 ,227), (603, 331, 201 ,227), (804, 321, 201, 237), (1005, 321, 201, 237)])
 	self.setAggro(False)
         self.changeRect(pygame.Rect(rect[0], rect[1], 121, 147))
         self.deathsound.set_volume(0)
