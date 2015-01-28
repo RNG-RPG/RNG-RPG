@@ -28,7 +28,8 @@ class grassland0:
 		
 		rockBro = agent.HelpRock(150, 50)
 		rockBro1 = agent.HelpRock(500, 600)
-		rockBro.setMessage(["[Rock]: I'm a talking rock~ - Press the mouse button to continue","[Rock]: You should bump into my friends to see what they have to say!"])
+		rockBro.setMessage(["[Rock]: I'm a talking rock~ ","[Rock]: You should bump into my friends to see what they have to say!", "You can also hit escape to quit the game whenever you want! (But who would want to do that?)",
+				"O! I almost forgot! You better not go west... Nothing interesting is over there!"])
 		rockBro1.setMessage(["[Rock Bro]: Cleanse this land of your enemies... or perish... (P.S. Rockbros are not your enemy)"])
 		self.NPCs = [rockBro, rockBro1]
 
@@ -416,7 +417,7 @@ class grassland8:
 		#Add DA enemies HERE
 		self.frameCounter = -1
 
-		self.enemies = [agent.Voodoo((580,50)), agent.Squirrel((650, 75)), agent.Squirrel((540,75))]
+		self.enemies = [agent.Deer((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))), agent.Voodoo((580,50)), agent.Squirrel((650, 75)), agent.Squirrel((540,75))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))

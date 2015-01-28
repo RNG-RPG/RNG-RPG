@@ -156,6 +156,11 @@ class engine:
 		attacktimer = 30
 		inventoryOn = False
 		angle = 0
+		#o hey a random variable!
+		variable = 0
+		variable1 = 0
+		variable2 = 0
+		
 		hero_invincible = False
 		invincible_counter = 0
 		attackDelay = False
@@ -176,6 +181,7 @@ class engine:
 		wtf = pygame.image.load( "sprites/wtfboom.png" ).convert_alpha()
 		wtf2 = pygame.image.load( "sprites/wtfboom2.png" ).convert_alpha()
 		endScreen = pygame.image.load( "sprites/End_Screen.png" ).convert_alpha()
+		textbox = pygame.image.load( "sprites/textbox.png")
 		description = ""
 		attackSecondary = 1
 		attackRadius = 200
@@ -368,6 +374,15 @@ class engine:
 			
 			# Stage Changing/win variables - LEVEL DESIGN:
 			if self.state == "main":
+				if variable == 0:
+					activeNPC = agent.Dialogue(["Welcome to the World of Yoban's Quest! ~Click your mouse to continue through dialogue",
+												"Press i and level up your first skill!", "You can only spec into 1 of the two special moves so choose wisely... ",
+												"You get upgrade points when you level up by shooting stuff in the face (with mouse clicks!)","That's it! THAT'S THE TUTORIAL!... P.S. Once you have a special skill, right click to use it! (Watch out for mana costs!)",
+												"Run into that weird looking rock above you for some sweet insight into the game"])
+					self.setTalk(True)
+					talkFrame = direction[1]
+					displayText=activeNPC.getMessage()
+					variable = 1
 				if self.rooms[5].bossDead() and self.rooms[9].bossDead() and self.winVar == False:
 					self.rooms[7].setNPC(["The forest seems to be at peace..."])
 					self.rooms[12].setNPC(["You have conquered the woods...", "Now face your foe within the caves!"])
@@ -386,12 +401,12 @@ class engine:
 					self.rooms[5].activateFinal()
 					self.finalAct = 1
 				if self.finalAct == 1 and self.room == self.rooms[5]:
-					activeNPC = agent.Dialogue(["[Mayor Alex]: YOU HAVE BEEN A THORN IN MY SIDE FOR TOO LONG YOBAN!","You may have taken down my little pet dragon...", "but you will not stop me!"])
+					activeNPC = agent.Dialogue(["[Mayor Alex]: YOU HAVE BEEN A THORN IN MY SIDE FOR TOO LONG YOBAN!","[Mayor Alex]:You may have taken down my little pet dragon...",
+												"[Mayor Alex]: But you will not stop me!"])
 					self.setTalk(True)
 					talkFrame = direction[1]
 					displayText=activeNPC.getMessage()
 					self.finalAct = 2
-					print "lel"
 				if self.finalAct == 2 and self.talking == False:
 					self.rooms[5].initFight()
 					self.finalAct = 3
@@ -1270,7 +1285,7 @@ class engine:
 			AOETimer += 1
 			
 			if self.talking:
-				refresh.append((50, 600, 1100, 200))
+				refresh.append((48, 550, 1100, 200))
 
 			# enemy projectile movement
 			i = 0
@@ -1297,7 +1312,8 @@ class engine:
 				if enem.getHP() > 0:
 					
 					enem_health_rects.append(pygame.Rect((enem.getRect().left, enem.getRect().top - 20), (((float(enem.getHP())/float(enem.getMaxHP()))*enem.getRect().width*3), 10)))
-					pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
+					if not isinstance(enem, agent.Shield) and not isinstance(enem, agent.TreeBeard):
+						pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
 					refresh.append(pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width *2 + 40, enem_health_rects[i].height *2 + 40)))
 					i += 1
 				
@@ -1460,12 +1476,6 @@ class engine:
 					#print("drawing!", i)
 					self.screen.blit( projectile[i], (projectile_rects[i]) )
 				i += 1
-			if self.talking:
-				if displayText is not None:
-					txt = bestFont.render(displayText, True, (255,255,255))
-					self.screen.blit(txt, (50, 600))
-				else:
-					self.setTalk(False)
 			
 			# mana and health drawing
 			self.screen.blit(healthBar, (healthBar_Rect) )
@@ -1477,6 +1487,14 @@ class engine:
 			self.screen.blit(quickbar, (quickBar_Rect) )
 			pygame.draw.rect(self.screen, (0, 255, 0), exp_Rect, 0)
 			
+			#talking screen
+			if self.talking:
+				if displayText is not None:
+					self.screen.blit(textbox, pygame.Rect(48,550,1100,200))
+					txt = bestFont.render(displayText, True, (255,255,255))
+					self.screen.blit(txt, (55, 580))
+				else:
+					self.setTalk(False)
 			# inventory stuff
 			if inventoryOn == True:
 				#print ( "inventoryOn", inventoryOn )

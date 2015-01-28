@@ -314,7 +314,7 @@ class bossland5:
 			self.walls.append(pygame.Rect(0,0,1200,1))
 			self.walls.append(pygame.Rect(0,699,1200,1))
 			self.music = "sounds/BKGmusic/ForestBoss/EnterTheRealm.wav"
-			self.enemies = [agent.Mayor((581,320)), agent.Shield((561,310))]
+			self.enemies = [agent.Mayor((581,320)), agent.Shield((584,310))]
 			self.NPCs = []
 			self.final = False
 		if self.finalInit:
@@ -432,7 +432,10 @@ class bossland7:
 		#Add DA enemies HERE
 		self.frameCounter = -1
 
-		self.enemies = [agent.TreeBeard((950, 250))]
+		self.enemies = [agent.Deer((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.Deer((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.Deer((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8))),
+						agent.TreeBeard((950, 250))]
 	def bossDead(self):
 		return self.enemies[-1].isDead()
 		
