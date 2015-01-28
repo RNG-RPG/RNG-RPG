@@ -283,7 +283,8 @@ class TreeBeard(Dragon):
     def __init__ (self, rect):
         super(TreeBeard, self).__init__(rect)
         self.changeRect(pygame.Rect(rect[0], rect[1], 121, 147))
-        self.deathsound.set_volume(0)
+        self.deathsound = pygame.mixer.Sound("sounds/treedeath.wav")
+        self.deathsound.set_volume(1)
         self.setSpeed(0)
         self.setDirectional(True)
         self.setSpriteMap([(0, 331, 201 ,227), (0, 331, 201 ,227), (201, 331, 201 ,227), (201, 331, 201 ,227), (402, 331, 201 ,227), (402, 331, 201 ,227), (0, 331, 201 ,227), (0, 331, 201 ,227),
