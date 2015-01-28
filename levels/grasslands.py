@@ -424,8 +424,8 @@ class grassland8:
 		self.screen.blit( self.background, (0,0) )
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
-		self.screen.blit(self.wallSprites, (0,0), (0, 90, 445, 85))
-		self.screen.blit(self.wallSprites, (675,0), (675, 90, 525, 85))
+		self.screen.blit(self.wallSprites, (0,0), (0, 90, 445, 77))
+		self.screen.blit(self.wallSprites, (675,0), (675, 90, 525, 77))
 		
 	def checkroom(self,hero_Rect):
 		print "room8"

@@ -377,7 +377,7 @@ class engine:
 				if variable == 0:
 					activeNPC = agent.Dialogue(["Welcome to the World of Yoban's Quest! ~Click your mouse to continue through dialogue",
 												"Press i and level up your first skill!", "You can only spec into 1 of the two special moves so choose wisely... ",
-												"You get upgrade points when you level up by shooting stuff in the face (with mouse clicks!)","That's it! THAT'S THE TUTORIAL!... P.S. Once you have a special skill, right click to use it! (Watch out for mana costs!)",
+												"You get upgrade points when you level up by shooting stuff in the face (with mouse clicks!)","That's it! THAT'S THE TUTORIAL!... Once you have a special skill, right click to use it! Watch out for mana costs!",
 												"Run into that weird looking rock above you for some sweet insight into the game"])
 					self.setTalk(True)
 					talkFrame = direction[1]
@@ -401,8 +401,8 @@ class engine:
 					self.rooms[5].activateFinal()
 					self.finalAct = 1
 				if self.finalAct == 1 and self.room == self.rooms[5]:
-					activeNPC = agent.Dialogue(["[Mayor Alex]: YOU HAVE BEEN A THORN IN MY SIDE FOR TOO LONG YOBAN!","[Mayor Alex]:You may have taken down my little pet dragon...",
-												"[Mayor Alex]: But you will not stop me!"])
+					activeNPC = agent.Dialogue(["[Mayor Alex]: YOU HAVE BEEN A THORN IN MY SIDE FOR TOO LONG YOBAN!","[Mayor Alex]:You may have taken down one of my little pet dragons...",
+												"[Mayor Alex]: But you will not stop me! My army will take over the lands!"])
 					self.setTalk(True)
 					talkFrame = direction[1]
 					displayText=activeNPC.getMessage()
@@ -587,7 +587,7 @@ class engine:
 			
 			# dragon shooting code
 			for enem in self.room.enemies:
-				if isinstance(enem, agent.Dragon) and enem.isAggro() and enem.isDead() != True:
+				if (isinstance(enem, agent.Dragon) or isinstance(enem, agent.Mayor)) and enem.isAggro() and enem.isDead() != True:
 					if self.room.frameCounter == 15:
 						if projectilenum < 19:
 							projectilenum += 1
@@ -1153,7 +1153,8 @@ class engine:
 						agent_hero.changeHP( - 1 )
 						print( "health lost", enem.getAttack(), agent_hero.getHP() )
 						hero_invincible = True
-						hero_Rect = hero_Rect.move( enem.getHSpeed() * 5, enem.getVSpeed() * 5 )
+						if hero_Rect.top > 70 and hero_Rect.bottom < self.height - 70 and hero_Rect.left > 70 and hero_Rect.right <self.width - 70:
+							hero_Rect = hero_Rect.move( enem.getHSpeed() * 5, enem.getVSpeed() * 5 )
 						if agent_hero.getHP() <= 0:
 							dead = True
 							health_Rect = pygame.Rect( (0, 0), (0, 0) )
@@ -1232,7 +1233,8 @@ class engine:
 							print( agent_hero.getEXP() )
 							print("did all the stuff when the thing died")
 						refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
-						if not isinstance(enem, agent.TreeBeard):
+						
+						if not isinstance(enem, agent.TreeBeard) and not isinstance(enem, agent.Shield) and not isinstance(enem,agent.Mayor):
 							if enem.getRect().top > 70 and enem.getRect().bottom < self.height - 70 and enem.getRect().left > 70 and enem.getRect().right <self.width - 70:
 								enem.changeRect(enem.getRect().move( 2 * (BigArrowSpeedX), 2 * (BigArrowSpeedY) ))
 						BigArrowOn = False
@@ -1314,7 +1316,10 @@ class engine:
 					enem_health_rects.append(pygame.Rect((enem.getRect().left, enem.getRect().top - 20), (((float(enem.getHP())/float(enem.getMaxHP()))*enem.getRect().width*3), 10)))
 					if not isinstance(enem, agent.Shield) and not isinstance(enem, agent.TreeBeard):
 						pygame.draw.rect(self.screen, (255, 0, 0), enem_health_rects[i], 0)
-					refresh.append(pygame.Rect((enem_health_rects[i].left - 20, enem_health_rects[i].top - 20), (enem_health_rects[i].width *2 + 40, enem_health_rects[i].height *2 + 40)))
+					if isinstance(enem, agent.Deer) or isinstance(enem, agent.Voodoo):
+						refresh.append(pygame.Rect((enem_health_rects[i].left - 30, enem_health_rects[i].top - 30), (enem_health_rects[i].width + 325*2, enem_health_rects[i].height +325*2)))
+					else:
+						refresh.append(pygame.Rect((enem_health_rects[i].left - 30, enem_health_rects[i].top - 30), (enem_health_rects[i].width + 40*2, enem_health_rects[i].height +40*2)))
 					i += 1
 				
 		   
@@ -1408,7 +1413,7 @@ class engine:
 			
 			# drawing dropped stuff:
 			for thing in itemsList:
-				refresh.append( thing[2] )
+				refresh.append(pygame.Rect( thing[2].x-40 ,thing[2].y-40, thing[2].width+80, thing[2].height+80 ))
 				self.screen.blit( thing[1], (thing[2]) )
 				if hero_Rect.colliderect( thing[2] ):
 					i = 0
@@ -1640,6 +1645,11 @@ class engine:
 			#endscreen
 			if self.state == "main2" and self.winVar == True:	
 				if p == 0:
+					deathsound.set_volume(0)
+					arrowshot.set_volume(0)
+					arrowready.set_volume(0)
+					footsteps.set_volume(0)
+					arrowhit.set_volume(0)
 					pygame.mixer.music.load("sounds/BKGmusic/MenuCredits/HeroReturns.wav")
 					pygame.mixer.music.play(-1,0)
 				if p < 255:
@@ -1653,10 +1663,10 @@ class engine:
 				self.screen.blit(endScreen, pygame.Rect(475, 175, 250, 250))
 				if p == 255:
 					txtz = 'Press Esc to Return to the Main Menu'
-					txtx = 'Thanks 4 Playing!'
+					txtx = 'Thanks "100" Playing!'
 					txta = bestFont.render(txtx, True, (255,255,255))
 					txts = bestFont.render(txtz, True, (255,255,255))
-					self.screen.blit(txta, (520,100))
+					self.screen.blit(txta, (515,100))
 					self.screen.blit(txts, (420, 600))
 				refresh.append(pygame.Rect(0,0,1200,700))
 			pygame.display.update( refresh )

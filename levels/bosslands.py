@@ -195,8 +195,8 @@ class bossland3:
 		self.screen.blit( self.background, (0,0) )
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
-		self.screen.blit(self.wallSprites, (0,0), (0, 90, 445, 85))
-		self.screen.blit(self.wallSprites, (675,0), (675, 90, 525, 85))
+		self.screen.blit(self.wallSprites, (0,0), (0, 90, 445, 77))
+		self.screen.blit(self.wallSprites, (675,0), (675, 90, 525, 77))
 		self.screen.blit( self.wallSprites, (0,0), (55, 170, 50, 700))
 		self.screen.blit( self.wallSprites, (1150, 0), (1100, 170, 50, 700))
 		self.screen.blit( self.wallSprites, (0,650), (55, 895, 445, 50))
@@ -245,8 +245,8 @@ class bossland4:
 		self.screen.blit( self.background, (0,0) )
 		self.screen.blit( self.background, (self.height,0) )
 		#draw on top of the background
-		self.screen.blit(self.wallSprites, (0,0), (0, 90, 445, 85))
-		self.screen.blit(self.wallSprites, (675,0), (675, 90, 525, 85))
+		self.screen.blit(self.wallSprites, (0,0), (0, 90, 445, 77))
+		self.screen.blit(self.wallSprites, (675,0), (675, 90, 525, 77))
 		self.screen.blit( self.wallSprites, (0,0), (55, 170, 50, 700))
 		self.screen.blit( self.wallSprites, (1150, 0), (1100, 170, 50, 700))
 		self.screen.blit( self.wallSprites, (0,650), (55, 895, 445, 50))
@@ -277,7 +277,7 @@ class bossland5:
 		self.background = sprites[0]
 		self.wallSprites = sprites[1]
 		self.enemySprites = sprites[2]
-		self.walls = [pygame.Rect(0, 0, 50, 50), pygame.Rect(0, 650, 50, 50), pygame.Rect(1150, 0, 50, 50), pygame.Rect(1150, 650, 50, 50)]
+		self.walls = [pygame.Rect(0, 0, 445, 50), pygame.Rect(675, 0, 525, 50), pygame.Rect(0, 650, 50, 50), pygame.Rect(1150, 650, 50, 50)]
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
@@ -309,12 +309,16 @@ class bossland5:
 		self.screen.blit( self.background, (self.height,0) )
 		#final battlearu
 		if self.final:
-			self.walls.append(pygame.Rect(0, 0, 1, 700))
+			self.walls.append(pygame.Rect(0, 0, 20, 700))
 			self.walls.append(pygame.Rect(1199, 0, 1, 700))
-			self.walls.append(pygame.Rect(0,0,1200,1))
+			self.walls.append(pygame.Rect(0,0,1200,30))
 			self.walls.append(pygame.Rect(0,699,1200,1))
 			self.music = "sounds/BKGmusic/ForestBoss/EnterTheRealm.wav"
-			self.enemies = [agent.Mayor((581,320)), agent.Shield((584,310))]
+			drag1=agent.Dragon((450,100))
+			drag2=agent.Dragon((636,100))
+			drag1.setAggro(False)
+			drag2.setAggro(False)
+			self.enemies = [agent.Mayor((581,320)), agent.Shield((567,310)), drag1, drag2]
 			self.NPCs = []
 			self.final = False
 		if self.finalInit:
@@ -322,7 +326,7 @@ class bossland5:
 				enem.setAggro(True)
 			if not self.enemies[0].isDead():
 				self.finalCounter += 1
-				if self.finalCounter > 120:
+				if self.finalCounter > 60:
 					self.finalCounter = 0
 					color = ["brown", "green", "pink"]
 					self.enemies.append(agent.Slime((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8)),True, 5, color[ra.randrange(0,3,1)]))
@@ -333,10 +337,10 @@ class bossland5:
 						self.shieldCounter = 0
 			
 		#draw on top of the background
-		self.screen.blit( self.wallSprites, (0,0), (215, 285, 100, 85) )
+		self.screen.blit(self.wallSprites, (0,0), (0, 90, 445, 77))
+		self.screen.blit(self.wallSprites, (675,0), (675, 90, 525, 77))
 		self.screen.blit( self.wallSprites, (0, 650), (200, 170, 50, 50)  )
 		self.screen.blit( self.wallSprites, (1150,650), (160, 170, 50, 50))
-		self.screen.blit( self.wallSprites, (1100,0), (115, 285, 100, 85) )
 		
 	def checkroom(self,hero_Rect):
 		print "room5"
