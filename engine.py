@@ -953,9 +953,9 @@ class engine:
 						if upgradeOn[(3,2)] == True and agent_hero.getUP() >= 1:
 							upgradeOn[(3,2)] = False
 							upgradeActive[(3,2)] = True
-							if not upgradeActive[(4,2)]:
+							if not upgradeActive[(4,2)] and AOE == True:
 								upgradeOn[(4,2)] = True
-							if not upgradeActive[(4,3)]:
+							if not upgradeActive[(4,3)] and DPS == True:
 								upgradeOn[(4,3)] = True
 							agent_hero.setSpeed(20)
 							agent_hero.changeUP( -1 )
