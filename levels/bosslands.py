@@ -29,7 +29,7 @@ class bossland0:
 		rockBro = agent.HelpRock(150, 50)
 		rockBro1 = agent.HelpRock(200, 50)
 		rockBro.setMessage(["[Rock Twat]: Congratulation! You've slain that infernal winged beast! (Not that I couldn't have done it)","[Rock Twat]: Now go complete your quest ya scrub."])
-		rockBro1.setMessage(["[Rocky Balboa]: You like what you see? These rock hard abs didn't come to be from sitting around all day", ".... Oh wait...."])
+		rockBro1.setMessage(["[Rocky Balboa]: You like what you see?","[Rocky Balboa] These rock hard abs didn't come to be from sitting around all day", ".... Oh wait...."])
 		self.NPCs = [rockBro, rockBro1]
 
 		
@@ -281,6 +281,10 @@ class bossland5:
 		self.rock = None
 		self.rockx= []
 		self.rocky= []
+		self.final = False
+		self.finalInit = False
+		self.finalCounter = 120
+		self.shieldCounter = 0
 		rockBro = agent.HelpRock(590,330)
 		rockBro.setMessage(["[Stone Guardian]: 3 paths... 3 guardians..."])
 		
@@ -291,10 +295,43 @@ class bossland5:
 		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
 		self.enemies = [agent.Squirrel((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8)))]
 		
+	def activateFinal(self):
+		self.final = True
+	def initFight(self):
+		self.finalInit = True
+	def bossDead(self):
+		return self.enemies[0].isDead()
+			
+		
 	def reset(self):
 		self.screen.fill((90,0,0))
 		self.screen.blit( self.background, (0,0) )
 		self.screen.blit( self.background, (self.height,0) )
+		#final battlearu
+		if self.final:
+			self.walls.append(pygame.Rect(0, 0, 1, 700))
+			self.walls.append(pygame.Rect(1199, 0, 1, 700))
+			self.walls.append(pygame.Rect(0,0,1200,1))
+			self.walls.append(pygame.Rect(0,699,1200,1))
+			self.music = "sounds/BKGmusic/ForestBoss/EnterTheRealm.wav"
+			self.enemies = [agent.Mayor((581,320)), agent.Shield((561,310))]
+			self.NPCs = []
+			self.final = False
+		if self.finalInit:
+			for enem in self.enemies:
+				enem.setAggro(True)
+			if not self.enemies[0].isDead():
+				self.finalCounter += 1
+				if self.finalCounter > 120:
+					self.finalCounter = 0
+					color = ["brown", "green", "pink"]
+					self.enemies.append(agent.Slime((self.width*ra.uniform(0.1, 0.9), self.height*ra.uniform(0.2, 0.8)),True, 5, color[ra.randrange(0,3,1)]))
+				if self.enemies[1].isDead():
+					self.shieldCounter += 1
+					if self.shieldCounter > 120:
+						self.enemies[1].ressurect()
+						self.shieldCounter = 0
+			
 		#draw on top of the background
 		self.screen.blit( self.wallSprites, (0,0), (215, 285, 100, 85) )
 		self.screen.blit( self.wallSprites, (0, 650), (200, 170, 50, 50)  )

@@ -21,6 +21,8 @@ class engine:
 		self.pause = False
 		self.talking = False
 		self.winVar = False
+		self.finalAct = 0
+		self.finalCount = 0
 		self.checkAvoid = False
 		self.enemySprites = pygame.image.load( "sprites/enemy_main.png" ).convert_alpha()
 		
@@ -109,7 +111,7 @@ class engine:
 			spritos = [pygame.transform.scale(temp, (self.width, self.height)), pygame.image.load('sprites/treewall_main.png').convert_alpha(), pygame.image.load( "sprites/enemy_main.png" ).convert_alpha(),
 						pygame.image.load('sprites/rockwall_main.png').convert_alpha()]
 			self.rooms = bosslands.gatherRooms(self.getScreen(), self.getWidth(), self.getHeight(), spritos)
-            
+		print self.level
 	
 	def setState(self):
 		if self.state == "sandbox":
@@ -163,6 +165,7 @@ class engine:
 		arrowSpeedY = [0,0,0,0,0,0,0,0,0,0]
 		arrownum = 0
 		loopdeath= 0
+		p = 0
 		refresh = [] 
 		displayText = None
 		bestFont = pygame.font.SysFont("Helvetica", 25)
@@ -172,6 +175,7 @@ class engine:
 		upgradeSprites = pygame.image.load( "sprites/upgrades_main.png").convert_alpha()
 		wtf = pygame.image.load( "sprites/wtfboom.png" ).convert_alpha()
 		wtf2 = pygame.image.load( "sprites/wtfboom2.png" ).convert_alpha()
+		endScreen = pygame.image.load( "sprites/End_Screen.png" ).convert_alpha()
 		description = ""
 		attackSecondary = 1
 		attackRadius = 200
@@ -378,9 +382,27 @@ class engine:
 					pygame.display.update()
 					self.winVar = True
 			elif self.state == "main2":
-				if self.rooms[6].bossDead() and self.rooms[7].bossDead() and self.rooms[8].bossDead():
-					#do shit
-					print "THE BOSS EVEN STRIKES IN ROOM 5"
+				if self.rooms[6].bossDead() and self.rooms[7].bossDead() and self.rooms[8].bossDead() and self.finalAct == 0:
+					self.rooms[5].activateFinal()
+					self.finalAct = 1
+				if self.finalAct == 1 and self.room == self.rooms[5]:
+					activeNPC = agent.Dialogue(["[Mayor Alex]: YOU HAVE BEEN A THORN IN MY SIDE FOR TOO LONG YOBAN!","You may have taken down my little pet dragon...", "but you will not stop me!"])
+					self.setTalk(True)
+					talkFrame = direction[1]
+					displayText=activeNPC.getMessage()
+					self.finalAct = 2
+					print "lel"
+				if self.finalAct == 2 and self.talking == False:
+					self.rooms[5].initFight()
+					self.finalAct = 3
+				if self.finalAct == 3 and self.rooms[5].bossDead():
+					self.finalAct = 4
+				if self.finalAct == 4:
+					if self.finalCount < 150:
+						self.finalCount +=1
+					else:
+						self.winVar = True
+					
 			def tutpaused():
 				while self.pause:			  
 					if self.tutorialcount < 4:
@@ -550,7 +572,7 @@ class engine:
 			
 			# dragon shooting code
 			for enem in self.room.enemies:
-				if isinstance(enem, agent.Dragon) and enem.isDead() != True:
+				if isinstance(enem, agent.Dragon) and enem.isAggro() and enem.isDead() != True:
 					if self.room.frameCounter == 15:
 						if projectilenum < 19:
 							projectilenum += 1
@@ -1157,7 +1179,7 @@ class engine:
 								print( agent_hero.getEXP() )
 								print("did all the stuff when the thing died")
 							refresh.append( (enem.getRect().x+enem.getxDev()*2, enem.getRect().y+enem.getyDev()*2, enem.getRect().width-enem.getxDev()*4, enem.getRect().height-enem.getyDev()*4))
-							if not isinstance(enem, agent.TreeBeard):
+							if not isinstance(enem, agent.TreeBeard) and not isinstance(enem, agent.Shield) and not isinstance(enem, agent.Mayor):
 								if enem.getRect().top > 70 and enem.getRect().bottom < self.height - 70 and enem.getRect().left > 70 and enem.getRect().right <self.width - 70:
 									enem.changeRect(enem.getRect().move( 2 * (arrowSpeedX[k]), 2 * (arrowSpeedY[k]) ))
 							arrowOn[k] = False
@@ -1596,9 +1618,30 @@ class engine:
 					
 					
 			self.screen.blit( target, (target_Rect) )	
-			
+			#endscreen
+			if self.state == "main2" and self.winVar == True:	
+				if p == 0:
+					pygame.mixer.music.load("sounds/BKGmusic/MenuCredits/HeroReturns.wav")
+					pygame.mixer.music.play(-1,0)
+				if p < 255:
+					p+= 1
+				surf = pygame.Surface((1200,700))
+				surf.set_alpha(p)
+				surf.fill((0,0,0))
+				endScreen = endScreen.convert()
+				endScreen.set_alpha(p)
+				self.screen.blit(surf, (0,0))
+				self.screen.blit(endScreen, pygame.Rect(475, 175, 250, 250))
+				if p == 255:
+					txtz = 'Press Esc to Return to the Main Menu'
+					txtx = 'Thanks 4 Playing!'
+					txta = bestFont.render(txtx, True, (255,255,255))
+					txts = bestFont.render(txtz, True, (255,255,255))
+					self.screen.blit(txta, (520,100))
+					self.screen.blit(txts, (420, 600))
+				refresh.append(pygame.Rect(0,0,1200,700))
 			pygame.display.update( refresh )
-		   
+			   
 			refresh = []
 			
 			#hero invincible timer
