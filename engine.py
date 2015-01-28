@@ -277,7 +277,7 @@ class engine:
 		
 		# hero exp stuff
 		quickbar = pygame.image.load( "quick_bar.png" ).convert_alpha()
-		quickBar_Rect = quickbar.get_rect().move( 100, 400 )
+		quickBar_Rect = quickbar.get_rect().move( 100, 566 )
 		exp_Rect = ( (0, 0) , (0, 0) )
 		
 		# upgrade stuff
@@ -359,7 +359,7 @@ class engine:
 			# health_bar, mana_bar, and exp_bar calculator
 			health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
 			mana_Rect = pygame.Rect((30, (574 + ((float(agent_hero.getMaxMP() - agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))), (17, (float(agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))
-			exp_Rect = pygame.Rect( (222 + 100, 18 + 400), ((float(agent_hero.getEXP())/float(agent_hero.getMaxEXP()) * 553), 63) )
+			exp_Rect = pygame.Rect( (54 + 100, 8 + 566), ((float(agent_hero.getEXP())/float(agent_hero.getMaxEXP()) * 890), 23) )
 			# print( exp_Rect.width )
 			
 			# Stage Changing/win variables - LEVEL DESIGN:
@@ -1385,6 +1385,7 @@ class engine:
 							inventoryItems[(level,num)] = thing[0]
 							print ( "level: ", level, " num: ", num, "items" )
 							i = 20
+						i += 1
 					itemsList.remove(thing)
 			
 			#enemy animations!
