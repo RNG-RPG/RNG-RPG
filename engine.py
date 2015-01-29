@@ -176,7 +176,7 @@ class engine:
 		bestFont = pygame.font.SysFont("Helvetica", 25)
 		#load inventory image
 		inventory = pygame.image.load( "upgrades.png" ).convert_alpha()
-		texture_missing_upgrades = pygame.image.load( "texture_missing_upgrades.png" ).convert_alpha()
+		# texture_missing_upgrades = pygame.image.load( "texture_missing_upgrades.png" ).convert_alpha()
 		upgradeSprites = pygame.image.load( "sprites/upgrades_main.png").convert_alpha()
 		wtf = pygame.image.load( "sprites/wtfboom.png" ).convert_alpha()
 		wtf2 = pygame.image.load( "sprites/wtfboom2.png" ).convert_alpha()
