@@ -63,20 +63,20 @@ class engine:
 	
 	
 	
-	def inventoryFunc(self, level, num, agent, inventoryList):
-		if isinstance(inventoryList[(level,num)], item.healthPotion):
-			inventoryList[(level,num)] = None
+	def inventoryFunc(self, num, agent, inventoryList):
+		if isinstance(inventoryList[num][0], item.healthPotion):
+			inventoryList[num] = (None, None)
 			if agent.getHP() <= (agent.getMaxHP() - 3):
 				agent.changeHP(3)
 			else:
 				agent.changeHP((agent.getMaxHP() - agent.getHP()))
-		elif isinstance(inventoryList[(level,num)], item.manaPotion):
-			inventoryList[(level,num)] = None
+		elif isinstance(inventoryList[num][0], item.manaPotion):
+			inventoryList[num] = (None, None)
 			if agent.getMP() <= (agent.getMaxMP() - 3):
 				agent.changeMP(3)
 			else:
 				agent.changeMP((agent.getMaxMP() - agent.getMP()))
-		print( "level:", level, " num:", num )
+		print(" num:", num )
 	
 	# deals with upgrade stuff (for now, I have decided that this should just happen in the function itself.
 	# upgradeItems = {(1,1):None,(2,1):None,(2,2):None,(3,1):None,(3,2):None,(3,3):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None}
@@ -201,11 +201,15 @@ class engine:
 		manaPotion_drop = pygame.image.load( "sprites/Blue_Potion_drop.png" ).convert_alpha()
 		
 		# deals with inventory stuff
-		inventoryItems = {(1,1):None,(1,2):None,(1,3):None,(1,4):None,(2,1):None,(2,2):None,(2,3):None,(2,4):None,(3,1):None,(3,2):None,(3,3):None,(3,4):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None,(6,1):None}
+
+		inventoryItems = {(1,1):(None,None),(1,2):(None,None),(1,3):(None,None),(1,4):(None,None),(2,1):(None,None),(2,2):(None,None),(2,3):(None,None),(2,4):(None,None),(3,1):(None,None),(3,2):(None,None),(3,3):(None,None),(3,4):(None,None),(4,1):(None,None),(4,2):(None,None),(4,3):(None,None),(4,4):(None,None),(5,1):(None,None),(5,2):(None,None),(5,3):(None,None),(5,4):(None,None),(6,1):(None,None)}
 		inventoryPositions = {(1,1):(218,47),(1,2):(306,47),(1,3):(394,47),(1,4):(482,47),(2,1):(218,135),(2,2):(306,135),(2,3):(394,135),(2,4):(482,135),(3,1):(218,223),(3,2):(306,223),(3,3):(394,223),(3,4):(482,223),(4,1):(218,311),(4,2):(306,311),(4,3):(394,311),(4,4):(482,311),(5,1):(218,399),(5,2):(306,399),(5,3):(394,399),(5,4):(482,399)}
+		mouse_contains = (None, None)
+		quickbarItems = [(None,None),(None,None),(None,None),(None,None),(None,None)]
+		quickbarPositions = [(253+100,38+566),(352+100,38+566),(453+100,38+566),(554+100,38+566),(655+100,38+566)]
 		# test of stuff
-		inventoryItems[(1,1)] = item.healthPotion()
-	
+		inventoryItems[(1,1)] = (item.healthPotion(), healthPotion_drop)
+		
 		# deals with dropped items
 		itemsList = []
 		
@@ -296,9 +300,9 @@ class engine:
 		
 		heroSprites = pygame.image.load( "sprites/archer_main.png" ).convert_alpha()
 		npcSprites = pygame.image.load( "sprites/npc_main.png" ).convert_alpha()
-		target = pygame.image.load( "sprites/AimingPointer.png" ).convert_alpha()
-		target = pygame.transform.scale(target, (45, 50))
-		target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
+		target_image = pygame.image.load( "sprites/AimingPointer.png" ).convert_alpha()
+		target_image = pygame.transform.scale(target_image, (45, 50))
+		target_Rect = target_image.get_rect().move( mpos[0] - 25, mpos[1] - 25)
 		
 		self.setUpRooms()
 		self.setState()
@@ -512,7 +516,7 @@ class engine:
 						if event.type == pygame.MOUSEMOTION:
 							pygame.mouse.set_visible(False)
 							mpos = pygame.mouse.get_pos()
-							target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
+							target_Rect = target_image.get_rect().move( mpos[0] - 25, mpos[1] - 25)
 							pygame.display.update()
 						if event.type == pygame.MOUSEBUTTONDOWN and inventoryOn != True and event.button == LEFT:
 							
@@ -662,7 +666,7 @@ class engine:
 				if event.type == pygame.MOUSEMOTION:
 					pygame.mouse.set_visible(False)
 					mpos = pygame.mouse.get_pos()
-					target_Rect = target.get_rect().move( mpos[0] - 25, mpos[1] - 25)
+					target_Rect = target_image.get_rect().move( mpos[0] - 25, mpos[1] - 25)
 				
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_p:
@@ -898,49 +902,164 @@ class engine:
 							inventoryOn = True
 						else:
 							inventoryOn = False
+					elif key[pygame.K_1] and inventoryOn == False:
+						self.inventoryFunc(0, agent_hero, quickbarItems)
+					elif key[pygame.K_2] and inventoryOn == False:
+						self.inventoryFunc(1, agent_hero, quickbarItems)
+					elif key[pygame.K_3] and inventoryOn == False:
+						self.inventoryFunc(2, agent_hero, quickbarItems)
+					elif key[pygame.K_4] and inventoryOn == False:
+						self.inventoryFunc(3, agent_hero, quickbarItems)
+					elif key[pygame.K_5] and inventoryOn == False:
+						self.inventoryFunc(4, agent_hero, quickbarItems)
+					
 				elif event.type == pygame.MOUSEBUTTONDOWN and inventoryOn == True:
 					# inventory slots:
 					if pygame.Rect((18+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 1, agent_hero, inventoryItems)
+						# self.inventoryFunc(1, 1, agent_hero, inventoryItems)
+						# if inventoryItems != None:
+							# target = inventoryItems[(1,1)][1]
+						temp = inventoryItems[(1,1)]
+						inventoryItems[(1,1)] = mouse_contains
+						mouse_contains = temp
+						# target = mouse_contains
 					elif pygame.Rect((18+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 1, agent_hero, inventoryItems)
+						# self.inventoryFunc(2, 1, agent_hero, inventoryItems)
+						# target = inventoryItems[(2,1)][1]
+						temp = inventoryItems[(2,1)]
+						inventoryItems[(2,1)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((18+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 1, agent_hero, inventoryItems)
+						# self.inventoryFunc(3, 1, agent_hero, inventoryItems)
+						# target = inventoryItems[(3,1)][1]
+						temp = inventoryItems[(3,1)]
+						inventoryItems[(3,1)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((18+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 1, agent_hero, inventoryItems)
+						# self.inventoryFunc(4, 1, agent_hero, inventoryItems)
+						# target = inventoryItems[(4,1)][1]
+						temp = inventoryItems[(4,1)]
+						inventoryItems[(4,1)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((18+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(5, 1, agent_hero, inventoryItems)
+						# self.inventoryFunc(5, 1, agent_hero, inventoryItems)
+						# target = inventoryItems[(5,1)][1]
+						temp = inventoryItems[(5,1)]
+						inventoryItems[(5,1)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((106+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 2, agent_hero, inventoryItems)
+						# self.inventoryFunc(1, 2, agent_hero, inventoryItems)
+						# target = inventoryItems[(1,2)][1]
+						temp = inventoryItems[(1,2)]
+						inventoryItems[(1,2)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((106+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 2, agent_hero, inventoryItems)
+						# self.inventoryFunc(2, 2, agent_hero, inventoryItems)
+						# target = inventoryItems[(2,2)][1]
+						temp = inventoryItems[(2,2)]
+						inventoryItems[(2,2)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((106+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 2, agent_hero, inventoryItems)
+						# self.inventoryFunc(3, 2, agent_hero, inventoryItems)
+						# target = inventoryItems[(3,2)][1]
+						temp = inventoryItems[(3,2)]
+						inventoryItems[(3,2)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((106+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 2, agent_hero, inventoryItems)
+						# self.inventoryFunc(4, 2, agent_hero, inventoryItems)
+						# target = inventoryItems[(4,2)][1]
+						temp = inventoryItems[(4,2)]
+						inventoryItems[(4,2)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((106+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(5, 2, agent_hero, inventoryItems)
+						# self.inventoryFunc(5, 2, agent_hero, inventoryItems)
+						# target = inventoryItems[(5,2)][1]
+						temp = inventoryItems[(5,2)]
+						inventoryItems[(5,2)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((194+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 3, agent_hero, inventoryItems)
+						# self.inventoryFunc(1, 3, agent_hero, inventoryItems)
+						# target = inventoryItems[(1,3)][1]
+						temp = inventoryItems[(1,3)]
+						inventoryItems[(1,3)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((194+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 3, agent_hero, inventoryItems)
+						# self.inventoryFunc(2, 3, agent_hero, inventoryItems)
+						# target = inventoryItems[(2,3)][1]
+						temp = inventoryItems[(2,3)]
+						inventoryItems[(2,3)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((194+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 3, agent_hero, inventoryItems)
+						# self.inventoryFunc(3, 3, agent_hero, inventoryItems)
+						# target = inventoryItems[(3,3)][1]
+						temp = inventoryItems[(3,3)]
+						inventoryItems[(3,3)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((194+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 3, agent_hero, inventoryItems)
+						# self.inventoryFunc(4, 3, agent_hero, inventoryItems)
+						# target = inventoryItems[(4,3)][1]
+						temp = inventoryItems[(4,3)]
+						inventoryItems[(4,3)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((194+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(5, 3, agent_hero, inventoryItems)
+						# self.inventoryFunc(5, 3, agent_hero, inventoryItems)
+						# target = inventoryItems[(5,3)][1]
+						temp = inventoryItems[(5,3)]
+						inventoryItems[(5,3)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((282+200,17+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(1, 4, agent_hero, inventoryItems)
+						# self.inventoryFunc(1, 4, agent_hero, inventoryItems)
+						# target = inventoryItems[(1,4)][1]
+						temp = inventoryItems[(1,4)]
+						inventoryItems[(1,4)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((282+200,105+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(2, 4, agent_hero, inventoryItems)
+						# self.inventoryFunc(2, 4, agent_hero, inventoryItems)
+						# target = inventoryItems[(2,4)][1]
+						temp = inventoryItems[(2,4)]
+						inventoryItems[(2,4)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((282+200,193+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(3, 4, agent_hero, inventoryItems)
+						# self.inventoryFunc(3, 4, agent_hero, inventoryItems)
+						# target = inventoryItems[(3,4)][1]
+						temp = inventoryItems[(3,4)]
+						inventoryItems[(3,4)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((282+200,281+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(4, 4, agent_hero, inventoryItems)
+						# self.inventoryFunc(4, 4, agent_hero, inventoryItems)
+						# target = inventoryItems[(4,4)][1]
+						temp = inventoryItems[(4,4)]
+						inventoryItems[(4,4)] = mouse_contains
+						mouse_contains = temp
 					elif pygame.Rect((282+200,369+30), (55,55)).collidepoint( pygame.mouse.get_pos() ):
-						self.inventoryFunc(5, 4, agent_hero, inventoryItems)
-						# upgrade slots:
+						# self.inventoryFunc(5, 4, agent_hero, inventoryItems)
+						# target = inventoryItems[(5,4)][1]
+						temp = inventoryItems[(5,4)]
+						inventoryItems[(5,4)] = mouse_contains
+						mouse_contains = temp
+					# quickbar collisions:
+					elif pygame.Rect((253+100,38+566), (91,89)).collidepoint( pygame.mouse.get_pos() ):
+						temp = quickbarItems[0]
+						quickbarItems[0] = mouse_contains
+						mouse_contains = temp
+					elif pygame.Rect((352+100,38+566), (91,89)).collidepoint( pygame.mouse.get_pos() ):
+						temp = quickbarItems[1]
+						quickbarItems[1] = mouse_contains
+						mouse_contains = temp
+					elif pygame.Rect((453+100,38+566), (91,89)).collidepoint( pygame.mouse.get_pos() ):
+						temp = quickbarItems[2]
+						quickbarItems[2] = mouse_contains
+						mouse_contains = temp
+					elif pygame.Rect((554+100,38+566), (91,89)).collidepoint( pygame.mouse.get_pos() ):
+						temp = quickbarItems[3]
+						quickbarItems[3] = mouse_contains
+						mouse_contains = temp
+					elif pygame.Rect((655+100,38+566), (91,89)).collidepoint( pygame.mouse.get_pos() ):
+						temp = quickbarItems[4]
+						quickbarItems[4] = mouse_contains
+						mouse_contains = temp
+						
+					# upgrade slots:
 					elif pygame.Rect((550+200,22+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): # allows main attack
 						print( "1, 1" )
 						if upgradeOn[(1,1)] == True and agent_hero.getUP() >= 1:
@@ -1425,7 +1544,7 @@ class engine:
 							level += 1
 						num += 1
 						if inventoryItems[(level,num)] == None:
-							inventoryItems[(level,num)] = thing[0]
+							inventoryItems[(level,num)] = (thing[0],thing[1])
 							print ( "level: ", level, " num: ", num, "items" )
 							i = 20
 						i += 1
@@ -1623,6 +1742,11 @@ class engine:
 						description = "super attack speed"
 						print( description )
 
+			if mouse_contains[1] == None:
+				target = target_image
+			else:
+				target = mouse_contains[1]
+						
 			self.screen.blit( target, (target_Rect) )			
 			# inventory drawing stuff
 			if inventoryOn == True:
@@ -1634,11 +1758,21 @@ class engine:
 						num = 0
 						level += 1
 					num += 1
-					if isinstance(inventoryItems[(level,num)], item.healthPotion):
+					if isinstance(inventoryItems[(level,num)][0], item.healthPotion):
 						self.screen.blit( healthPotion, (inventoryPositions[(level, num)]) )
-					elif isinstance(inventoryItems[(level,num)], item.manaPotion):
+					elif isinstance(inventoryItems[(level,num)][0], item.manaPotion):
 						self.screen.blit( manaPotion, (inventoryPositions[(level,num)] ) )
 					i += 1
+				
+				i = 0
+			
+			# quickbar things
+			while i < 5:
+				if isinstance(quickbarItems[i][0], item.healthPotion):
+					self.screen.blit( healthPotion, (quickbarPositions[i]) )
+				elif isinstance(quickbarItems[i][0], item.manaPotion):
+					self.screen.blit( manaPotion, (quickbarPositions[i]) )
+				i += 1
 					
 					
 			self.screen.blit( target, (target_Rect) )	
