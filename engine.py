@@ -1828,8 +1828,10 @@ class engine:
 				arrowSpeedX = [0,0,0,0,0,0,0,0,0,0]
 				arrowSpeedY = [0,0,0,0,0,0,0,0,0,0]
 				arrownum = 0
+				i = 0
 				while i < 10:
 					arrowOn[i] = False
+					i += 1
 				itemsList= []
 				thismusic = self.room.music
 				print "ROOM before: ", self.roomNum
