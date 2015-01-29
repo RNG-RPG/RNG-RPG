@@ -77,7 +77,7 @@ class Agent:
 		if self.exp >= ((self.level ** 2) * 10):
 			self.exp = self.exp - ((self.level ** 2)*10)
 			self.level += 1
-			self.maxEXP = self.level * 9
+			self.maxEXP = ((self.level ** 2) * 10)
 			self.upgrade_Points += 1
 			print( "upgrade points", self.upgrade_Points )
 	
