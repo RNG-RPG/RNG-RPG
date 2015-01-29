@@ -317,11 +317,11 @@ class bossland5:
 			self.music= "sounds/BKGmusic/BeachBoss/IWillNotDie.wav"
 			drag1=agent.TreeBeard((450,100))
 			drag2=agent.TreeBeard((636,100))
-			drag3=agent.Dragon((600,150))
+			# drag3=agent.Dragon((600,150))
 			drag1.setAggro(False)
 			drag2.setAggro(False)
-			drag3.setAggro(False)
-			self.enemies = [self.themayor, agent.Shield(self.themayor.Rect), drag1, drag2, drag3]
+			# drag3.setAggro(False)
+			self.enemies = [self.themayor, agent.Shield(self.themayor.Rect), drag1, drag2]
 			self.NPCs = []
 			self.final = False
 		if self.finalInit:

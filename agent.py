@@ -363,7 +363,7 @@ class TreeBeard(Dragon):
         self.deathsound = pygame.mixer.Sound("sounds/treedeath.wav")
         self.deathsound.set_volume(1)
         self.attacksound = pygame.mixer.Sound("sounds/dragonattack.wav")
-        self.setSpeed(1)
+        self.setSpeed(0)
         
 		
 class Voodoo(Enemy):
