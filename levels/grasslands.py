@@ -615,7 +615,16 @@ class grassland12:
 		treebeard.setSpeed(0)
 		treebeard.setAggress(False)
 		treebeard.setCoward(True)
-		self.enemies = [agent.Squirrel((720,330)),agent.Squirrel((720,320)),agent.Squirrel((720,310)),treebeard]
+		angrySquirrel1= agent.Squirrel((725,330))
+		angrySquirrel2= agent.Squirrel((725,320))
+		angrySquirrel3= agent.Squirrel((725,310))
+		angrySquirrel4= agent.Squirrel((725,340))
+		angrySquirrel1.setAggro(True)
+		angrySquirrel2.setAggro(True)
+		angrySquirrel3.setAggro(True)
+		angrySquirrel4.setAggro(True)
+		
+		self.enemies = [angrySquirrel1,angrySquirrel2,angrySquirrel3,angrySquirrel4,treebeard]
 				
 	# special event methods and field
 		self.passable = False

@@ -766,9 +766,9 @@ class engine:
 									if enem.isDead() == True:
 										agent_hero.changeEXP(enem.getEXP())
 										randomNumber = random.random()
-										if randomNumber <= .2:
+										if randomNumber <= .3:
 											itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-										elif randomNumber > .2 and randomNumber <= .4:
+										elif randomNumber > .3 and randomNumber <= .6:
 											itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
@@ -809,6 +809,8 @@ class engine:
 							print( "arrow_posY : " )
 							print( BigArrow_posY )
 							BigArrowOn = True
+							chan= pygame.mixer.find_channel(True)
+							chan.play(eldrichsound)
 							BigArrowSpeedY =	 ( math.sin(angle) * 10.0 )
 							#print( "arrowSpeedY" )
 							#print( arrowSpeedY )
@@ -823,8 +825,6 @@ class engine:
 							#print( arrowSpeedX )
 							#print( "############" )
 							self.screen.blit( BigArrow, (BigArrow_Rect) )
-							chan= pygame.mixer.find_channel(True)
-							chan.play(eldrichsound)
 						# else:
 							# print( "we don't have the technology!" )
 
@@ -919,6 +919,14 @@ class engine:
 							inventoryOn = True
 						else:
 							inventoryOn = False
+					
+					elif key[pygame.K_f]:
+    						if self.screen.get_flags() & pygame.FULLSCREEN:
+        						pygame.display.set_mode((self.width,self.height))
+        						pygame.display.update()
+    						else:
+        						pygame.display.set_mode((self.width,self.height), pygame.FULLSCREEN)
+        						pygame.display.update()
 					
 					elif key[pygame.K_h]:
 						agent_hero.hack()
@@ -1337,9 +1345,9 @@ class engine:
 								enem.setHSpeed(0)
 								enem.setVSpeed(0)
 								randomNumber = random.random()
-								if randomNumber <= .2:
+								if randomNumber <= .3:
 									itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-								elif randomNumber > .2 and randomNumber <= .4:
+								elif randomNumber > .3 and randomNumber <= .6:
 									itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 								agent_hero.changeEXP(enem.getEXP())
 								print( agent_hero.getEXP() )
@@ -1375,9 +1383,9 @@ class engine:
 							enem.setHSpeed(0)
 							enem.setVSpeed(0)
 							randomNumber = random.random()
-							if randomNumber <= .2:
+							if randomNumber <= .3:
 								itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-							elif randomNumber > .2 and randomNumber <= .4:
+							elif randomNumber > .3 and randomNumber <= .6:
 								itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 							agent_hero.changeEXP(enem.getEXP())
 							print( agent_hero.getEXP() )
