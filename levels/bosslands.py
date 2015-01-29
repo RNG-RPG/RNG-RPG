@@ -28,8 +28,8 @@ class bossland0:
 		
 		rockBro = agent.HelpRock(150, 50)
 		rockBro1 = agent.HelpRock(200, 50)
-		rockBro.setMessage(["[Rock Twat]: Congratulation! You've slain that infernal winged beast! (Not that I couldn't have done it)","[Rock Twat]: Now go complete your quest ya scrub."])
-		rockBro1.setMessage(["[Rocky Balboa]: You like what you see?","[Rocky Balboa] These rock hard abs didn't come to be from sitting around all day", ".... Oh wait...."])
+		rockBro.setMessage(["[Rock Twat]: Congratulation! You've slain that infernal winged beast!","[Rock Twat]: Now go complete your quest ya scrub."])
+		rockBro1.setMessage(["[Rocky Balboa]: You like what you see?","[Rocky Balboa]: These rock hard abs didn't come to be from sitting around all day", "[Rocky Balboa]: .... Oh wait...."])
 		self.NPCs = [rockBro, rockBro1]
 
 		
@@ -314,8 +314,8 @@ class bossland5:
 			self.walls.append(pygame.Rect(0,0,1200,30))
 			self.walls.append(pygame.Rect(0,699,1200,1))
 			self.music = "sounds/BKGmusic/ForestBoss/EnterTheRealm.wav"
-			drag1=agent.Dragon((450,100))
-			drag2=agent.Dragon((636,100))
+			drag1=agent.TreeBeard((450,100))
+			drag2=agent.TreeBeard((636,100))
 			drag1.setAggro(False)
 			drag2.setAggro(False)
 			self.enemies = [agent.Mayor((581,320)), agent.Shield((567,310)), drag1, drag2]
