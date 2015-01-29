@@ -320,6 +320,7 @@ class bossland5:
 			drag3=agent.Dragon((600,150))
 			drag1.setAggro(False)
 			drag2.setAggro(False)
+			drag3.setAggro(False)
 			self.enemies = [self.themayor, agent.Shield(self.themayor.Rect), drag1, drag2, drag3]
 			self.NPCs = []
 			self.final = False

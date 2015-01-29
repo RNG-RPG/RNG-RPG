@@ -18,8 +18,36 @@ class Agent:
 		self.maxEXP = 10
 		self.attack = attack
 		self.attackSpeed = 30
+		self.hacked = False
+		self.tempMaxHP = 0
+		self.tempMaxMP = 0
+		self.tempattSpeed = 0
 		
 	#accessors   
+	def hack(self):
+		if self.hacked == False:
+			print ( "bug testing hack activated" )
+			self.tempMaxHP = self.maxHP
+			self.tempMaxMP = self.maxMP
+			self.tempattaSpeed = self.attackSpeed
+			self.hacked = True
+			self.maxHP=1000000
+			self.HP=1000000
+			self.maxMP=1000000
+			self.MP=1000000
+			self.attackSpeed = 3
+			print self.maxHP, self.HP, self.maxMP, self.MP, self.attackSpeed
+		else:
+			print ( "bug testing hack deactivated" )
+			self.hacked = False
+			self.maxHP = self.tempMaxHP
+			self.HP = self.tempMaxHP
+			self.maxMP = self.tempMaxMP
+			self.MP = self.tempMaxMP
+			self.attackSpeed = self.tempattSpeed
+			print self.maxHP, self.HP, self.maxMP, self.MP, self.attackSpeed
+			
+		
 	def getMaxHP(self):
 		return self.maxHP
 		
@@ -323,7 +351,7 @@ class Dragon(Enemy):
         self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
         self.movesound.set_volume(.2)
         self.attacksound = pygame.mixer.Sound("sounds/dragonattack.wav")
-        self.setSpeed(3)
+        self.setSpeed(2)
                 
 class TreeBeard(Dragon):
     def __init__ (self, rect):
@@ -335,7 +363,7 @@ class TreeBeard(Dragon):
         self.deathsound = pygame.mixer.Sound("sounds/treedeath.wav")
         self.deathsound.set_volume(1)
         self.attacksound = pygame.mixer.Sound("sounds/dragonattack.wav")
-        self.setSpeed(2)
+        self.setSpeed(1)
         
 		
 class Voodoo(Enemy):
@@ -349,7 +377,7 @@ class Voodoo(Enemy):
 		self.movesound = pygame.mixer.Sound("sounds/slimemove.wav")
 		self.movesound.set_volume(.2)
 		self.attacksound = pygame.mixer.Sound("sounds/slimemove.wav")
-		self.setSpeed(2)
+		self.setSpeed(3)
 	
 class Squirrel(Enemy):
 	def __init__ (self, rect, aggress = True, animSpeed = 5):

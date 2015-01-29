@@ -919,6 +919,10 @@ class engine:
 							inventoryOn = True
 						else:
 							inventoryOn = False
+					
+					elif key[pygame.K_h]:
+						agent_hero.hack()
+													
 					elif key[pygame.K_1] and inventoryOn == False:
 						chan= pygame.mixer.find_channel(True)
 						chan.play(potionsound)
@@ -1811,7 +1815,7 @@ class engine:
 					arrowready.set_volume(0)
 					footsteps.set_volume(0)
 					arrowhit.set_volume(0)
-					pygame.mixer.music.load("sounds/BKGmusic/MenuCredits/HeroReturns.wav")
+					pygame.mixer.music.load("sounds/BKGmusic/StoryVictory/TheFinalChime.wav")
 					pygame.mixer.music.play(-1,0)
 				if p < 255:
 					p+= 1
@@ -1820,11 +1824,12 @@ class engine:
 				surf.fill((0,0,0))
 				endScreen = endScreen.convert()
 				endScreen.set_alpha(p)
+				endScreen = pygame.transform.scale(endScreen, (self.width, self.height))
 				self.screen.blit(surf, (0,0))
-				self.screen.blit(endScreen, pygame.Rect(475, 175, 250, 250))
+				self.screen.blit(endScreen,(0,0))
 				if p == 255:
 					txtz = 'Press Esc to Return to the Main Menu'
-					txtx = 'Thanks "100" Playing!'
+					txtx = 'Thanks "100" for Playing!'
 					txta = bestFont.render(txtx, True, (255,255,255))
 					txts = bestFont.render(txtz, True, (255,255,255))
 					self.screen.blit(txta, (485,100))
