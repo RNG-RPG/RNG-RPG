@@ -391,7 +391,8 @@ class engine:
 				if variable == 0:
 					activeNPC = agent.Dialogue(["Welcome to the World of Yoban's Quest! ~Click your mouse to continue through dialogue",
 												"Press i and level up your first skill!", "You can only spec into 1 of the two special moves so choose wisely... ",
-												"You get upgrade points when you level up by shooting stuff in the face (with mouse clicks!)","That's it! THAT'S THE TUTORIAL!... Once you have a special skill, right click to use it!"," Watch out for mana costs!",
+												"You get upgrade points when you level up by shooting stuff in the face (with mouse clicks!)", "place potions in the hotbar and use them with the 1-5 number keys.",
+												"That's it! THAT'S THE TUTORIAL!... Once you have a special skill, right click to use it!"," Watch out for mana costs!",
 												"Run into that weird looking rock above you for some sweet insight into the game"])
 					self.setTalk(True)
 					talkFrame = direction[1]
