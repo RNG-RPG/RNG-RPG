@@ -13,7 +13,7 @@ class bossland0:
 		self.identity = 0
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/Forest/FollowTheLeaf.wav"
+		self.music= "sounds/BKGmusic/ForestCreepy/Clovewood.wav"
 		
 		self.width = width
 		self.height = height
@@ -64,7 +64,7 @@ class bossland1:
 		self.identity = 1
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/Forest/FollowTheLeaf.wav"
+		self.music= "sounds/BKGmusic/ForestCreepy/Clovewood.wav"
 		
 		self.width = width
 		self.height = height
@@ -115,7 +115,7 @@ class bossland2:
 		self.identity = 2
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/Forest/FollowTheLeaf.wav"
+		self.music= "sounds/BKGmusic/ForestCreepy/Clovewood.wav"
 		
 		self.width = width
 		self.height = height
@@ -170,7 +170,7 @@ class bossland3:
 		self.identity = 3
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/Forest/FollowTheLeaf.wav"
+		self.music= "sounds/BKGmusic/ForestCreepy/Clovewood.wav"
 		
 		self.width = width
 		self.height = height
@@ -220,7 +220,7 @@ class bossland4:
 		self.identity = 4
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/Forest/FollowTheLeaf.wav"
+		self.music= "sounds/BKGmusic/ForestCreepy/Clovewood.wav"
 		
 		self.width = width
 		self.height = height
@@ -267,10 +267,11 @@ class bossland4:
 			
 class bossland5:		   
 	def __init__ (self, screen, width, height, sprites):
+		self.themayor = agent.Mayor((581,320))
 		self.identity = 5
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/Forest/FollowTheLeaf.wav"
+		self.music= "sounds/BKGmusic/ForestCreepy/Clovewood.wav"
 		
 		self.width = width
 		self.height = height
@@ -313,12 +314,13 @@ class bossland5:
 			self.walls.append(pygame.Rect(1199, 0, 1, 700))
 			self.walls.append(pygame.Rect(0,0,1200,30))
 			self.walls.append(pygame.Rect(0,699,1200,1))
-			self.music = "sounds/BKGmusic/ForestBoss/EnterTheRealm.wav"
+			self.music= "sounds/BKGmusic/BeachBoss/IWillNotDie.wav"
 			drag1=agent.TreeBeard((450,100))
 			drag2=agent.TreeBeard((636,100))
+			drag3=agent.Dragon((600,150))
 			drag1.setAggro(False)
 			drag2.setAggro(False)
-			self.enemies = [agent.Mayor((581,320)), agent.Shield((567,310)), drag1, drag2]
+			self.enemies = [self.themayor, agent.Shield(self.themayor.Rect), drag1, drag2, drag3]
 			self.NPCs = []
 			self.final = False
 		if self.finalInit:
@@ -333,7 +335,7 @@ class bossland5:
 				if self.enemies[1].isDead():
 					self.shieldCounter += 1
 					if self.shieldCounter > 120:
-						self.enemies[1].ressurect()
+						self.enemies[1].ressurect(True,self.themayor.Rect)
 						self.shieldCounter = 0
 			
 		#draw on top of the background
@@ -368,7 +370,7 @@ class bossland6:
 		self.identity = 6
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/Forest/FollowTheLeaf.wav"
+		self.music= "sounds/BKGmusic/ForestCreepy/Clovewood.wav"
 		
 		self.width = width
 		self.height = height
@@ -419,7 +421,7 @@ class bossland7:
 		self.identity = 7
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/Forest/FollowTheLeaf.wav"
+		self.music= "sounds/BKGmusic/ForestCreepy/Clovewood.wav"
 		
 		self.width = width
 		self.height = height
@@ -466,7 +468,7 @@ class bossland8:
 		self.identity = 8
 		self.screen= screen
 		
-		self.music= "sounds/BKGmusic/Forest/FollowTheLeaf.wav"
+		self.music= "sounds/BKGmusic/ForestCreepy/Clovewood.wav"
 		
 		self.width = width
 		self.height = height

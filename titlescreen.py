@@ -42,15 +42,9 @@ def main(WIDTH,HEIGHT):
     back= load_image(bkg,"",LENGTH,HEIGHT)
     BKG.append(back)
   
-  image1  = load_image('1.png', 'images',50,50)
-  image2  = load_image('2.png', 'images',50,50)
-  image3  = load_image('3.png', 'images',50,50)
-  image4  = load_image('4.png', 'images',5,50)
-  
   # Create the menus. 
   menu0 = cMenu(HEIGHT/5, WIDTH/5, 20, 5, 'vertical', 100, screen,
               [('Play',      1, None),
-              ('Tutorial',      2, None),
               ('Directions',         3, None),
               ('Credits',         4, None),
               ('Exit',           9, None)])

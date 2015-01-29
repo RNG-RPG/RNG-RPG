@@ -221,6 +221,12 @@ class engine:
 		arrowready = pygame.mixer.Sound("sounds/arrowready.wav")
 		footsteps = pygame.mixer.Sound("sounds/footsteps.wav")
 		deathsound = pygame.mixer.Sound("sounds/death.wav")
+		eldrichsound = pygame.mixer.Sound("sounds/eldrich.wav")
+		fart = pygame.mixer.Sound("sounds/fart.wav")
+		wtfsound = pygame.mixer.Sound("sounds/WTF.wav")
+		improve = pygame.mixer.Sound("sounds/skillimprove.wav")
+		potionsound = pygame.mixer.Sound("sounds/potion.wav")
+		dragonattack = pygame.mixer.Sound("sounds/dragonattack.wav")
 
 		#sound volume
 		deathsound.set_volume(.6)
@@ -228,6 +234,8 @@ class engine:
 		arrowready.set_volume(.5)
 		footsteps.set_volume(1)
 		arrowhit.set_volume(.5)
+		eldrichsound.set_volume(1)
+		
 		
 		#making the target move
 		pygame.event.pump()
@@ -375,7 +383,7 @@ class engine:
 			# health_bar, mana_bar, and exp_bar calculator
 			health_Rect = pygame.Rect((4, (574 + ((float(agent_hero.getMaxHP() - agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))), (17, (float(agent_hero.getHP())/float(agent_hero.getMaxHP())) * 91))
 			mana_Rect = pygame.Rect((30, (574 + ((float(agent_hero.getMaxMP() - agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))), (17, (float(agent_hero.getMP())/float(agent_hero.getMaxMP())) * 91))
-			exp_Rect = pygame.Rect( (54 + 100, 8 + 566), ((float(agent_hero.getEXP())/float(agent_hero.getMaxEXP()) * 890), 23) )
+			exp_Rect = pygame.Rect( (54 + 100, 8 + 566), (int(float(agent_hero.getEXP())/float(agent_hero.getMaxEXP()) * 890), 23) )
 			# print( exp_Rect.width )
 			
 			# Stage Changing/win variables - LEVEL DESIGN:
@@ -596,6 +604,8 @@ class engine:
 				if (isinstance(enem, agent.Dragon) or isinstance(enem, agent.Mayor)) and enem.isAggro() and enem.isDead() != True:
 					if self.room.frameCounter == 15:
 						if projectilenum < 19:
+							chan= pygame.mixer.find_channel(True)
+							chan.play(dragonattack)
 							projectilenum += 1
 						else:
 							projectilenum = 0
@@ -742,6 +752,8 @@ class engine:
 							agent_hero.changeMP( -1 )
 							AOETimer = 0
 							print attackRadius
+							chan= pygame.mixer.find_channel(True)
+							chan.play(wtfsound)
 							AOEx = hero_Rect.centerx - attackRadius
 							AOEy = hero_Rect.centery - attackRadius
 							for enem in self.room.enemies:
@@ -754,9 +766,9 @@ class engine:
 									if enem.isDead() == True:
 										agent_hero.changeEXP(enem.getEXP())
 										randomNumber = random.random()
-										if randomNumber <= .1:
+										if randomNumber <= .2:
 											itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-										elif randomNumber > .1 and randomNumber <= .2:
+										elif randomNumber > .2 and randomNumber <= .4:
 											itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
@@ -769,11 +781,7 @@ class engine:
 							# print "arrowready",arrowready.get_num_channels()
 							# attackDelay = True
 							BigArrowTimer = 0
-							
 							BigArrow = pygame.image.load( "sprites/magic_missile.png" ).convert_alpha() 
-
-							# chan= pygame.mixer.find_channel(True)
-							# chan.play(arrowshot)
 							#arrowshot.play()
 							# print "arrowshot", arrowshot.get_num_channels()
 							if target_Rect.centerx - hero_Rect.centerx == 0:
@@ -815,6 +823,8 @@ class engine:
 							#print( arrowSpeedX )
 							#print( "############" )
 							self.screen.blit( BigArrow, (BigArrow_Rect) )
+							chan= pygame.mixer.find_channel(True)
+							chan.play(eldrichsound)
 						# else:
 							# print( "we don't have the technology!" )
 
@@ -895,7 +905,12 @@ class engine:
 						refresh.append( self.room.background.get_rect().move(648, 0) )
 						agent_hero = agent.Agent(10, 4, 0, 1, 1)
 					elif key[pygame.K_ESCAPE]:
-						titlescreen.main(self.width,self.height)
+						if inventoryOn == True:
+							refresh.append( pygame.Rect( (0,0), (1200, 700)) )
+							inventoryOn = False
+							
+						else:
+							titlescreen.main(self.width,self.height)
 					elif key[pygame.K_i]:
 						refresh.append( pygame.Rect( (0,0), (1200, 700)) )
 						print ( "i is hit" )
@@ -905,14 +920,24 @@ class engine:
 						else:
 							inventoryOn = False
 					elif key[pygame.K_1] and inventoryOn == False:
+						chan= pygame.mixer.find_channel(True)
+						chan.play(potionsound)
 						self.inventoryFunc(0, agent_hero, quickbarItems)
 					elif key[pygame.K_2] and inventoryOn == False:
+						chan= pygame.mixer.find_channel(True)
+						chan.play(potionsound)
 						self.inventoryFunc(1, agent_hero, quickbarItems)
 					elif key[pygame.K_3] and inventoryOn == False:
+						chan= pygame.mixer.find_channel(True)
+						chan.play(potionsound)
 						self.inventoryFunc(2, agent_hero, quickbarItems)
 					elif key[pygame.K_4] and inventoryOn == False:
+						chan= pygame.mixer.find_channel(True)
+						chan.play(potionsound)
 						self.inventoryFunc(3, agent_hero, quickbarItems)
 					elif key[pygame.K_5] and inventoryOn == False:
+						chan= pygame.mixer.find_channel(True)
+						chan.play(potionsound)
 						self.inventoryFunc(4, agent_hero, quickbarItems)
 					
 				elif event.type == pygame.MOUSEBUTTONDOWN and inventoryOn == True:
@@ -1288,7 +1313,7 @@ class engine:
 				while k < 10:
 					if arrowOn[k] == True:
 						if arrow_rects[k].colliderect( enem.getRect() ) and not enem.isDead():
-							if enem.aggressive != True:
+							if enem.aggressive != True and enem.coward != True:
 								enem.setAggress(True)
 							if enem.isAggro() != True:
 								enem.setAggro(True)
@@ -1308,9 +1333,9 @@ class engine:
 								enem.setHSpeed(0)
 								enem.setVSpeed(0)
 								randomNumber = random.random()
-								if randomNumber <= .1:
+								if randomNumber <= .2:
 									itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-								elif randomNumber > .1 and randomNumber <= .2:
+								elif randomNumber > .2 and randomNumber <= .4:
 									itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 								agent_hero.changeEXP(enem.getEXP())
 								print( agent_hero.getEXP() )
@@ -1346,9 +1371,9 @@ class engine:
 							enem.setHSpeed(0)
 							enem.setVSpeed(0)
 							randomNumber = random.random()
-							if randomNumber <= .1:
+							if randomNumber <= .2:
 								itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-							elif randomNumber > .1 and randomNumber <= .2:
+							elif randomNumber > .2 and randomNumber <= .4:
 								itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 							agent_hero.changeEXP(enem.getEXP())
 							print( agent_hero.getEXP() )

@@ -38,7 +38,7 @@ class grassland0:
 		self.frameCounter = -1
 		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
 
-		self.enemies = [agent.Squirrel((900,200)),agent.Squirrel((850,200)), agent.Deer((555,555))]
+		self.enemies = [agent.Squirrel((900,200)),agent.Squirrel((850,200))]
 
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -80,7 +80,7 @@ class grassland1:
 		#Add DA enemies HERE
 		self.frameCounter = -1
 		#hitbox note: subtract double of |dev| from respective x, y -- width and height of rect
-		self.enemies = [agent.Squirrel((600,300))]
+		self.enemies = [agent.Squirrel((600,300)), agent.Deer((655,555))]
 		
 	def reset(self):
 		self.screen.fill((90,0,0))
@@ -611,10 +611,12 @@ class grassland12:
 
 		#Add DA enemies HERE
 		self.frameCounter = -1
-		enem = agent.TreeBeard(((700,250)))
-		enem.setAggro(False)
-		self.enemies = [enem]
-		
+		treebeard = agent.TreeBeard((700,250))
+		treebeard.setSpeed(0)
+		treebeard.setAggress(False)
+		treebeard.setCoward(True)
+		self.enemies = [agent.Squirrel((720,330)),agent.Squirrel((720,320)),agent.Squirrel((720,310)),treebeard]
+				
 	# special event methods and field
 		self.passable = False
 	def setNPC(self, message):
