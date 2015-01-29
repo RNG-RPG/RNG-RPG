@@ -176,7 +176,7 @@ class engine:
 		bestFont = pygame.font.SysFont("Helvetica", 25)
 		#load inventory image
 		inventory = pygame.image.load( "upgrades.png" ).convert_alpha()
-		texture_missing_upgrades = pygame.image.load( "texture_missing_upgrades.png" ).convert_alpha()
+		# texture_missing_upgrades = pygame.image.load( "texture_missing_upgrades.png" ).convert_alpha()
 		upgradeSprites = pygame.image.load( "sprites/upgrades_main.png").convert_alpha()
 		wtf = pygame.image.load( "sprites/wtfboom.png" ).convert_alpha()
 		wtf2 = pygame.image.load( "sprites/wtfboom2.png" ).convert_alpha()
@@ -754,9 +754,9 @@ class engine:
 									if enem.isDead() == True:
 										agent_hero.changeEXP(enem.getEXP())
 										randomNumber = random.random()
-										if randomNumber <= .5:
+										if randomNumber <= .1:
 											itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-										elif randomNumber > .5 and randomNumber <= 1:
+										elif randomNumber > .1 and randomNumber <= .2:
 											itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
@@ -1308,9 +1308,9 @@ class engine:
 								enem.setHSpeed(0)
 								enem.setVSpeed(0)
 								randomNumber = random.random()
-								if randomNumber <= .5:
+								if randomNumber <= .1:
 									itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-								elif randomNumber > .5 and randomNumber <= 1:
+								elif randomNumber > .1 and randomNumber <= .2:
 									itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 								agent_hero.changeEXP(enem.getEXP())
 								print( agent_hero.getEXP() )
@@ -1346,9 +1346,9 @@ class engine:
 							enem.setHSpeed(0)
 							enem.setVSpeed(0)
 							randomNumber = random.random()
-							if randomNumber <= .5:
+							if randomNumber <= .1:
 								itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-							elif randomNumber > .5 and randomNumber <= 1:
+							elif randomNumber > .1 and randomNumber <= .2:
 								itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 							agent_hero.changeEXP(enem.getEXP())
 							print( agent_hero.getEXP() )
@@ -1828,8 +1828,10 @@ class engine:
 				arrowSpeedX = [0,0,0,0,0,0,0,0,0,0]
 				arrowSpeedY = [0,0,0,0,0,0,0,0,0,0]
 				arrownum = 0
+				i = 0
 				while i < 10:
 					arrowOn[i] = False
+					i += 1
 				itemsList= []
 				thismusic = self.room.music
 				print "ROOM before: ", self.roomNum
