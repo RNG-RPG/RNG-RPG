@@ -69,6 +69,7 @@ def main(WIDTH,HEIGHT):
               ('P = PAUSE', 3, None),
               ('Esc = QUIT', 3, None),
               ('Left Click = ATTACK', 3, None),
+              ('Right Click = SPELL ATTACK', 3, None),
               ('Back', 0, None)])
 
   menu3 = cMenu(0, 0, 20, 5, 'vertical', 20, screen,
