@@ -199,6 +199,8 @@ class engine:
 		manaPotion = pygame.image.load( "sprites/Blue_Potion.png" ).convert_alpha()
 		healthPotion_drop = pygame.image.load( "sprites/Red_Potion_drop.png" ).convert_alpha()
 		manaPotion_drop = pygame.image.load( "sprites/Blue_Potion_drop.png" ).convert_alpha()
+		healthPotion_quick = pygame.image.load( "sprites/Red_Potion_quick.png" ).convert_alpha()
+		manaPotion_quick = pygame.image.load( "sprites/Blue_Potion_quick.png" ).convert_alpha()
 		
 		# deals with inventory stuff
 
@@ -1489,7 +1491,7 @@ class engine:
 							dFrame = herour[counter]
 							counter = (counter + 1) % 4
 							direction=herour
-			  #attack frames
+			  # attack frames
 				elif attackDelay == True:
 					if target_Rect.centerx < hero_Rect.centerx:
 						if angle < 1.6 and angle > 1.15:
@@ -1529,7 +1531,7 @@ class engine:
 					#deathsound.play()
 					print "deathsound character", deathsound.get_num_channels()
 					loopdeath += 1
-			
+
 			# drawing dropped stuff:
 			for thing in itemsList:
 				refresh.append(pygame.Rect( thing[2].x-40 ,thing[2].y-40, thing[2].width+80, thing[2].height+80 ))
@@ -1543,7 +1545,7 @@ class engine:
 							num = 0
 							level += 1
 						num += 1
-						if inventoryItems[(level,num)] == None:
+						if inventoryItems[(level,num)] == (None,None):
 							inventoryItems[(level,num)] = (thing[0],thing[1])
 							print ( "level: ", level, " num: ", num, "items" )
 							i = 20
@@ -1763,15 +1765,15 @@ class engine:
 					elif isinstance(inventoryItems[(level,num)][0], item.manaPotion):
 						self.screen.blit( manaPotion, (inventoryPositions[(level,num)] ) )
 					i += 1
-				
-				i = 0
 			
+			
+			i = 0
 			# quickbar things
 			while i < 5:
 				if isinstance(quickbarItems[i][0], item.healthPotion):
-					self.screen.blit( healthPotion, (quickbarPositions[i]) )
+					self.screen.blit( healthPotion_quick, (quickbarPositions[i]) )
 				elif isinstance(quickbarItems[i][0], item.manaPotion):
-					self.screen.blit( manaPotion, (quickbarPositions[i]) )
+					self.screen.blit( manaPotion_quick, (quickbarPositions[i]) )
 				i += 1
 					
 					
