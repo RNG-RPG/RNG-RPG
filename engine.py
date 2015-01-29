@@ -202,10 +202,10 @@ class engine:
 		
 		# deals with inventory stuff
 		inventoryItems = {(1,1):None,(1,2):None,(1,3):None,(1,4):None,(2,1):None,(2,2):None,(2,3):None,(2,4):None,(3,1):None,(3,2):None,(3,3):None,(3,4):None,(4,1):None,(4,2):None,(4,3):None,(4,4):None,(5,1):None,(5,2):None,(5,3):None,(5,4):None,(6,1):None}
-		inventoryPositions = {(1,1):(218,47),(1,2):(306,47),(1,3):(394,47),(1,4):(482,47),(2,1):(218,135),(2,2):(306,135),(2,3):(394,135),(2,4):(482,135),(3,1):(218,223),(3,2):(306,223),(3,3):(394,223),(3,4):(482,223),(4,1):(218,311),(4,2):(306,311),(4,3):(394,311),(4,4):(482,311),(5,1):(218,399),(5,2):(306,311),(5,3):(394,311),(5,4):(482,311)}
+		inventoryPositions = {(1,1):(218,47),(1,2):(306,47),(1,3):(394,47),(1,4):(482,47),(2,1):(218,135),(2,2):(306,135),(2,3):(394,135),(2,4):(482,135),(3,1):(218,223),(3,2):(306,223),(3,3):(394,223),(3,4):(482,223),(4,1):(218,311),(4,2):(306,311),(4,3):(394,311),(4,4):(482,311),(5,1):(218,399),(5,2):(306,399),(5,3):(394,399),(5,4):(482,399)}
 		# test of stuff
 		inventoryItems[(1,1)] = item.healthPotion()
-		
+	
 		# deals with dropped items
 		itemsList = []
 		
@@ -1525,29 +1525,29 @@ class engine:
 				else:
 					self.screen.blit( upgradeSprites, (550+200,196+30), (171,114, 57, 57))
 				if upgradeOn[(3,3)]:
-					self.screen.blit( upgradeSprites, (666+200,196+30), (228,0, 57, 57))
+					self.screen.blit( upgradeSprites, (666+200,196+30), (114, 57, 57, 57))
 				else:
-					self.screen.blit( upgradeSprites, (666+200,196+30), (228,114, 57, 57))
+					self.screen.blit( upgradeSprites, (666+200,196+30), (114,171, 57, 57))
 				if upgradeOn[(4,1)]:
-					self.screen.blit( upgradeSprites, (376+200,283+30), (228,0, 57, 57))
+					self.screen.blit( upgradeSprites, (376+200,283+30), (57,57, 57, 57))
 				else:
-					self.screen.blit( upgradeSprites, (376+200,283+30), (228,114, 57, 57))
+					self.screen.blit( upgradeSprites, (376+200,283+30), (57,171, 57, 57))
 				if upgradeOn[(4,2)]:
 					self.screen.blit( upgradeSprites, (492+200,283+30), (57,57, 57, 57))
 				else:
 					self.screen.blit( upgradeSprites, (492+200,283+30), (57,171, 57, 57))
 				if upgradeOn[(4,3)]:
-					self.screen.blit( upgradeSprites, (608+200,283+30), (228,0, 57, 57))
+					self.screen.blit( upgradeSprites, (608+200,283+30), (114,57, 57, 57))
 				else:
-					self.screen.blit( upgradeSprites, (608+200,283+30), (228,114, 57, 57))
+					self.screen.blit( upgradeSprites, (608+200,283+30), (114,171, 57, 57))
 				if upgradeOn[(4,4)]:
 					self.screen.blit( upgradeSprites, (724+200,283+30), (171,0, 57, 57))
 				else:
 					self.screen.blit( upgradeSprites, (724+200,283+30), (171,114, 57, 57))
 				if upgradeOn[(5,1)]:
-					self.screen.blit( upgradeSprites, (376+200,370+30), (228,0, 57, 57))
+					self.screen.blit( upgradeSprites, (376+200,370+30), (57,57, 57, 57))
 				else:
-					self.screen.blit( upgradeSprites, (376+200,370+30), (228,114, 57, 57))
+					self.screen.blit( upgradeSprites, (376+200,370+30), (57,171, 57, 57))
 				if upgradeOn[(5,2)]:
 					self.screen.blit( upgradeSprites, (492+200,370+30), (0,57, 57, 57))
 				else:
@@ -1571,56 +1571,56 @@ class engine:
 						description = "train in archery"
 						print( description )
 				elif pygame.Rect((492+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(2,1)
-					if description != "train for AOE attack":
-						description = "train for AOE attack"
+					if description != "train 'Explosive Diarrhea'":
+						description = "train 'Explosive Diarrhea'"
 						print( description )
 				elif pygame.Rect((608+200,109+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(2,2)
-					if description != "train for big damage attack":
-						description = "train for big damage attack"
+					if description != "train 'Eldritch Blast'":
+						description = "train 'Eldritch Blast'"
 						print( description )
 				elif pygame.Rect((434+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,1)
-					if description != "increase radius":
-						description = "increase radius"
+					if description != "increase Explosive Diarrhea's damage radius":
+						description = "increase Explosive Diarrhea's damage radius"
 						print( description )
 				elif pygame.Rect((550+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,2)
-					if description != "increase default speed":
-						description = "increase default speed"
+					if description != "increase default attack speed":
+						description = "increase default attack speed"
 						print( description )
 				elif pygame.Rect((666+200,196+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(3,3)
-					if description != "increase attack":
-						description = "increase attack"
+					if description != "increase Eldritch Blast's damage":
+						description = "increase Eldritch Blast's damage"
 						print( description )
 				elif pygame.Rect((376+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,1)
-					if description != "increase attack":
-						description = "increase attack"
+					if description != "increase Explosive Diarrhea's damage":
+						description = "increase Explosive Diarrhea's damage"
 						print( description )
 				elif pygame.Rect((492+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,2)
-					if description != "increase radius":
-						description = "increase radius"
+					if description != "increase Explosive Diarrhea's damage radius":
+						description = "increase Explosive Diarrhea's damage radius"
 						print( description )
 				elif pygame.Rect((608+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,3)
-					if description != "increase attack":
-						description = "increase attack"
+					if description != "increase Eldritch Blast's damage":
+						description = "increase Eldritch Blast's damage"
 						print( description )
 				elif pygame.Rect((724+200,283+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(4,4)
-					if description != "increase default speed":
-						description = "increase default speed"
+					if description != "increase default attack speed":
+						description = "increase default attack speed"
 						print( description )
 				elif pygame.Rect((376+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,1)
-					if description != "increase attack":
-						description = "increase attack"
+					if description != "increase Explosive Diarrhea's damage":
+						description = "increase Explosive Diarrhea's damage"
 						print( description )
 				elif pygame.Rect((492+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,2)
-					if description != "full screen":
-						description = "full screen"
+					if description != "MAX EXPLOSION RANGE":
+						description = "MAX EXPLOSION RANGE"
 						print( description )
 				elif pygame.Rect((608+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,3)
-					if description != "increase default attack":
-						description = "increase default attack"
+					if description != "increase default attack damage":
+						description = "increase default attack damage"
 						print( description )
 				elif pygame.Rect((724+200,370+30), (57,57)).collidepoint( pygame.mouse.get_pos() ): #(5,4)
-					if description != "increase super attack speed":
-						description = "increase super attack speed"
+					if description != "super attack speed":
+						description = "super attack speed"
 						print( description )
 
 			self.screen.blit( target, (target_Rect) )			
