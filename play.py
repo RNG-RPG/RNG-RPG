@@ -20,7 +20,7 @@ except:
 	print "Fonts unavailable"
 	sys.exit()
 
-#width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
+#width, height = pygame.display.Info().current_w, pygame.display.Info().current_
 WIDTH = 1200
 HEIGHT = 700
 screen = pygame.display.set_mode( (WIDTH, HEIGHT) )

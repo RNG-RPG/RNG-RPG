@@ -383,7 +383,7 @@ class engine:
 				if variable == 0:
 					activeNPC = agent.Dialogue(["Welcome to the World of Yoban's Quest! ~Click your mouse to continue through dialogue",
 												"Press i and level up your first skill!", "You can only spec into 1 of the two special moves so choose wisely... ",
-												"You get upgrade points when you level up by shooting stuff in the face (with mouse clicks!)","That's it! THAT'S THE TUTORIAL!... Once you have a special skill, right click to use it! Watch out for mana costs!",
+												"You get upgrade points when you level up by shooting stuff in the face (with mouse clicks!)","That's it! THAT'S THE TUTORIAL!... Once you have a special skill, right click to use it!"," Watch out for mana costs!",
 												"Run into that weird looking rock above you for some sweet insight into the game"])
 					self.setTalk(True)
 					talkFrame = direction[1]
@@ -1802,7 +1802,7 @@ class engine:
 					txtx = 'Thanks "100" Playing!'
 					txta = bestFont.render(txtx, True, (255,255,255))
 					txts = bestFont.render(txtz, True, (255,255,255))
-					self.screen.blit(txta, (515,100))
+					self.screen.blit(txta, (485,100))
 					self.screen.blit(txts, (420, 600))
 				refresh.append(pygame.Rect(0,0,1200,700))
 			pygame.display.update( refresh )
