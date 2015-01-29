@@ -754,9 +754,9 @@ class engine:
 									if enem.isDead() == True:
 										agent_hero.changeEXP(enem.getEXP())
 										randomNumber = random.random()
-										if randomNumber <= .5:
+										if randomNumber <= .1:
 											itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-										elif randomNumber > .5 and randomNumber <= 1:
+										elif randomNumber > .1 and randomNumber <= .2:
 											itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 										print ( agent_hero.getEXP() )
 								print( agent_hero.getEXP() )
@@ -1308,9 +1308,9 @@ class engine:
 								enem.setHSpeed(0)
 								enem.setVSpeed(0)
 								randomNumber = random.random()
-								if randomNumber <= .5:
+								if randomNumber <= .1:
 									itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-								elif randomNumber > .5 and randomNumber <= 1:
+								elif randomNumber > .1 and randomNumber <= .2:
 									itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 								agent_hero.changeEXP(enem.getEXP())
 								print( agent_hero.getEXP() )
@@ -1346,9 +1346,9 @@ class engine:
 							enem.setHSpeed(0)
 							enem.setVSpeed(0)
 							randomNumber = random.random()
-							if randomNumber <= .5:
+							if randomNumber <= .1:
 								itemsList.append( (item.healthPotion(), healthPotion_drop, healthPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
-							elif randomNumber > .5 and randomNumber <= 1:
+							elif randomNumber > .1 and randomNumber <= .2:
 								itemsList.append( (item.manaPotion(), manaPotion_drop, manaPotion.get_rect().move(enem.getRect().left, enem.getRect().top) ) )
 							agent_hero.changeEXP(enem.getEXP())
 							print( agent_hero.getEXP() )
